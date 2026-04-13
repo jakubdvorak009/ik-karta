@@ -26,208 +26,197 @@
   --green: #1a9e68;
   --green-dim: rgba(26,158,104,0.08);
   --amber: #c47d0a;
-  --amber-dim: rgba(196,125,10,0.08);
+  --amber-bg: #fffbf0;
+  --amber-border: rgba(196,125,10,0.3);
   --red: #d94444;
-  --red-dim: rgba(217,68,68,0.08);
   --radius: 10px;
   --radius-sm: 6px;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 14px; }
-body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:14px}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
+.shell{display:flex;height:100vh;overflow:hidden}
+.sidebar{width:260px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.sidebar-header{padding:20px 18px 14px;border-bottom:1px solid var(--border)}
+.app-logo{display:flex;align-items:center;gap:9px;margin-bottom:4px}
+.logo-mark{width:28px;height:28px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;letter-spacing:-.3px}
+.app-name{font-size:14px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+.app-sub{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace}
+.sidebar-section{padding:10px 10px 4px}
+.sidebar-label{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--text3);text-transform:uppercase;padding:0 8px 6px}
+.mode-tabs{display:flex;gap:4px;padding:0 0 8px}
+.mode-tab{flex:1;padding:6px 4px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text2);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;transition:all .15s;line-height:1.3}
+.mode-tab.active-mgr{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
+.mode-tab.active-dir{background:var(--purple-dim);border-color:var(--purple-border);color:var(--purple)}
+.mode-tab:hover:not(.active-mgr):not(.active-dir){background:var(--bg3);border-color:var(--border2)}
+.person-list{padding:0 10px;flex:1;overflow-y:auto}
+.person-item{display:flex;align-items:center;gap:9px;padding:8px 8px;border-radius:var(--radius-sm);cursor:pointer;transition:background .1s;margin-bottom:2px;border:1px solid transparent}
+.person-item:hover{background:var(--bg3)}
+.person-item.active{background:var(--bg3);border-color:var(--border2)}
+.pav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.pav-blue{background:rgba(59,110,245,0.12);color:var(--accent)}
+.pav-purple{background:rgba(108,79,214,0.12);color:var(--purple)}
+.person-info{flex:1;min-width:0}
+.person-name-s{font-size:12px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.person-pos{font-size:11px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.person-week-badge{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);background:var(--bg4);border-radius:4px;padding:1px 5px;flex-shrink:0}
+.add-person-btn{margin:8px 10px 0;padding:8px;border-radius:var(--radius-sm);border:1px dashed var(--border2);background:transparent;color:var(--text2);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;width:calc(100% - 20px);display:flex;align-items:center;justify-content:center;gap:5px;transition:all .15s}
+.add-person-btn:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-dim)}
+.sidebar-nav{border-top:1px solid var(--border);padding:10px}
+.nav-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:var(--radius-sm);cursor:pointer;color:var(--text2);font-size:12px;transition:background .1s}
+.nav-item:hover{background:var(--bg3);color:var(--text)}
+.nav-item.active{background:var(--bg3);color:var(--text)}
+.nav-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
+.main-header{padding:20px 28px 0;border-bottom:1px solid var(--border);background:var(--bg2);position:sticky;top:0;z-index:10}
+.mh-top{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:16px;gap:16px}
+.mh-person{display:flex;align-items:center;gap:12px}
+.mh-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0}
+.mh-av-blue{background:rgba(59,110,245,0.12);color:var(--accent);border:1px solid var(--accent-border)}
+.mh-av-purple{background:rgba(108,79,214,0.12);color:var(--purple);border:1px solid var(--purple-border)}
+.mh-name{font-size:17px;font-weight:600;letter-spacing:-.3px;color:var(--text)}
+.mh-meta{font-size:12px;color:var(--text2);margin-top:1px}
+.mh-meta span{color:var(--accent);font-family:'DM Mono',monospace;font-size:11px}
+.mh-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.btn{padding:7px 14px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:transparent;color:var(--text2);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.btn:hover{background:var(--bg3);color:var(--text);border-color:var(--border2)}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-primary:hover{background:#2d5fe0;border-color:#2d5fe0;color:#fff}
+.btn-purple{background:var(--purple);border-color:var(--purple);color:#fff}
+.btn-purple:hover{background:#5b40c0;border-color:#5b40c0;color:#fff}
+.progress-bar-wrap{padding-bottom:0}
+.prog-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.prog-label-txt{font-size:11px;color:var(--text2)}
+.prog-pct-txt{font-size:11px;font-family:'DM Mono',monospace;color:var(--accent)}
+.prog-track{height:3px;background:var(--bg4);border-radius:2px;margin-bottom:-1px}
+.prog-fill{height:3px;border-radius:2px;background:var(--accent);transition:width .4s ease}
+.tabs-row{display:flex;gap:0;margin-top:1px}
+.tab-btn{padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.tab-btn:hover{color:var(--text)}
+.tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.content{padding:24px 28px;flex:1}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px}
+.stat-card-label{font-size:11px;color:var(--text3);margin-bottom:4px}
+.stat-card-val{font-size:22px;font-weight:600;color:var(--text);font-family:'DM Mono',monospace;letter-spacing:-1px}
+.stat-card-sub{font-size:11px;color:var(--text3);margin-top:2px}
 
-/* Layout */
-.shell { display: flex; height: 100vh; overflow: hidden; }
-.sidebar { width: 260px; background: var(--bg2); border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
-.main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
-
-/* Sidebar */
-.sidebar-header { padding: 20px 18px 14px; border-bottom: 1px solid var(--border); }
-.app-logo { display: flex; align-items: center; gap: 9px; margin-bottom: 4px; }
-.logo-mark { width: 28px; height: 28px; background: var(--accent); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; color: #fff; letter-spacing: -.3px; }
-.app-name { font-size: 14px; font-weight: 600; color: var(--text); letter-spacing: -.2px; }
-.app-sub { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; }
-
-.sidebar-section { padding: 10px 10px 4px; }
-.sidebar-label { font-size: 10px; font-weight: 600; letter-spacing: .08em; color: var(--text3); text-transform: uppercase; padding: 0 8px 6px; }
-.mode-tabs { display: flex; gap: 4px; padding: 0 0 8px; }
-.mode-tab { flex: 1; padding: 6px 4px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: transparent; color: var(--text2); font-size: 11px; font-family: 'DM Sans', sans-serif; cursor: pointer; text-align: center; transition: all .15s; line-height: 1.3; }
-.mode-tab.active-mgr { background: var(--accent-dim); border-color: var(--accent-border); color: var(--accent); }
-.mode-tab.active-dir { background: var(--purple-dim); border-color: var(--purple-border); color: var(--purple); }
-.mode-tab:hover:not(.active-mgr):not(.active-dir) { background: var(--bg3); border-color: var(--border2); }
-
-.person-list { padding: 0 10px; flex: 1; overflow-y: auto; }
-.person-item { display: flex; align-items: center; gap: 9px; padding: 8px 8px; border-radius: var(--radius-sm); cursor: pointer; transition: background .1s; margin-bottom: 2px; border: 1px solid transparent; }
-.person-item:hover { background: var(--bg3); }
-.person-item.active { background: var(--bg3); border-color: var(--border2); }
-.pav { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; }
-.pav-blue { background: rgba(79,126,247,0.2); color: var(--accent); }
-.pav-purple { background: rgba(139,111,247,0.2); color: var(--purple); }
-.person-info { flex: 1; min-width: 0; }
-.person-name-s { font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.person-pos { font-size: 11px; color: var(--text3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.person-week-badge { font-size: 10px; font-family: 'DM Mono', monospace; color: var(--text3); background: var(--bg4); border-radius: 4px; padding: 1px 5px; flex-shrink: 0; }
-
-.add-person-btn { margin: 8px 10px 0; padding: 8px; border-radius: var(--radius-sm); border: 1px dashed var(--border2); background: transparent; color: var(--text2); font-size: 12px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: calc(100% - 20px); display: flex; align-items: center; justify-content: center; gap: 5px; transition: all .15s; }
-.add-person-btn:hover { border-color: var(--accent-border); color: var(--accent); background: var(--accent-dim); }
-
-.sidebar-nav { border-top: 1px solid var(--border); padding: 10px; }
-.nav-item { display: flex; align-items: center; gap: 8px; padding: 7px 8px; border-radius: var(--radius-sm); cursor: pointer; color: var(--text2); font-size: 12px; transition: background .1s; }
-.nav-item:hover { background: var(--bg3); color: var(--text); }
-.nav-item.active { background: var(--bg3); color: var(--text); }
-.nav-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
-
-/* Main header */
-.main-header { padding: 20px 28px 0; border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 10; }
-.mh-top { display: flex; align-items: flex-start; justify-content: space-between; padding-bottom: 16px; gap: 16px; }
-.mh-person { display: flex; align-items: center; gap: 12px; }
-.mh-av { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; flex-shrink: 0; }
-.mh-av-blue { background: rgba(79,126,247,0.2); color: var(--accent); border: 1px solid var(--accent-border); }
-.mh-av-purple { background: rgba(139,111,247,0.2); color: var(--purple); border: 1px solid var(--purple-border); }
-.mh-name { font-size: 17px; font-weight: 600; letter-spacing: -.3px; color: var(--text); }
-.mh-meta { font-size: 12px; color: var(--text2); margin-top: 1px; }
-.mh-meta span { color: var(--accent); font-family: 'DM Mono', monospace; font-size: 11px; }
-.mh-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
-.btn { padding: 7px 14px; border-radius: var(--radius-sm); border: 1px solid var(--border2); background: transparent; color: var(--text2); font-size: 12px; font-family: 'DM Sans', sans-serif; cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 5px; white-space: nowrap; }
-.btn:hover { background: var(--bg3); color: var(--text); border-color: var(--border2); }
-.btn-primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-.btn-primary:hover { background: #3d6ef5; border-color: #3d6ef5; color: #fff; }
-.btn-purple { background: var(--purple); border-color: var(--purple); color: #fff; }
-.btn-purple:hover { background: #7b60e8; border-color: #7b60e8; color: #fff; }
-
-.progress-bar-wrap { padding-bottom: 0; }
-.prog-label-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-.prog-label-txt { font-size: 11px; color: var(--text2); }
-.prog-pct-txt { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--accent); }
-.prog-track { height: 3px; background: var(--bg4); border-radius: 2px; margin-bottom: -1px; }
-.prog-fill { height: 3px; border-radius: 2px; background: var(--accent); transition: width .4s ease; }
-
-.tabs-row { display: flex; gap: 0; margin-top: 1px; }
-.tab-btn { padding: 10px 16px; font-size: 12px; font-weight: 500; color: var(--text2); background: transparent; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .15s; }
-.tab-btn:hover { color: var(--text); }
-.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-/* Content */
-.content { padding: 24px 28px; flex: 1; }
+/* Legend */
+.legend{display:flex;align-items:center;gap:16px;margin-bottom:14px;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
+.legend-cb{width:16px;height:16px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.lcb-none{border:1.5px solid var(--border2);background:#fff}
+.lcb-wait{border:1.5px solid var(--amber-border);background:var(--amber-bg)}
+.lcb-done{border:1.5px solid var(--accent-border);background:var(--accent)}
 
 /* Phase blocks */
-.phase-block { margin-bottom: 8px; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-.phase-hdr { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; cursor: pointer; background: var(--bg2); transition: background .1s; user-select: none; }
-.phase-hdr:hover { background: var(--bg3); }
-.phase-title-txt { font-size: 13px; font-weight: 500; color: var(--text); }
-.phase-meta { display: flex; align-items: center; gap: 10px; }
-.phase-count { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; }
-.phase-pct { font-size: 11px; font-family: 'DM Mono', monospace; color: var(--green); }
-.chevron { font-size: 10px; color: var(--text3); transition: transform .2s; display: inline-block; }
-.phase-block.collapsed .chevron { transform: rotate(-90deg); }
-.phase-body { display: block; }
-.phase-block.collapsed .phase-body { display: none; }
+.phase-block{margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.phase-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;cursor:pointer;background:var(--bg2);transition:background .1s;user-select:none}
+.phase-hdr:hover{background:var(--bg3)}
+.phase-title-txt{font-size:13px;font-weight:500;color:var(--text)}
+.phase-meta{display:flex;align-items:center;gap:10px}
+.phase-count{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace}
+.phase-pct{font-size:11px;font-family:'DM Mono',monospace;color:var(--green)}
+.chevron{font-size:10px;color:var(--text3);transition:transform .2s;display:inline-block}
+.phase-block.collapsed .chevron{transform:rotate(-90deg)}
+.phase-body{display:block}
+.phase-block.collapsed .phase-body{display:none}
+.week-block{border-top:1px solid var(--border)}
+.week-block.current-week{border-left:3px solid var(--accent)}
+.week-hdr{display:flex;align-items:center;gap:10px;padding:9px 16px;background:var(--bg3)}
+.week-label-txt{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:.02em;text-transform:uppercase;font-family:'DM Mono',monospace}
+.current-badge{font-size:10px;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border);border-radius:20px;padding:1px 8px;font-weight:500}
+.week-prog{height:2px;background:var(--bg4)}
+.week-prog-fill{height:2px;background:var(--accent);transition:width .3s}
 
-/* Week blocks */
-.week-block { border-top: 1px solid var(--border); }
-.week-block.current-week { border-left: 3px solid var(--accent); }
-.week-hdr { display: flex; align-items: center; gap: 10px; padding: 9px 16px; background: var(--bg3); }
-.week-label-txt { font-size: 11px; font-weight: 600; color: var(--text2); letter-spacing: .02em; text-transform: uppercase; font-family: 'DM Mono', monospace; }
-.current-badge { font-size: 10px; background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-border); border-radius: 20px; padding: 1px 8px; font-weight: 500; }
-.week-prog { height: 2px; background: var(--bg4); }
-.week-prog-fill { height: 2px; background: var(--accent); transition: width .3s; }
-.current-week .week-prog-fill { background: var(--accent); }
+/* Section header with edit button */
+.section-hdr{display:flex;align-items:center;gap:7px;padding:7px 16px 3px}
+.section-lbl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3)}
+.role-badge{font-size:10px;border-radius:4px;padding:1px 7px;font-weight:500}
+.rb-mgr{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border)}
+.rb-nov{background:var(--green-dim);color:var(--green);border:1px solid rgba(26,158,104,0.25)}
+.rb-dir{background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-border)}
+.edit-section-btn{margin-left:auto;font-size:10px;color:var(--text3);background:transparent;border:none;cursor:pointer;padding:2px 6px;border-radius:4px;font-family:'DM Sans',sans-serif;transition:all .12s;display:flex;align-items:center;gap:3px}
+.edit-section-btn:hover{background:var(--bg4);color:var(--text2)}
+.edit-section-btn.active{background:var(--accent-dim);color:var(--accent)}
 
-/* Section */
-.section-hdr { display: flex; align-items: center; gap: 7px; padding: 7px 16px 3px; }
-.section-lbl { font-size: 10px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; color: var(--text3); }
-.role-badge { font-size: 10px; border-radius: 4px; padding: 1px 7px; font-weight: 500; }
-.rb-mgr { background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-border); }
-.rb-nov { background: rgba(62,207,142,0.1); color: var(--green); border: 1px solid rgba(62,207,142,0.25); }
-.rb-dir { background: var(--purple-dim); color: var(--purple); border: 1px solid var(--purple-border); }
+/* Check items – 3 states */
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:6px 16px;cursor:pointer;transition:background .1s;user-select:none}
+.check-item:hover{background:rgba(0,0,0,0.025)}
+.cb3{width:16px;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .12s;cursor:pointer;border:1.5px solid var(--border2);background:#fff}
+.cb3.waiting{border-color:var(--amber-border);background:var(--amber-bg)}
+.cb3.done{background:var(--accent);border-color:var(--accent)}
+.cb3.done::after{content:'';display:block;width:8px;height:5px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translateY(-1px)}
+.cb3.waiting::after{content:'~';font-size:11px;color:var(--amber);line-height:1;font-weight:600}
+.item-txt{font-size:13px;color:var(--text);line-height:1.5;transition:color .1s;flex:1}
+.check-item.state-done .item-txt{color:var(--text3);text-decoration:line-through}
+.check-item.state-waiting .item-txt{color:var(--amber)}
+.waiting-label{font-size:10px;color:var(--amber);background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:4px;padding:1px 6px;white-space:nowrap;margin-left:4px;flex-shrink:0;margin-top:3px}
 
-/* Check items */
-.check-item { display: flex; align-items: flex-start; gap: 10px; padding: 6px 16px; cursor: pointer; transition: background .1s; }
-.check-item:hover { background: rgba(255,255,255,0.025); }
-.cb { width: 15px; height: 15px; border: 1px solid var(--border2); border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; transition: all .1s; cursor: pointer; }
-.cb.checked { background: var(--accent); border-color: var(--accent); }
-.cb.checked::after { content: ''; display: block; width: 8px; height: 5px; border-left: 1.5px solid #fff; border-bottom: 1.5px solid #fff; transform: rotate(-45deg) translateY(-1px); }
-.item-txt { font-size: 13px; color: var(--text); line-height: 1.5; transition: color .1s; }
-.check-item.done .item-txt { color: var(--text3); text-decoration: line-through; }
-.check-item.done .cb { background: var(--bg4); border-color: var(--border); }
-.check-item.done .cb::after { border-color: var(--text3); }
+/* Edit mode for section */
+.edit-item-row{display:flex;align-items:center;gap:6px;padding:4px 16px}
+.edit-item-input{flex:1;padding:5px 8px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none}
+.edit-item-input:focus{border-color:var(--accent-border);background:#fff}
+.del-item-btn{width:22px;height:22px;border-radius:4px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s}
+.del-item-btn:hover{background:rgba(217,68,68,0.1);color:var(--red)}
+.drag-handle{color:var(--text3);font-size:12px;cursor:grab;padding:0 2px;flex-shrink:0}
+.add-item-row{padding:5px 16px 8px;display:flex;gap:6px}
+.add-item-input{flex:1;padding:5px 8px;background:var(--bg3);border:1px dashed var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;outline:none}
+.add-item-input:focus{border-color:var(--accent-border);background:#fff;border-style:solid}
+.add-item-input::placeholder{color:var(--text3)}
+.add-item-btn-sm{padding:5px 10px;border-radius:var(--radius-sm);border:1px solid var(--accent-border);background:var(--accent-dim);color:var(--accent);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap}
+.add-item-btn-sm:hover{background:var(--accent);color:#fff}
 
-/* IK Záznamy */
-.ik-empty { text-align: center; padding: 40px 20px; color: var(--text3); font-size: 13px; }
-.ik-empty svg { margin-bottom: 10px; opacity: .3; }
-.ik-record { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 12px; overflow: hidden; }
-.ik-record-hdr { padding: 12px 16px; background: var(--bg2); display: flex; align-items: center; justify-content: space-between; }
-.ik-date { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--text2); }
-.ik-record-body { padding: 12px 16px; }
-.ik-field { margin-bottom: 10px; }
-.ik-label { font-size: 11px; color: var(--text3); margin-bottom: 4px; text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
-.ik-text { font-size: 13px; color: var(--text2); line-height: 1.6; }
-.ik-tasks { list-style: none; }
-.ik-task-item { display: flex; align-items: flex-start; gap: 7px; padding: 3px 0; font-size: 13px; color: var(--text2); }
-.ik-task-item::before { content: '·'; color: var(--accent); flex-shrink: 0; margin-top: 1px; }
-.ik-footer { padding: 10px 16px; background: var(--bg2); border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; justify-content: flex-end; }
+/* IK */
+.ik-empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:13px}
+.ik-record{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;background:var(--bg2)}
+.ik-record-hdr{padding:12px 16px;background:var(--bg3);display:flex;align-items:center;justify-content:space-between}
+.ik-date{font-size:12px;font-family:'DM Mono',monospace;color:var(--text2)}
+.ik-record-body{padding:12px 16px}
+.ik-field{margin-bottom:10px}
+.ik-label{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.ik-text{font-size:13px;color:var(--text2);line-height:1.6}
+.ik-tasks{list-style:none}
+.ik-task-item{display:flex;align-items:flex-start;gap:7px;padding:3px 0;font-size:13px;color:var(--text2)}
+.ik-task-item::before{content:'·';color:var(--accent);flex-shrink:0;margin-top:1px}
+.ik-footer{padding:10px 16px;background:var(--bg3);border-top:1px solid var(--border);display:flex;gap:8px;align-items:center;justify-content:flex-end}
 
-/* New IK form */
-.ik-form { border: 1px solid var(--accent-border); border-radius: var(--radius); background: var(--accent-dim); padding: 16px; margin-bottom: 16px; }
-.ik-form-title { font-size: 13px; font-weight: 500; color: var(--accent); margin-bottom: 12px; }
-.form-group { margin-bottom: 10px; }
-.form-label { font-size: 11px; color: var(--text2); margin-bottom: 4px; display: block; font-weight: 500; }
-.form-input, .form-textarea { width: 100%; padding: 8px 10px; background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius-sm); color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 13px; outline: none; transition: border-color .15s; }
-.form-input:focus, .form-textarea:focus { border-color: var(--accent-border); }
-.form-textarea { min-height: 70px; resize: vertical; line-height: 1.5; }
-.form-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 12px; }
-
-/* Modal */
-.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
-.modal-bg.hidden { display: none; }
-.modal { background: var(--bg2); border: 1px solid var(--border2); border-radius: 14px; width: 100%; max-width: 440px; padding: 24px; }
-.modal-title { font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-.modal-sub { font-size: 12px; color: var(--text2); margin-bottom: 18px; }
-.modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
-
-/* Stats row */
-.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
-.stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
-.stat-card-label { font-size: 11px; color: var(--text3); margin-bottom: 4px; }
-.stat-card-val { font-size: 22px; font-weight: 600; color: var(--text); font-family: 'DM Mono', monospace; letter-spacing: -1px; }
-.stat-card-sub { font-size: 11px; color: var(--text3); margin-top: 2px; }
+/* Modals */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal-bg.hidden{display:none}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;width:100%;max-width:440px;padding:24px;box-shadow:0 8px 40px rgba(0,0,0,0.12)}
+.modal-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px}
+.modal-sub{font-size:12px;color:var(--text2);margin-bottom:18px}
+.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
+.form-group{margin-bottom:10px}
+.form-label{font-size:11px;color:var(--text2);margin-bottom:4px;display:block;font-weight:500}
+.form-input,.form-textarea{width:100%;padding:8px 10px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .15s}
+.form-input:focus,.form-textarea:focus{border-color:var(--accent-border);background:#fff}
+.form-textarea{min-height:70px;resize:vertical;line-height:1.5}
 
 /* Toast */
-.toast { position: fixed; bottom: 20px; right: 20px; background: var(--bg3); border: 1px solid var(--border2); border-radius: var(--radius); padding: 10px 16px; font-size: 13px; color: var(--text); z-index: 200; transform: translateY(60px); opacity: 0; transition: all .25s; pointer-events: none; }
-.toast.show { transform: translateY(0); opacity: 1; }
+.toast{position:fixed;bottom:20px;right:20px;background:var(--text);border-radius:var(--radius);padding:10px 16px;font-size:13px;color:#fff;z-index:200;transform:translateY(60px);opacity:0;transition:all .25s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
 
 /* Empty state */
-.empty-state { text-align: center; padding: 60px 20px; color: var(--text3); }
-.empty-state-title { font-size: 15px; font-weight: 500; color: var(--text2); margin-bottom: 6px; }
+.empty-state{text-align:center;padding:60px 20px;color:var(--text3)}
+.empty-state-title{font-size:15px;font-weight:500;color:var(--text2);margin-bottom:6px}
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--bg4); border-radius: 3px; }
-.main-header { background: var(--bg2); border-bottom: 1px solid var(--border); }
-
-/* Responsive */
-@media (max-width: 768px) {
-  .sidebar { display: none; }
-  .stats-row { grid-template-columns: repeat(2, 1fr); }
-}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
+@media(max-width:768px){.sidebar{display:none}.stats-row{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
-
 <div class="shell">
-  <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-header">
       <div class="app-logo">
         <div class="logo-mark">IK</div>
-        <div>
-          <div class="app-name">IK Karta 2.0</div>
-          <div class="app-sub">preview · beta</div>
-        </div>
+        <div><div class="app-name">IK Karta 2.0</div><div class="app-sub">preview · beta</div></div>
       </div>
     </div>
-
     <div class="sidebar-section">
       <div class="sidebar-label">Režim</div>
       <div class="mode-tabs">
@@ -235,38 +224,30 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <button class="mode-tab" id="mode-dir" onclick="setMode('dir')">Ředitel<br>adaptuje manažera</button>
       </div>
     </div>
-
-    <div class="sidebar-section">
-      <div class="sidebar-label" id="people-label">Poradci v adaptaci</div>
-    </div>
+    <div class="sidebar-section"><div class="sidebar-label" id="people-label">Poradci v adaptaci</div></div>
     <div class="person-list" id="person-list"></div>
     <button class="add-person-btn" onclick="openAddModal()">
       <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       Přidat osobu
     </button>
-
     <div class="sidebar-nav">
-      <div class="nav-item active" onclick="setTab('checklist')"><span class="nav-dot"></span> Checklist adaptace</div>
-      <div class="nav-item" onclick="setTab('ik')"><span class="nav-dot"></span> IK záznamy</div>
+      <div class="nav-item active" id="nav-checklist" onclick="setTab('checklist')"><span class="nav-dot"></span> Checklist adaptace</div>
+      <div class="nav-item" id="nav-ik" onclick="setTab('ik')"><span class="nav-dot"></span> IK záznamy</div>
     </div>
   </aside>
 
-  <!-- MAIN -->
   <main class="main">
     <div class="main-header" id="main-header">
       <div class="mh-top">
         <div class="mh-person">
           <div class="mh-av mh-av-blue" id="mh-av">--</div>
-          <div>
-            <div class="mh-name" id="mh-name">Vyberte osobu</div>
-            <div class="mh-meta" id="mh-meta">–</div>
-          </div>
+          <div><div class="mh-name" id="mh-name">Vyberte osobu</div><div class="mh-meta" id="mh-meta">–</div></div>
         </div>
         <div class="mh-actions" id="mh-actions"></div>
       </div>
       <div class="progress-bar-wrap">
         <div class="prog-label-row">
-          <span class="prog-label-txt" id="prog-label-txt">Celkový postup adaptace</span>
+          <span class="prog-label-txt">Celkový postup adaptace</span>
           <span class="prog-pct-txt" id="prog-pct">0 %</span>
         </div>
         <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
@@ -276,11 +257,10 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
         <button class="tab-btn" id="tab-ik" onclick="setTab('ik')">IK záznamy</button>
       </div>
     </div>
-
     <div class="content" id="main-content">
       <div class="empty-state">
         <div class="empty-state-title">Žádná osoba vybrána</div>
-        <p style="font-size:13px;margin-top:6px">Přidejte osobu v levém panelu nebo vyberte existující.</p>
+        <p style="font-size:13px;margin-top:6px">Přidejte osobu v levém panelu.</p>
         <button class="btn btn-primary" style="margin-top:16px" onclick="openAddModal()">+ Přidat osobu</button>
       </div>
     </div>
@@ -291,51 +271,27 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <div class="modal-bg hidden" id="add-modal">
   <div class="modal">
     <div class="modal-title">Přidat osobu do adaptace</div>
-    <div class="modal-sub" id="add-modal-sub">Nový poradce – manažer bude sledovat adaptaci</div>
-    <div class="form-group">
-      <label class="form-label">Celé jméno *</label>
-      <input class="form-input" id="inp-name" placeholder="Jan Novák" type="text">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Pozice *</label>
-      <input class="form-input" id="inp-pos" placeholder="Junior konzultant" type="text">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Datum nástupu *</label>
-      <input class="form-input" id="inp-date" type="date">
-    </div>
-    <div class="form-group">
-      <label class="form-label">E-mail</label>
-      <input class="form-input" id="inp-email" placeholder="jan.novak@firma.cz" type="email">
-    </div>
+    <div class="modal-sub" id="add-modal-sub">Nový poradce</div>
+    <div class="form-group"><label class="form-label">Celé jméno *</label><input class="form-input" id="inp-name" type="text" placeholder="Jan Novák"></div>
+    <div class="form-group"><label class="form-label">Pozice *</label><input class="form-input" id="inp-pos" type="text" placeholder="Junior konzultant"></div>
+    <div class="form-group"><label class="form-label">Datum nástupu *</label><input class="form-input" id="inp-date" type="date"></div>
+    <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="inp-email" type="email" placeholder="jan.novak@firma.cz"></div>
     <div class="modal-actions">
       <button class="btn" onclick="closeAddModal()">Zrušit</button>
-      <button class="btn btn-primary" id="add-save-btn" onclick="savePerson()">Přidat</button>
+      <button class="btn btn-primary" onclick="savePerson()">Přidat</button>
     </div>
   </div>
 </div>
 
-<!-- IK FORM MODAL -->
+<!-- IK MODAL -->
 <div class="modal-bg hidden" id="ik-modal">
   <div class="modal">
     <div class="modal-title">Nový záznam z IK</div>
-    <div class="modal-sub" id="ik-modal-sub">Zaznamenejte průběh a zadejte úkoly z dnešní IK schůzky</div>
-    <div class="form-group">
-      <label class="form-label">Datum IK</label>
-      <input class="form-input" id="ik-date" type="date">
-    </div>
-    <div class="form-group">
-      <label class="form-label">Obsah / co jsme probírali</label>
-      <textarea class="form-textarea" id="ik-content" placeholder="Zpětná vazba k aktivitám, produktové školení, situace v týmu..."></textarea>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Úkoly pro poradce (každý na nový řádek)</label>
-      <textarea class="form-textarea" id="ik-tasks-nov" placeholder="Nastudovat pyramidu osobních financí&#10;Uskutečnit 5 hovorů z Projektu 100&#10;Odevzdat produkci do pátku"></textarea>
-    </div>
-    <div class="form-group">
-      <label class="form-label">Úkoly pro manažera / ředitele (každý na nový řádek)</label>
-      <textarea class="form-textarea" id="ik-tasks-mgr" placeholder="Zajistit školení na investice&#10;Zkontrolovat kompetenční model"></textarea>
-    </div>
+    <div class="modal-sub" id="ik-modal-sub">Záznam ze schůzky</div>
+    <div class="form-group"><label class="form-label">Datum IK</label><input class="form-input" id="ik-date" type="date"></div>
+    <div class="form-group"><label class="form-label">Obsah / co jsme probírali</label><textarea class="form-textarea" id="ik-content" placeholder="Zpětná vazba k aktivitám, produktové školení..."></textarea></div>
+    <div class="form-group"><label class="form-label">Úkoly pro nováčka (každý na nový řádek)</label><textarea class="form-textarea" id="ik-tasks-nov" placeholder="Nastudovat pyramidu&#10;Uskutečnit 5 hovorů&#10;Odevzdat produkci do pátku"></textarea></div>
+    <div class="form-group"><label class="form-label">Úkoly pro manažera (každý na nový řádek)</label><textarea class="form-textarea" id="ik-tasks-mgr" placeholder="Zajistit školení na investice&#10;Zkontrolovat KM"></textarea></div>
     <div class="modal-actions">
       <button class="btn" onclick="closeIkModal()">Zrušit</button>
       <button class="btn btn-primary" onclick="saveIkRecord()">Uložit záznam</button>
@@ -346,488 +302,477 @@ body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--t
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── DATA ────────────────────────────────────────────────────────────────────
-const CHECKLIST = {
-  mng: [
-    { label: 'Předadaptační fáze', open: true, weeks: [
-      { label: 'Před nástupem', sections: [
-        { title: 'Manažer zajistí', role: 'mgr', items: ['Podpis smlouvy o spolupráci','Výpis z trestního rejstříku','Licence – převod nebo vysvětlení postupu','Vysvědčení (úředně ověřené)','Živnostenský list','Smlouva VIP start / Přestupní bonus'] },
-        { title: 'Orientace v kanceláři', role: 'mgr', items: ['Seznámení s kolegy, asistentka, recepce','Skříňky a místo k sezení','Klíče od kanceláře, platby za kanceláře','Nastavení tiskárny, kancelářské směrnice'] },
-        { title: 'Nastavení spolupráce', role: 'mgr', items: ['Vysvětlení kariérního plánu','Důležité termíny (IK, call party, workshop)','Sepsat dohodu o odpovědnostech (DoO)','Poslání IK karty + vyplnit Projekt 100'] },
+// ─── DEFAULT CHECKLIST TEMPLATE ───────────────────────────────────────────────
+const TEMPLATE = {
+  mng:[
+    {label:'Předadaptační fáze',open:true,weeks:[
+      {label:'Před nástupem',weekNum:null,sections:[
+        {title:'Manažer zajistí',role:'mgr',items:['Podpis smlouvy o spolupráci','Výpis z trestního rejstříku','Licence – převod nebo vysvětlení postupu','Vysvědčení (úředně ověřené)','Živnostenský list','Smlouva VIP start / Přestupní bonus']},
+        {title:'Orientace v kanceláři',role:'mgr',items:['Seznámení s kolegy, asistentka, recepce','Skříňky a místo k sezení','Klíče od kanceláře, platby za kanceláře','Nastavení tiskárny, kancelářské směrnice']},
+        {title:'Nastavení spolupráce',role:'mgr',items:['Vysvětlení kariérního plánu','Důležité termíny (IK, call party, workshop)','Sepsat dohodu o odpovědnostech (DoO)','Poslání IK karty + vyplnit Projekt 100']},
       ]},
     ]},
-    { label: 'Adaptační fáze – 1. měsíc', open: true, weeks: [
-      { label: '1. týden', weekNum: 1, sections: [
-        { title: 'Manažer učí', role: 'mgr', items: ['Poradenský proces s AI – představit a trénovat','Kontrola Projektu 100 + probrání do hloubky','Vize poradenství a vize 4fin (7 druhů příjmů)','Proč podnikat ve financích','Vysvětlení poradenského procesu','Probrání a trénink call skriptu na klienty','Ukázka první schůzky u klienta (A1)','Situační vedení – úvod do direktivy'] },
-        { title: 'Nováček plní', role: 'nov', items: ['Registrace do vzdělávacího portálu 4edu','AML kurz BrokerTrust – test pro výplatu provizí','Základní informace ke spolupráci','Pracuj na Projektu 100, dodělej seznam','Připrav se na telefonování','Nauč se první schůzku u klienta (A1)'] },
-        { title: 'Předat / přeposlat', role: 'mgr', items: ['Výpis z trestního rejstříku na oddělení zasmluvnění','Prezentér první schůzky u klienta (A1)'] },
+    {label:'Adaptační fáze – 1. měsíc',open:true,weeks:[
+      {label:'1. týden',weekNum:1,sections:[
+        {title:'Manažer učí',role:'mgr',items:['Poradenský proces s AI – představit a trénovat','Kontrola Projektu 100 + probrání do hloubky','Vize poradenství a vize 4fin (7 druhů příjmů)','Proč podnikat ve financích','Vysvětlení poradenského procesu','Probrání a trénink call skriptu','Ukázka první schůzky u klienta (A1)','Situační vedení – úvod do direktivy']},
+        {title:'Nováček plní',role:'nov',items:['Registrace do vzdělávacího portálu 4edu','AML kurz BrokerTrust – test pro výplatu provizí','Základní informace ke spolupráci','Pracuj na Projektu 100, dodělej seznam','Připrav se na telefonování','Nauč se první schůzku u klienta (A1)']},
+        {title:'Předat / přeposlat',role:'mgr',items:['Výpis z trestního rejstříku na zasmluvnění','Prezentér první schůzky u klienta (A1)']},
       ]},
-      { label: '2. týden', weekNum: 2, sections: [
-        { title: 'Manažer učí', role: 'mgr', items: ['Call party klientská – pasivní účast + zpětná vazba','Trénink telefonování – domluvení schůzky','Probrání procesu první schůzky + roleplay','Příprava na A1 u reálného klienta','Situační vedení: direktiva v praxi'] },
-        { title: 'Nováček plní', role: 'nov', items: ['Call party pasivně + 5 vlastních hovorů','Zamyslet se nad 10 potenciálními klienty','Nastudovat pyramidu osobních financí (4basic 01)','Připravit se na první schůzku u klienta'] },
+      {label:'2. týden',weekNum:2,sections:[
+        {title:'Manažer učí',role:'mgr',items:['Call party klientská – pasivní účast + zpětná vazba','Trénink telefonování – domluvení schůzky','Probrání procesu první schůzky + roleplay','Příprava na A1 u reálného klienta','Situační vedení: direktiva v praxi']},
+        {title:'Nováček plní',role:'nov',items:['Call party pasivně + 5 vlastních hovorů','Zamyslet se nad 10 potenciálními klienty','Nastudovat pyramidu osobních financí','Připravit se na první schůzku u klienta']},
       ]},
-      { label: '3. týden', weekNum: 3, sections: [
-        { title: 'Manažer učí', role: 'mgr', items: ['Absolvovat A1 u klienta společně – zpětná vazba','Produktové školení: životní pojištění základy','Trénink A2 – potřeby klienta, prezentace','Práce s BrokerTrust (BeTy, ŽP)'] },
-        { title: 'Nováček plní', role: 'nov', items: ['Absolvovat min. 2 první schůzky u klientů','Zadat schůzky a výsledky do IK karty','Nastudovat základy životního pojištění','Připravit se na A2'] },
+      {label:'3. týden',weekNum:3,sections:[
+        {title:'Manažer učí',role:'mgr',items:['Absolvovat A1 u klienta společně – zpětná vazba','Produktové školení: životní pojištění základy','Trénink A2 – potřeby klienta, prezentace','Práce s BrokerTrust (BeTy, ŽP)']},
+        {title:'Nováček plní',role:'nov',items:['Absolvovat min. 2 první schůzky u klientů','Zadat schůzky a výsledky do IK karty','Nastudovat základy životního pojištění','Připravit se na A2']},
       ]},
-      { label: '4. týden', weekNum: 4, sections: [
-        { title: 'Manažer učí', role: 'mgr', items: ['Zpětná vazba k A2 a A3','Produktové školení: neživotní pojištění','Trénink uzavírání obchodu – podpis smlouvy','Vysvětlení administrativy a odevzdávání produkce','Vyhodnocení 1. měsíce – IK vs. realita'] },
-        { title: 'Nováček plní', role: 'nov', items: ['Min. 3 schůzky a 1 podpis','Odevzdat první produkci přes asistenta','Projít kompetenční model – kde jsem?','Aktualizovat IK kartu, splnit úkoly z DoO'] },
+      {label:'4. týden',weekNum:4,sections:[
+        {title:'Manažer učí',role:'mgr',items:['Zpětná vazba k A2 a A3','Produktové školení: neživotní pojištění','Trénink uzavírání obchodu – podpis smlouvy','Vysvětlení administrativy a produkce','Vyhodnocení 1. měsíce – IK vs. realita']},
+        {title:'Nováček plní',role:'nov',items:['Min. 3 schůzky a 1 podpis','Odevzdat první produkci přes asistenta','Projít kompetenční model – kde jsem?','Aktualizovat IK kartu, splnit úkoly z DoO']},
       ]},
     ]},
-    { label: 'Adaptační fáze – 2. a 3. měsíc', open: false, weeks: [
-      { label: '2. měsíc', weekNum: 5, sections: [
-        { title: 'Manažer řeší', role: 'mgr', items: ['Pravidelné IK 1× týdně – kontrola aktivit vs. DoO','Produktová školení: investice a penzijní spoření','Trénink A2 u klienta','Příprava na zkoušku odborné způsobilosti','Situační vedení: přechod z direktivy na koučování'] },
-        { title: 'Nováček plní', role: 'nov', items: ['Dosáhnout plánovaného OB z DoO','Absolvovat zkoušku odborné způsobilosti (Pojištění)','Nastudovat investice a penzijní spoření','Vytvořit akční plán ze školení'] },
+    {label:'Adaptační fáze – 2. a 3. měsíc',open:false,weeks:[
+      {label:'2. měsíc',weekNum:5,sections:[
+        {title:'Manažer řeší',role:'mgr',items:['Pravidelné IK 1× týdně – kontrola aktivit vs. DoO','Produktová školení: investice a penzijní spoření','Trénink A2 u klienta','Příprava na zkoušku odborné způsobilosti','Situační vedení: přechod z direktivy na koučování']},
+        {title:'Nováček plní',role:'nov',items:['Dosáhnout plánovaného OB z DoO','Absolvovat zkoušku odborné způsobilosti (Pojištění)','Nastudovat investice a penzijní spoření','Vytvořit akční plán ze školení']},
       ]},
-      { label: '3. měsíc', weekNum: 9, sections: [
-        { title: 'Manažer řeší', role: 'mgr', items: ['Vyhodnocení adaptace – splnil nováček podmínky?','Probrání kariérní cesty: povýšení nebo plán','Zkouška odborné způsobilosti – investice/úvěry','Nasměrování na samostatné vedení klientů'] },
-        { title: 'Nováček plní', role: 'nov', items: ['Splnit všechny zkoušky odborné způsobilosti','Dosáhnout podmínek na Konzultanta','Vyhodnotit Projekt 100 – kolik klientů osloveno','Plánovat kariérní krok s manažerem'] },
+      {label:'3. měsíc',weekNum:9,sections:[
+        {title:'Manažer řeší',role:'mgr',items:['Vyhodnocení adaptace – splnil nováček podmínky?','Probrání kariérní cesty: povýšení nebo plán','Zkouška odborné způsobilosti – investice/úvěry','Nasměrování na samostatné vedení klientů']},
+        {title:'Nováček plní',role:'nov',items:['Splnit všechny zkoušky odborné způsobilosti','Dosáhnout podmínek na Konzultanta','Vyhodnotit Projekt 100 – kolik klientů osloveno','Plánovat kariérní krok s manažerem']},
       ]},
     ]},
   ],
-  dir: [
-    { label: '1. měsíc – základ manažerské role', open: true, weeks: [
-      { label: '1. týden', weekNum: 1, sections: [
-        { title: 'Ředitel zajistí', role: 'dir', items: ['Business plán nového manažera','Změna role poradce → manažer (PPT, systémy)','Naplánovat diář – IK, call party, adaptace nováčků','IK karta manažera – nastavit a vysvětlit','Dohoda o odpovědnostech: klienti, nábory, adaptace','Zdroje pro nábor – Projekt 30'] },
-        { title: 'Manažer nastaví', role: 'mgr', items: ['Aktivity v PPT – manažerský rozvoj','Call party NÁBOR – pravidelná účast','Rotace na adaptaci nováčků','Podporující role na klientské call party','Projekt 30 – sestavit seznam kandidátů'] },
-        { title: 'Předat dokumenty', role: 'dir', items: ['IK karta pro manažera','Dohoda o odpovědnosti v IK kartě','Projekt 30 v IK kartě','Náborová prezentace NETRH'] },
+  dir:[
+    {label:'1. měsíc – základ manažerské role',open:true,weeks:[
+      {label:'1. týden',weekNum:1,sections:[
+        {title:'Ředitel zajistí',role:'dir',items:['Business plán nového manažera','Změna role poradce → manažer','Naplánovat diář – IK, call party, adaptace nováčků','IK karta manažera – nastavit a vysvětlit','Dohoda o odpovědnostech: klienti, nábory, adaptace','Zdroje pro nábor – Projekt 30']},
+        {title:'Manažer nastaví',role:'mgr',items:['Aktivity v PPT – manažerský rozvoj','Call party NÁBOR – pravidelná účast','Rotace na adaptaci nováčků','Podporující role na klientské call party','Projekt 30 – sestavit seznam kandidátů']},
+        {title:'Předat dokumenty',role:'dir',items:['IK karta pro manažera','Dohoda o odpovědnosti v IK kartě','Projekt 30 v IK kartě','Náborová prezentace NETRH']},
       ]},
-      { label: '2. týden', weekNum: 2, sections: [
-        { title: 'Ředitel kontroluje', role: 'dir', items: ['Doporučení na spolupracovníky','Nastavení leadové spolupráce','Práce s asistentkou – delegování','Kontrola Projektu 30','Kontrola klientských aktivit dle DoO','Náborová schůzka: trénink NETRH'] },
-        { title: 'Manažer plní', role: 'mgr', items: ['Projekt 30 – prvních 10 kontaktů osloven','Call party KLIENT i NÁBOR','Domluvení prvních náborových schůzek','Účast na manažerském rozvoji','Trénink náborové schůzky dle NETRH'] },
+      {label:'2. týden',weekNum:2,sections:[
+        {title:'Ředitel kontroluje',role:'dir',items:['Doporučení na spolupracovníky','Nastavení leadové spolupráce','Práce s asistentkou – delegování','Kontrola Projektu 30','Kontrola klientských aktivit dle DoO','Náborová schůzka: trénink NETRH']},
+        {title:'Manažer plní',role:'mgr',items:['Projekt 30 – prvních 10 kontaktů osloven','Call party KLIENT i NÁBOR','Domluvení prvních náborových schůzek','Účast na manažerském rozvoji','Trénink náborové schůzky dle NETRH']},
       ]},
-      { label: '3. týden', weekNum: 3, sections: [
-        { title: 'Ředitel kontroluje', role: 'dir', items: ['Kontrola doporučení na spolupracovníky','Kontrola leadových spoluprací','Kontrola klientských aktivit dle DoO','Kontrola náborových aktivit dle DoO','Situační řízení – direktiva vs. koučování','Trénink NETRH – zpětná vazba'] },
-        { title: 'Manažer plní', role: 'mgr', items: ['Výsledky prvních náborových schůzek','Vedení adaptace nováčka – co a jak','Klientské aktivity dle DoO','Projekt 30 – aktualizace stavu kontaktů'] },
+      {label:'3. týden',weekNum:3,sections:[
+        {title:'Ředitel kontroluje',role:'dir',items:['Kontrola doporučení na spolupracovníky','Kontrola leadových spoluprací','Kontrola klientských aktivit dle DoO','Kontrola náborových aktivit dle DoO','Situační řízení – direktiva vs. koučování','Trénink NETRH – zpětná vazba']},
+        {title:'Manažer plní',role:'mgr',items:['Výsledky prvních náborových schůzek','Vedení adaptace nováčka – co a jak','Klientské aktivity dle DoO','Projekt 30 – aktualizace stavu kontaktů']},
       ]},
-      { label: '4. týden', weekNum: 4, sections: [
-        { title: 'Ředitel kontroluje', role: 'dir', items: ['Vyhodnocení 1. měsíce – klienti a nábory vs. DoO','Nastavení cílů na 2. měsíc','Zpětná vazba k vedení nováčka','Koučování vs. direktiva – kdy přepnout','Leadová spolupráce – stav a výsledky'] },
-        { title: 'Manažer plní', role: 'mgr', items: ['Shrnutí 1. měsíce – vlastní vyhodnocení','Aktualizace IK karty a kompetenčního modelu','Plán náboru na 2. měsíc – konkrétní jména','Plán klientských aktivit na 2. měsíc'] },
+      {label:'4. týden',weekNum:4,sections:[
+        {title:'Ředitel kontroluje',role:'dir',items:['Vyhodnocení 1. měsíce – klienti a nábory vs. DoO','Nastavení cílů na 2. měsíc','Zpětná vazba k vedení nováčka','Koučování vs. direktiva – kdy přepnout','Leadová spolupráce – stav a výsledky']},
+        {title:'Manažer plní',role:'mgr',items:['Shrnutí 1. měsíce – vlastní vyhodnocení','Aktualizace IK karty a kompetenčního modelu','Plán náboru na 2. měsíc – konkrétní jména','Plán klientských aktivit na 2. měsíc']},
       ]},
     ]},
-    { label: '2. a 3. měsíc – rozvoj týmu', open: false, weeks: [
-      { label: '2. měsíc', weekNum: 5, sections: [
-        { title: 'Ředitel řeší', role: 'dir', items: ['Pravidelné IK 1× týdně – hloubková kontrola','Zpětná vazba k vedení nováčků v týmu','Nábor: kde jsou výsledky Projektu 30?','Leadová spolupráce – nastavení procesu','Kariérní rozhovor: chce manažer růst dál?'] },
-        { title: 'Manažer plní', role: 'mgr', items: ['Min. 1 podepsaný nováček v Projektu 30','Pravidelné IK se svými poradci','Klientské aktivity dle DoO – udržení produkce','Příprava tématu na manažerský rozvoj'] },
+    {label:'2. a 3. měsíc – rozvoj týmu',open:false,weeks:[
+      {label:'2. měsíc',weekNum:5,sections:[
+        {title:'Ředitel řeší',role:'dir',items:['Pravidelné IK 1× týdně – hloubková kontrola','Zpětná vazba k vedení nováčků v týmu','Nábor: kde jsou výsledky Projektu 30?','Leadová spolupráce – nastavení procesu','Kariérní rozhovor: chce manažer růst dál?']},
+        {title:'Manažer plní',role:'mgr',items:['Min. 1 podepsaný nováček v Projektu 30','Pravidelné IK se svými poradci','Klientské aktivity dle DoO','Příprava tématu na manažerský rozvoj']},
       ]},
-      { label: '3. měsíc – atestace', weekNum: 9, sections: [
-        { title: 'Ředitel řeší', role: 'dir', items: ['Atestace – splnil manažer podmínky?','Povýšení nebo plán na zlepšení','Nastavení dlouhodobého mentoringu','Předání větší odpovědnosti'] },
-        { title: 'Manažer plní', role: 'mgr', items: ['Splnit atestační podmínky (nábory + klienti)','Vést tým samostatně','Vyhodnotit Projekt 30 – kolik podpisů?','Navrhnout vlastní plán rozvoje na Q2'] },
+      {label:'3. měsíc – atestace',weekNum:9,sections:[
+        {title:'Ředitel řeší',role:'dir',items:['Atestace – splnil manažer podmínky?','Povýšení nebo plán na zlepšení','Nastavení dlouhodobého mentoringu','Předání větší odpovědnosti']},
+        {title:'Manažer plní',role:'mgr',items:['Splnit atestační podmínky (nábory + klienti)','Vést tým samostatně','Vyhodnotit Projekt 30 – kolik podpisů?','Navrhnout vlastní plán rozvoje na Q2']},
       ]},
     ]},
   ]
 };
 
-// ─── STATE ───────────────────────────────────────────────────────────────────
-let mode = 'mng';
-let people = [];
-let activePersonId = null;
-let activeTab = 'checklist';
-
-function storageKey() { return 'ik_karta_v1'; }
-function load() {
-  try { const d = localStorage.getItem(storageKey()); if (d) { const p = JSON.parse(d); people = p.people || []; mode = p.mode || 'mng'; activePersonId = p.activePersonId || null; } } catch(e) {}
-}
-function save() {
-  try { localStorage.setItem(storageKey(), JSON.stringify({ people, mode, activePersonId })); } catch(e) {}
-}
-function getPersonState(pid) {
-  const p = people.find(x => x.id === pid); return p ? (p.state || {}) : {};
-}
-function setPersonState(pid, key, val) {
-  const p = people.find(x => x.id === pid); if (!p) return;
-  if (!p.state) p.state = {};
-  if (val) p.state[key] = 1; else delete p.state[key];
-  save(); renderAll();
-}
-function getPersonIK(pid) {
-  const p = people.find(x => x.id === pid); return p ? (p.ik || []) : [];
+// Deep clone template into person's custom checklist
+function cloneTemplate(m) {
+  return JSON.parse(JSON.stringify(TEMPLATE[m]));
 }
 
-// ─── WEEK CALCULATION ────────────────────────────────────────────────────────
-function getCurrentWeekNum(startDateStr) {
-  if (!startDateStr) return null;
-  const start = new Date(startDateStr);
-  const now = new Date();
-  const diff = Math.floor((now - start) / (1000 * 60 * 60 * 24 * 7));
-  return diff + 1;
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let mode='mng', people=[], activePersonId=null, activeTab='checklist';
+// editMode: set of sectionKeys currently in edit mode
+const editMode = new Set();
+
+function storageKey(){return 'ik_karta_v2'}
+function load(){try{const d=localStorage.getItem(storageKey());if(d){const p=JSON.parse(d);people=p.people||[];mode=p.mode||'mng';activePersonId=p.activePersonId||null}}catch(e){}}
+function save(){try{localStorage.setItem(storageKey(),JSON.stringify({people,mode,activePersonId}))}catch(e){}}
+
+function getPerson(){return people.find(p=>p.id===activePersonId)||null}
+function getChecklist(person){
+  if(!person.checklist) person.checklist=cloneTemplate(person.mode||mode);
+  return person.checklist;
 }
 
-// ─── INITIALS ────────────────────────────────────────────────────────────────
-function initials(name) {
-  if (!name) return '?';
-  const parts = name.trim().split(' ');
-  if (parts.length >= 2) return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
-  return name.slice(0,2).toUpperCase();
+// ─── HELPERS ──────────────────────────────────────────────────────────────────
+function initials(name){if(!name)return'?';const p=name.trim().split(' ');return p.length>=2?(p[0][0]+p[p.length-1][0]).toUpperCase():name.slice(0,2).toUpperCase()}
+function getCurrentWeekNum(d){if(!d)return null;const diff=Math.floor((new Date()-new Date(d))/(1000*60*60*24*7));return diff+1}
+function formatDate(d){if(!d)return'–';try{return new Date(d).toLocaleDateString('cs-CZ')}catch{return d}}
+function sectionKey(pi,wi,si){return`s_${pi}_${wi}_${si}`}
+function itemKey(pi,wi,si,ii){return`${pi}_${wi}_${si}_${ii}`}
+
+// ─── PROGRESS ─────────────────────────────────────────────────────────────────
+function countProgress(person){
+  const cl=getChecklist(person);
+  const st=person.state||{};
+  let total=0,done=0,waiting=0;
+  cl.forEach((ph,pi)=>ph.weeks.forEach((wk,wi)=>wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{
+    total++;
+    const v=st[itemKey(pi,wi,si,ii)];
+    if(v==='done')done++;
+    else if(v==='waiting')waiting++;
+  }))));
+  return{total,done,waiting};
 }
 
-// ─── RENDER SIDEBAR ──────────────────────────────────────────────────────────
-function renderSidebar() {
-  document.getElementById('mode-mgr').className = 'mode-tab ' + (mode === 'mng' ? 'active-mgr' : '');
-  document.getElementById('mode-dir').className = 'mode-tab ' + (mode === 'dir' ? 'active-dir' : '');
-  document.getElementById('people-label').textContent = mode === 'mng' ? 'Poradci v adaptaci' : 'Manažeři v adaptaci';
-
-  const list = document.getElementById('person-list');
-  const filtered = people.filter(p => p.mode === mode);
-  if (filtered.length === 0) {
-    list.innerHTML = '<div style="padding:8px 10px;font-size:12px;color:var(--text3)">Žádné osoby</div>';
-  } else {
-    list.innerHTML = filtered.map(p => {
-      const wn = getCurrentWeekNum(p.startDate);
-      const wLabel = wn ? (wn > 12 ? '12+ týd.' : wn + '. týd.') : '–';
-      const avClass = mode === 'mng' ? 'pav-blue' : 'pav-purple';
-      const isActive = p.id === activePersonId;
-      return `<div class="person-item${isActive?' active':''}" onclick="selectPerson('${p.id}')">
-        <div class="pav ${avClass}">${initials(p.name)}</div>
-        <div class="person-info">
-          <div class="person-name-s">${p.name}</div>
-          <div class="person-pos">${p.position || '–'}</div>
-        </div>
-        <span class="person-week-badge">${wLabel}</span>
-      </div>`;
-    }).join('');
-  }
+// ─── SIDEBAR ──────────────────────────────────────────────────────────────────
+function renderSidebar(){
+  document.getElementById('mode-mgr').className='mode-tab '+(mode==='mng'?'active-mgr':'');
+  document.getElementById('mode-dir').className='mode-tab '+(mode==='dir'?'active-dir':'');
+  document.getElementById('people-label').textContent=mode==='mng'?'Poradci v adaptaci':'Manažeři v adaptaci';
+  document.getElementById('nav-checklist').className='nav-item'+(activeTab==='checklist'?' active':'');
+  document.getElementById('nav-ik').className='nav-item'+(activeTab==='ik'?' active':'');
+  const list=document.getElementById('person-list');
+  const filtered=people.filter(p=>p.mode===mode);
+  if(!filtered.length){list.innerHTML='<div style="padding:8px 10px;font-size:12px;color:var(--text3)">Žádné osoby</div>';return}
+  list.innerHTML=filtered.map(p=>{
+    const wn=getCurrentWeekNum(p.startDate);
+    const wl=wn?(wn>12?'12+ týd.':wn+'. týd.'):'–';
+    const av=mode==='mng'?'pav-blue':'pav-purple';
+    return`<div class="person-item${p.id===activePersonId?' active':''}" onclick="selectPerson('${p.id}')">
+      <div class="pav ${av}">${initials(p.name)}</div>
+      <div class="person-info"><div class="person-name-s">${p.name}</div><div class="person-pos">${p.position||'–'}</div></div>
+      <span class="person-week-badge">${wl}</span>
+    </div>`;
+  }).join('');
 }
 
-// ─── RENDER HEADER ───────────────────────────────────────────────────────────
-function renderHeader(person) {
-  if (!person) {
-    document.getElementById('mh-av').textContent = '--';
-    document.getElementById('mh-av').className = 'mh-av mh-av-blue';
-    document.getElementById('mh-name').textContent = 'Vyberte osobu';
-    document.getElementById('mh-meta').innerHTML = '–';
-    document.getElementById('mh-actions').innerHTML = '';
-    document.getElementById('prog-fill').style.width = '0%';
-    document.getElementById('prog-pct').textContent = '0 %';
+// ─── HEADER ───────────────────────────────────────────────────────────────────
+function renderHeader(person){
+  if(!person){
+    document.getElementById('mh-av').textContent='--';
+    document.getElementById('mh-name').textContent='Vyberte osobu';
+    document.getElementById('mh-meta').innerHTML='–';
+    document.getElementById('mh-actions').innerHTML='';
+    document.getElementById('prog-fill').style.width='0%';
+    document.getElementById('prog-pct').textContent='0 %';
     return;
   }
-  const wn = getCurrentWeekNum(person.startDate);
-  const avClass = mode === 'mng' ? 'mh-av-blue' : 'mh-av-purple';
-  document.getElementById('mh-av').textContent = initials(person.name);
-  document.getElementById('mh-av').className = 'mh-av ' + avClass;
-  document.getElementById('mh-name').textContent = person.name;
-  const started = person.startDate ? new Date(person.startDate).toLocaleDateString('cs-CZ') : '–';
-  const weekStr = wn ? `<span>týden ${wn}</span>` : '';
-  document.getElementById('mh-meta').innerHTML = `${person.position || '–'} · nastoupil ${started} ${weekStr}`;
-
-  const btnCol = mode === 'mng' ? 'btn-primary' : 'btn-purple';
-  const emailBtn = person.email ? `<button class="btn" onclick="sendEmail('${person.id}')">
-    <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 4l6 4 6-4" stroke="currentColor" stroke-width="1.2"/></svg>
-    Poslat úkoly e-mailem</button>` : '';
-  document.getElementById('mh-actions').innerHTML = `
-    ${emailBtn}
-    <button class="btn ${btnCol}" onclick="openIkModal()">+ Nová IK</button>
-    <button class="btn" onclick="deletePerson('${person.id}')" style="color:var(--red)">Odebrat</button>`;
-
-  // progress
-  const { total, checked } = countProgress(person);
-  const pct = total > 0 ? Math.round(checked / total * 100) : 0;
-  document.getElementById('prog-fill').style.width = pct + '%';
-  document.getElementById('prog-pct').textContent = pct + ' %';
+  const wn=getCurrentWeekNum(person.startDate);
+  document.getElementById('mh-av').textContent=initials(person.name);
+  document.getElementById('mh-av').className='mh-av '+(mode==='mng'?'mh-av-blue':'mh-av-purple');
+  document.getElementById('mh-name').textContent=person.name;
+  const started=person.startDate?new Date(person.startDate).toLocaleDateString('cs-CZ'):'–';
+  document.getElementById('mh-meta').innerHTML=`${person.position||'–'} · nastoupil ${started}${wn?` <span>týden ${wn}</span>`:''}`;
+  const bc=mode==='mng'?'btn-primary':'btn-purple';
+  const emailBtn=person.email?`<button class="btn" onclick="sendEmail('${person.id}')"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 4l6 4 6-4" stroke="currentColor" stroke-width="1.2"/></svg>Poslat úkoly e-mailem</button>`:'';
+  document.getElementById('mh-actions').innerHTML=`${emailBtn}<button class="btn ${bc}" onclick="openIkModal()">+ Nová IK</button><button class="btn" onclick="deletePerson('${person.id}')" style="color:var(--red)">Odebrat</button>`;
+  const {total,done}=countProgress(person);
+  const pct=total>0?Math.round(done/total*100):0;
+  document.getElementById('prog-fill').style.width=pct+'%';
+  document.getElementById('prog-pct').textContent=pct+' %';
 }
 
-function countProgress(person) {
-  const phases = CHECKLIST[person.mode || mode];
-  const state = person.state || {};
-  let total = 0, checked = 0;
-  phases.forEach((ph, pi) => ph.weeks.forEach((wk, wi) => wk.sections.forEach((sec, si) => sec.items.forEach((_, ii) => {
-    total++;
-    if (state[`${pi}_${wi}_${si}_${ii}`]) checked++;
-  }))));
-  return { total, checked };
-}
+// ─── CHECKLIST RENDER ─────────────────────────────────────────────────────────
+function renderChecklist(person){
+  const cl=getChecklist(person);
+  const st=person.state||{};
+  const wn=getCurrentWeekNum(person.startDate);
+  const {total,done,waiting}=countProgress(person);
+  const ik=(person.ik||[]).length;
 
-// ─── RENDER CHECKLIST ────────────────────────────────────────────────────────
-function renderChecklist(person) {
-  const phases = CHECKLIST[person.mode || mode];
-  const state = person.state || {};
-  const wn = getCurrentWeekNum(person.startDate);
-  let html = '';
-
-  // stats row
-  const { total, checked } = countProgress(person);
-  const ik = getPersonIK(person.id);
-  html += `<div class="stats-row">
-    <div class="stat-card"><div class="stat-card-label">Splněno</div><div class="stat-card-val">${checked}</div><div class="stat-card-sub">z ${total} položek</div></div>
-    <div class="stat-card"><div class="stat-card-label">Aktuální týden</div><div class="stat-card-val">${wn || '–'}</div><div class="stat-card-sub">od nástupu</div></div>
-    <div class="stat-card"><div class="stat-card-label">IK záznamy</div><div class="stat-card-val">${ik.length}</div><div class="stat-card-sub">schůzek</div></div>
-    <div class="stat-card"><div class="stat-card-label">Postup</div><div class="stat-card-val">${total>0?Math.round(checked/total*100):0} %</div><div class="stat-card-sub">celkově</div></div>
+  let html=`<div class="legend">
+    <div class="legend-item"><div class="legend-cb lcb-none"></div>Nezahájeno</div>
+    <div class="legend-item"><div class="legend-cb lcb-wait" style="display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--amber);font-weight:600">~</div>Čekám na protistranu</div>
+    <div class="legend-item"><div class="legend-cb lcb-done"></div>Hotovo</div>
+    <div class="legend-item" style="margin-left:auto;font-size:11px;color:var(--text3)">Kliknutím na položku cyklujete stav</div>
   </div>`;
 
-  phases.forEach((phase, pi) => {
-    let phTotal = 0, phChecked = 0;
-    phase.weeks.forEach((wk, wi) => wk.sections.forEach((sec, si) => sec.items.forEach((_, ii) => {
-      phTotal++; if (state[`${pi}_${wi}_${si}_${ii}`]) phChecked++;
-    })));
-    const phPct = phTotal > 0 ? Math.round(phChecked / phTotal * 100) : 0;
-    const collapsed = !phase.open ? ' collapsed' : '';
+  html+=`<div class="stats-row">
+    <div class="stat-card"><div class="stat-card-label">Hotovo</div><div class="stat-card-val">${done}</div><div class="stat-card-sub">z ${total} položek</div></div>
+    <div class="stat-card"><div class="stat-card-label">Čekám na protistranu</div><div class="stat-card-val" style="color:var(--amber)">${waiting}</div><div class="stat-card-sub">položek čeká</div></div>
+    <div class="stat-card"><div class="stat-card-label">IK záznamy</div><div class="stat-card-val">${ik}</div><div class="stat-card-sub">schůzek</div></div>
+    <div class="stat-card"><div class="stat-card-label">Postup</div><div class="stat-card-val">${total>0?Math.round(done/total*100):0} %</div><div class="stat-card-sub">dokončeno</div></div>
+  </div>`;
 
-    html += `<div class="phase-block${collapsed}" id="phase-${pi}">
+  cl.forEach((phase,pi)=>{
+    let phTotal=0,phDone=0;
+    phase.weeks.forEach((wk,wi)=>wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{phTotal++;if(st[itemKey(pi,wi,si,ii)]==='done')phDone++;})));
+    const phPct=phTotal>0?Math.round(phDone/phTotal*100):0;
+    const collapsed=phase.open?'':'collapsed';
+    html+=`<div class="phase-block ${collapsed}" id="phase-${pi}">
       <div class="phase-hdr" onclick="togglePhase(${pi})">
         <span class="phase-title-txt">${phase.label}</span>
-        <span class="phase-meta">
-          <span class="phase-count">${phChecked}/${phTotal}</span>
-          <span class="phase-pct">${phPct} %</span>
-          <span class="chevron">▾</span>
-        </span>
+        <span class="phase-meta"><span class="phase-count">${phDone}/${phTotal}</span><span class="phase-pct">${phPct}%</span><span class="chevron">▾</span></span>
       </div>
       <div class="phase-body">`;
 
-    phase.weeks.forEach((wk, wi) => {
-      const isCurrent = wk.weekNum && wn && wn === wk.weekNum;
-      let wkTotal = 0, wkChecked = 0;
-      wk.sections.forEach((sec, si) => sec.items.forEach((_, ii) => {
-        wkTotal++; if (state[`${pi}_${wi}_${si}_${ii}`]) wkChecked++;
-      }));
-      const wkPct = wkTotal > 0 ? Math.round(wkChecked / wkTotal * 100) : 0;
-
-      html += `<div class="week-block${isCurrent?' current-week':''}">
-        <div class="week-hdr">
-          <span class="week-label-txt">${wk.label}</span>
-          ${isCurrent ? '<span class="current-badge">Aktuální týden</span>' : ''}
-        </div>
+    phase.weeks.forEach((wk,wi)=>{
+      const isCurrent=wk.weekNum&&wn&&wn===wk.weekNum;
+      let wkTotal=0,wkDone=0;
+      wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{wkTotal++;if(st[itemKey(pi,wi,si,ii)]==='done')wkDone++;}));
+      const wkPct=wkTotal>0?Math.round(wkDone/wkTotal*100):0;
+      html+=`<div class="week-block${isCurrent?' current-week':''}">
+        <div class="week-hdr"><span class="week-label-txt">${wk.label}</span>${isCurrent?'<span class="current-badge">Aktuální týden</span>':''}</div>
         <div class="week-prog"><div class="week-prog-fill" style="width:${wkPct}%"></div></div>`;
 
-      wk.sections.forEach((sec, si) => {
-        const roleClass = { mgr: 'rb-mgr', nov: 'rb-nov', dir: 'rb-dir' }[sec.role] || 'rb-mgr';
-        const roleLabel = { mgr: 'manažer', nov: 'nováček', dir: 'ředitel' }[sec.role] || '';
-        html += `<div class="section-hdr"><span class="section-lbl">${sec.title}</span><span class="role-badge ${roleClass}">${roleLabel}</span></div>`;
-        sec.items.forEach((item, ii) => {
-          const key = `${pi}_${wi}_${si}_${ii}`;
-          const isChecked = !!state[key];
-          html += `<div class="check-item${isChecked?' done':''}" onclick="toggleItem('${person.id}','${key}')">
-            <div class="cb${isChecked?' checked':''}"></div>
-            <span class="item-txt">${item}</span>
+      wk.sections.forEach((sec,si)=>{
+        const sk=sectionKey(pi,wi,si);
+        const inEdit=editMode.has(sk);
+        const roleClass={mgr:'rb-mgr',nov:'rb-nov',dir:'rb-dir'}[sec.role]||'rb-mgr';
+        const roleLabel={mgr:'manažer',nov:'nováček',dir:'ředitel'}[sec.role]||'';
+        html+=`<div class="section-hdr">
+          <span class="section-lbl">${sec.title}</span>
+          <span class="role-badge ${roleClass}">${roleLabel}</span>
+          <button class="edit-section-btn${inEdit?' active':''}" onclick="toggleEditSection('${person.id}','${sk}',${pi},${wi},${si})">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
+            ${inEdit?'Hotovo':'Upravit'}
+          </button>
+        </div>`;
+
+        if(inEdit){
+          // Edit mode: show inputs
+          sec.items.forEach((item,ii)=>{
+            const k=itemKey(pi,wi,si,ii);
+            html+=`<div class="edit-item-row">
+              <span class="drag-handle">⠿</span>
+              <input class="edit-item-input" value="${escHtml(item)}" 
+                onchange="updateItemText('${person.id}',${pi},${wi},${si},${ii},this.value)"
+                onblur="updateItemText('${person.id}',${pi},${wi},${si},${ii},this.value)">
+              <button class="del-item-btn" onclick="deleteItem('${person.id}',${pi},${wi},${si},${ii})" title="Smazat položku">×</button>
+            </div>`;
+          });
+          html+=`<div class="add-item-row">
+            <input class="add-item-input" id="new-item-${sk}" placeholder="+ Nová položka..." 
+              onkeydown="if(event.key==='Enter')addItem('${person.id}',${pi},${wi},${si})">
+            <button class="add-item-btn-sm" onclick="addItem('${person.id}',${pi},${wi},${si})">Přidat</button>
           </div>`;
-        });
+        } else {
+          // Normal view mode
+          sec.items.forEach((item,ii)=>{
+            const k=itemKey(pi,wi,si,ii);
+            const v=st[k]||'none';
+            html+=`<div class="check-item state-${v}" onclick="cycleState('${person.id}','${k}')">
+              <div class="cb3 ${v==='done'?'done':v==='waiting'?'waiting':''}"></div>
+              <span class="item-txt">${escHtml(item)}</span>
+              ${v==='waiting'?'<span class="waiting-label">čekám</span>':''}
+            </div>`;
+          });
+        }
       });
-      html += `</div>`;
+      html+=`</div>`;
     });
-    html += `</div></div>`;
+    html+=`</div></div>`;
   });
 
-  // action buttons
-  html += `<div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
-    <button class="btn" onclick="checkAll('${person.id}')">Označit vše jako splněno</button>
-    <button class="btn" onclick="uncheckAll('${person.id}')">Resetovat checklist</button>
+  html+=`<div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
+    <button class="btn" onclick="checkAll('${person.id}')">Označit vše jako hotovo</button>
+    <button class="btn" onclick="uncheckAll('${person.id}')">Resetovat stavy</button>
+    <button class="btn" onclick="resetChecklist('${person.id}')">Obnovit výchozí checklist</button>
   </div>`;
-
   return html;
 }
 
-// ─── RENDER IK ───────────────────────────────────────────────────────────────
-function renderIK(person) {
-  const ik = getPersonIK(person.id);
-  let html = `<div style="display:flex;justify-content:flex-end;margin-bottom:16px">
-    <button class="btn btn-primary" onclick="openIkModal()">+ Nová IK schůzka</button>
-  </div>`;
+function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 
-  if (ik.length === 0) {
-    html += `<div class="ik-empty">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18M8 14h4M8 17h6"/></svg>
-      <div style="margin-top:8px">Zatím žádné záznamy z IK schůzek</div>
-    </div>`;
+// ─── IK RENDER ────────────────────────────────────────────────────────────────
+function renderIK(person){
+  const ik=person.ik||[];
+  let html=`<div style="display:flex;justify-content:flex-end;margin-bottom:16px">
+    <button class="btn btn-primary" onclick="openIkModal()">+ Nová IK schůzka</button></div>`;
+  if(!ik.length){
+    html+=`<div class="ik-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18M8 14h4M8 17h6"/></svg><div style="margin-top:8px">Zatím žádné záznamy z IK schůzek</div></div>`;
   } else {
-    [...ik].reverse().forEach((rec, idx) => {
-      const rid = ik.length - 1 - idx;
-      const tasksNov = (rec.tasksNov || '').split('\n').filter(Boolean);
-      const tasksMgr = (rec.tasksMgr || '').split('\n').filter(Boolean);
-      html += `<div class="ik-record">
-        <div class="ik-record-hdr">
-          <span class="ik-date">IK · ${formatDate(rec.date)}</span>
-          <button class="btn" style="font-size:11px;padding:4px 10px;color:var(--red)" onclick="deleteIkRecord('${person.id}',${rid})">Smazat</button>
-        </div>
+    [...ik].reverse().forEach((rec,ri)=>{
+      const idx=ik.length-1-ri;
+      const tNov=(rec.tasksNov||'').split('\n').filter(Boolean);
+      const tMgr=(rec.tasksMgr||'').split('\n').filter(Boolean);
+      html+=`<div class="ik-record">
+        <div class="ik-record-hdr"><span class="ik-date">IK · ${formatDate(rec.date)}</span>
+          <button class="btn" style="font-size:11px;padding:4px 10px;color:var(--red)" onclick="deleteIkRecord('${person.id}',${idx})">Smazat</button></div>
         <div class="ik-record-body">`;
-      if (rec.content) {
-        html += `<div class="ik-field"><div class="ik-label">Obsah schůzky</div><div class="ik-text">${rec.content}</div></div>`;
-      }
-      if (tasksNov.length) {
-        html += `<div class="ik-field"><div class="ik-label">Úkoly pro nováčka</div><ul class="ik-tasks">${tasksNov.map(t=>`<li class="ik-task-item">${t}</li>`).join('')}</ul></div>`;
-      }
-      if (tasksMgr.length) {
-        html += `<div class="ik-field"><div class="ik-label">Úkoly pro manažera</div><ul class="ik-tasks">${tasksMgr.map(t=>`<li class="ik-task-item">${t}</li>`).join('')}</ul></div>`;
-      }
-      html += `</div>
-        <div class="ik-footer">
-          ${person.email ? `<button class="btn" onclick="sendEmailRecord('${person.id}',${rid})">Poslat e-mailem</button>` : ''}
-        </div>
-      </div>`;
+      if(rec.content) html+=`<div class="ik-field"><div class="ik-label">Obsah schůzky</div><div class="ik-text">${rec.content}</div></div>`;
+      if(tNov.length) html+=`<div class="ik-field"><div class="ik-label">Úkoly pro nováčka</div><ul class="ik-tasks">${tNov.map(t=>`<li class="ik-task-item">${escHtml(t)}</li>`).join('')}</ul></div>`;
+      if(tMgr.length) html+=`<div class="ik-field"><div class="ik-label">Úkoly pro manažera</div><ul class="ik-tasks">${tMgr.map(t=>`<li class="ik-task-item">${escHtml(t)}</li>`).join('')}</ul></div>`;
+      html+=`</div><div class="ik-footer">${person.email?`<button class="btn" onclick="sendEmailRecord('${person.id}',${idx})">Poslat e-mailem</button>`:''}</div></div>`;
     });
   }
   return html;
 }
 
-function formatDate(d) {
-  if (!d) return '–';
-  try { return new Date(d).toLocaleDateString('cs-CZ'); } catch { return d; }
-}
-
-// ─── MAIN RENDER ─────────────────────────────────────────────────────────────
-function renderAll() {
+// ─── MAIN RENDER ──────────────────────────────────────────────────────────────
+function renderAll(){
   renderSidebar();
-  const person = people.find(p => p.id === activePersonId) || null;
+  const person=getPerson();
   renderHeader(person);
-
-  const content = document.getElementById('main-content');
-  document.getElementById('tab-checklist').className = 'tab-btn' + (activeTab === 'checklist' ? ' active' : '');
-  document.getElementById('tab-ik').className = 'tab-btn' + (activeTab === 'ik' ? ' active' : '');
-
-  if (!person) {
-    content.innerHTML = `<div class="empty-state">
-      <div class="empty-state-title">Žádná osoba vybrána</div>
-      <p style="font-size:13px;margin-top:6px;color:var(--text3)">Přidejte osobu v levém panelu nebo vyberte existující.</p>
-      <button class="btn btn-primary" style="margin-top:16px" onclick="openAddModal()">+ Přidat osobu</button>
-    </div>`;
+  document.getElementById('tab-checklist').className='tab-btn'+(activeTab==='checklist'?' active':'');
+  document.getElementById('tab-ik').className='tab-btn'+(activeTab==='ik'?' active':'');
+  const content=document.getElementById('main-content');
+  if(!person){
+    content.innerHTML=`<div class="empty-state"><div class="empty-state-title">Žádná osoba vybrána</div><p style="font-size:13px;margin-top:6px">Přidejte osobu v levém panelu.</p><button class="btn btn-primary" style="margin-top:16px" onclick="openAddModal()">+ Přidat osobu</button></div>`;
     return;
   }
-
-  content.innerHTML = activeTab === 'checklist' ? renderChecklist(person) : renderIK(person);
+  content.innerHTML=activeTab==='checklist'?renderChecklist(person):renderIK(person);
 }
 
-// ─── ACTIONS ─────────────────────────────────────────────────────────────────
-function setMode(m) {
-  mode = m;
-  activePersonId = null;
-  save(); renderAll();
-}
-function selectPerson(id) { activePersonId = id; save(); renderAll(); }
-function setTab(t) { activeTab = t; renderAll(); }
-function togglePhase(pi) {
-  const el = document.getElementById('phase-' + pi);
-  if (el) el.classList.toggle('collapsed');
-}
-function toggleItem(pid, key) {
-  const p = people.find(x => x.id === pid); if (!p) return;
-  if (!p.state) p.state = {};
-  if (p.state[key]) delete p.state[key]; else p.state[key] = 1;
-  save(); renderAll();
-}
-function checkAll(pid) {
-  const p = people.find(x => x.id === pid); if (!p) return;
-  const phases = CHECKLIST[p.mode || mode];
-  if (!p.state) p.state = {};
-  phases.forEach((ph, pi) => ph.weeks.forEach((wk, wi) => wk.sections.forEach((sec, si) => sec.items.forEach((_, ii) => { p.state[`${pi}_${wi}_${si}_${ii}`] = 1; }))));
-  save(); renderAll(); toast('Vše označeno jako splněno');
-}
-function uncheckAll(pid) {
-  const p = people.find(x => x.id === pid); if (!p) return;
-  p.state = {}; save(); renderAll(); toast('Checklist resetován');
-}
-function deletePerson(pid) {
-  if (!confirm('Opravdu odebrat tuto osobu a všechny záznamy?')) return;
-  people = people.filter(p => p.id !== pid);
-  activePersonId = null; save(); renderAll();
-}
-function deleteIkRecord(pid, idx) {
-  const p = people.find(x => x.id === pid); if (!p) return;
-  p.ik = p.ik || []; p.ik.splice(idx, 1); save(); renderAll();
+// ─── ACTIONS ──────────────────────────────────────────────────────────────────
+function setMode(m){mode=m;activePersonId=null;editMode.clear();save();renderAll()}
+function selectPerson(id){activePersonId=id;editMode.clear();save();renderAll()}
+function setTab(t){activeTab=t;renderAll()}
+function togglePhase(pi){const el=document.getElementById('phase-'+pi);if(el)el.classList.toggle('collapsed')}
+
+// 3-state cycle: none → waiting → done → none
+function cycleState(pid,key){
+  const p=people.find(x=>x.id===pid);if(!p)return;
+  if(!p.state)p.state={};
+  const cur=p.state[key]||'none';
+  const next={none:'waiting',waiting:'done',done:'none'}[cur];
+  if(next==='none')delete p.state[key];else p.state[key]=next;
+  save();renderAll();
 }
 
-// ─── ADD PERSON MODAL ────────────────────────────────────────────────────────
-function openAddModal() {
-  document.getElementById('add-modal-sub').textContent = mode === 'mng' ? 'Nový poradce – manažer bude sledovat adaptaci' : 'Nový manažer – ředitel bude sledovat adaptaci';
-  document.getElementById('inp-name').value = '';
-  document.getElementById('inp-pos').value = '';
-  document.getElementById('inp-date').value = new Date().toISOString().split('T')[0];
-  document.getElementById('inp-email').value = '';
+function toggleEditSection(pid,sk,pi,wi,si){
+  if(editMode.has(sk))editMode.delete(sk);else editMode.add(sk);
+  renderAll();
+}
+
+function updateItemText(pid,pi,wi,si,ii,val){
+  const p=people.find(x=>x.id===pid);if(!p)return;
+  const cl=getChecklist(p);
+  if(cl[pi]&&cl[pi].weeks[wi]&&cl[pi].weeks[wi].sections[si]){
+    cl[pi].weeks[wi].sections[si].items[ii]=val;save();
+  }
+}
+
+function deleteItem(pid,pi,wi,si,ii){
+  const p=people.find(x=>x.id===pid);if(!p)return;
+  const cl=getChecklist(p);
+  cl[pi].weeks[wi].sections[si].items.splice(ii,1);
+  // clean state keys for this section (reindex)
+  if(!p.state)p.state={};
+  const newState={};
+  Object.entries(p.state).forEach(([k,v])=>{
+    const parts=k.split('_');
+    if(parts.length===4){
+      const [ppi,wwi,ssi,iii]=parts.map(Number);
+      if(ppi===pi&&wwi===wi&&ssi===si){
+        if(iii<ii)newState[k]=v;
+        else if(iii>ii)newState[`${ppi}_${wwi}_${ssi}_${iii-1}`]=v;
+      }else newState[k]=v;
+    }else newState[k]=v;
+  });
+  p.state=newState;save();renderAll();
+}
+
+function addItem(pid,pi,wi,si){
+  const sk=sectionKey(pi,wi,si);
+  const inp=document.getElementById('new-item-'+sk);
+  if(!inp)return;
+  const val=inp.value.trim();if(!val)return;
+  const p=people.find(x=>x.id===pid);if(!p)return;
+  const cl=getChecklist(p);
+  cl[pi].weeks[wi].sections[si].items.push(val);
+  save();renderAll();
+  // re-focus
+  setTimeout(()=>{const ni=document.getElementById('new-item-'+sk);if(ni)ni.focus();},50);
+}
+
+function checkAll(pid){
+  const p=people.find(x=>x.id===pid);if(!p)return;
+  const cl=getChecklist(p);if(!p.state)p.state={};
+  cl.forEach((ph,pi)=>ph.weeks.forEach((wk,wi)=>wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{p.state[itemKey(pi,wi,si,ii)]='done';}))));
+  save();renderAll();toast('Vše označeno jako hotovo');
+}
+function uncheckAll(pid){
+  const p=people.find(x=>x.id===pid);if(!p)return;
+  p.state={};save();renderAll();toast('Stavy resetovány');
+}
+function resetChecklist(pid){
+  if(!confirm('Obnovit výchozí šablonu checklistu? Vaše vlastní úpravy budou ztraceny.'))return;
+  const p=people.find(x=>x.id===pid);if(!p)return;
+  p.checklist=cloneTemplate(p.mode||mode);p.state={};
+  save();renderAll();toast('Checklist obnoven na výchozí šablonu');
+}
+function deletePerson(pid){
+  if(!confirm('Opravdu odebrat tuto osobu a všechny záznamy?'))return;
+  people=people.filter(p=>p.id!==pid);activePersonId=null;save();renderAll();
+}
+function deleteIkRecord(pid,idx){
+  const p=people.find(x=>x.id===pid);if(!p)return;
+  p.ik=p.ik||[];p.ik.splice(idx,1);save();renderAll();
+}
+
+// ─── ADD PERSON ───────────────────────────────────────────────────────────────
+function openAddModal(){
+  document.getElementById('add-modal-sub').textContent=mode==='mng'?'Nový poradce – manažer sleduje adaptaci':'Nový manažer – ředitel sleduje adaptaci';
+  document.getElementById('inp-name').value='';
+  document.getElementById('inp-pos').value='';
+  document.getElementById('inp-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('inp-email').value='';
   document.getElementById('add-modal').classList.remove('hidden');
-  setTimeout(() => document.getElementById('inp-name').focus(), 50);
+  setTimeout(()=>document.getElementById('inp-name').focus(),50);
 }
-function closeAddModal() { document.getElementById('add-modal').classList.add('hidden'); }
-function savePerson() {
-  const name = document.getElementById('inp-name').value.trim();
-  const pos = document.getElementById('inp-pos').value.trim();
-  const date = document.getElementById('inp-date').value;
-  const email = document.getElementById('inp-email').value.trim();
-  if (!name) { document.getElementById('inp-name').focus(); return; }
-  const id = 'p_' + Date.now();
-  people.push({ id, name, position: pos, startDate: date, email, mode, state: {}, ik: [] });
-  activePersonId = id; save(); closeAddModal(); renderAll(); toast('Osoba přidána');
+function closeAddModal(){document.getElementById('add-modal').classList.add('hidden')}
+function savePerson(){
+  const name=document.getElementById('inp-name').value.trim();
+  if(!name){document.getElementById('inp-name').focus();return}
+  const id='p_'+Date.now();
+  people.push({id,name,position:document.getElementById('inp-pos').value.trim(),startDate:document.getElementById('inp-date').value,email:document.getElementById('inp-email').value.trim(),mode,state:{},ik:[],checklist:cloneTemplate(mode)});
+  activePersonId=id;save();closeAddModal();renderAll();toast('Osoba přidána');
 }
 
-// ─── IK MODAL ────────────────────────────────────────────────────────────────
-function openIkModal() {
-  const person = people.find(p => p.id === activePersonId);
-  if (!person) return;
-  document.getElementById('ik-modal-sub').textContent = `Záznam z IK schůzky: ${person.name}`;
-  document.getElementById('ik-date').value = new Date().toISOString().split('T')[0];
-  document.getElementById('ik-content').value = '';
-  document.getElementById('ik-tasks-nov').value = '';
-  document.getElementById('ik-tasks-mgr').value = '';
+// ─── IK ───────────────────────────────────────────────────────────────────────
+function openIkModal(){
+  const person=getPerson();if(!person)return;
+  document.getElementById('ik-modal-sub').textContent='Záznam z IK schůzky: '+person.name;
+  document.getElementById('ik-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('ik-content').value='';
+  document.getElementById('ik-tasks-nov').value='';
+  document.getElementById('ik-tasks-mgr').value='';
   document.getElementById('ik-modal').classList.remove('hidden');
 }
-function closeIkModal() { document.getElementById('ik-modal').classList.add('hidden'); }
-function saveIkRecord() {
-  const person = people.find(p => p.id === activePersonId); if (!person) return;
-  if (!person.ik) person.ik = [];
-  person.ik.push({
-    date: document.getElementById('ik-date').value,
-    content: document.getElementById('ik-content').value.trim(),
-    tasksNov: document.getElementById('ik-tasks-nov').value.trim(),
-    tasksMgr: document.getElementById('ik-tasks-mgr').value.trim(),
-  });
-  save(); closeIkModal(); activeTab = 'ik'; renderAll(); toast('IK záznam uložen');
+function closeIkModal(){document.getElementById('ik-modal').classList.add('hidden')}
+function saveIkRecord(){
+  const person=getPerson();if(!person)return;
+  if(!person.ik)person.ik=[];
+  person.ik.push({date:document.getElementById('ik-date').value,content:document.getElementById('ik-content').value.trim(),tasksNov:document.getElementById('ik-tasks-nov').value.trim(),tasksMgr:document.getElementById('ik-tasks-mgr').value.trim()});
+  save();closeIkModal();activeTab='ik';renderAll();toast('IK záznam uložen');
 }
 
-// ─── EMAIL ───────────────────────────────────────────────────────────────────
-function buildEmailBody(person) {
-  const ik = getPersonIK(person.id);
-  if (ik.length === 0) return null;
-  const last = ik[ik.length - 1];
-  const tasks = (last.tasksNov || '').split('\n').filter(Boolean);
-  if (tasks.length === 0) return null;
-  const subject = `Úkoly z IK schůzky ${formatDate(last.date)} – ${person.name}`;
-  let body = `Dobrý den ${person.name.split(' ')[0]},\n\nzasílám úkoly z naší IK schůzky dne ${formatDate(last.date)}.\n\n`;
-  if (last.content) body += `Obsah schůzky:\n${last.content}\n\n`;
-  body += `Vaše úkoly:\n${tasks.map((t, i) => `${i+1}. ${t}`).join('\n')}\n\nPokud máte dotazy, dejte vědět.\n\nS pozdravem`;
-  return { subject, body };
+// ─── EMAIL ────────────────────────────────────────────────────────────────────
+function buildEmail(person,rec){
+  const tasks=(rec.tasksNov||'').split('\n').filter(Boolean);
+  const subject=`Úkoly z IK schůzky ${formatDate(rec.date)} – ${person.name}`;
+  let body=`Dobrý den ${person.name.split(' ')[0]},\n\nzasílám úkoly z IK schůzky dne ${formatDate(rec.date)}.\n\n`;
+  if(rec.content)body+=`Obsah schůzky:\n${rec.content}\n\n`;
+  if(tasks.length)body+=`Vaše úkoly:\n${tasks.map((t,i)=>`${i+1}. ${t}`).join('\n')}\n\n`;
+  body+=`S pozdravem`;
+  return{subject,body};
 }
-function sendEmail(pid) {
-  const person = people.find(p => p.id === pid); if (!person || !person.email) return;
-  const data = buildEmailBody(person);
-  if (!data) { toast('Nejsou žádné úkoly k odeslání'); return; }
-  window.location.href = `mailto:${person.email}?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(data.body)}`;
+function sendEmail(pid){
+  const p=people.find(x=>x.id===pid);if(!p||!p.email)return;
+  const ik=p.ik||[];if(!ik.length){toast('Nejsou žádné IK záznamy k odeslání');return}
+  const{subject,body}=buildEmail(p,ik[ik.length-1]);
+  window.location.href=`mailto:${p.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
-function sendEmailRecord(pid, idx) {
-  const person = people.find(p => p.id === pid); if (!person || !person.email) return;
-  const rec = person.ik[idx]; if (!rec) return;
-  const tasks = (rec.tasksNov || '').split('\n').filter(Boolean);
-  const subject = `Úkoly z IK schůzky ${formatDate(rec.date)} – ${person.name}`;
-  let body = `Dobrý den ${person.name.split(' ')[0]},\n\nzasílám úkoly z IK schůzky dne ${formatDate(rec.date)}.\n\n`;
-  if (rec.content) body += `Obsah schůzky:\n${rec.content}\n\n`;
-  if (tasks.length) body += `Vaše úkoly:\n${tasks.map((t, i) => `${i+1}. ${t}`).join('\n')}\n\n`;
-  body += `S pozdravem`;
-  window.location.href = `mailto:${person.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+function sendEmailRecord(pid,idx){
+  const p=people.find(x=>x.id===pid);if(!p||!p.email)return;
+  const rec=(p.ik||[])[idx];if(!rec)return;
+  const{subject,body}=buildEmail(p,rec);
+  window.location.href=`mailto:${p.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-// ─── TOAST ───────────────────────────────────────────────────────────────────
+// ─── TOAST ────────────────────────────────────────────────────────────────────
 let toastTimer;
-function toast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg; el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
-}
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2500)}
 
-// ─── KEYBOARD ────────────────────────────────────────────────────────────────
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeAddModal(); closeIkModal(); }
-});
-document.getElementById('add-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeAddModal(); });
-document.getElementById('ik-modal').addEventListener('click', e => { if (e.target === e.currentTarget) closeIkModal(); });
+// ─── KEYBOARD ─────────────────────────────────────────────────────────────────
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAddModal();closeIkModal()}});
+document.getElementById('add-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeAddModal()});
+document.getElementById('ik-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeIkModal()});
 
-// ─── INIT ────────────────────────────────────────────────────────────────────
+// ─── INIT ─────────────────────────────────────────────────────────────────────
 load();
-
-// seed demo data if empty
-if (people.length === 0) {
-  const demoDate = new Date(); demoDate.setDate(demoDate.getDate() - 14);
-  people.push({ id: 'demo1', name: 'Jindřich Úspěšný', position: 'Junior konzultant', startDate: demoDate.toISOString().split('T')[0], email: 'jindrich@priklad.cz', mode: 'mng', state: {'0_0_0_0':1,'0_0_0_1':1,'0_0_0_2':1,'0_0_1_0':1,'0_0_1_1':1,'1_0_0_0':1,'1_0_0_1':1,'1_0_0_2':1,'1_0_1_0':1,'1_0_1_1':1}, ik: [{date: demoDate.toISOString().split('T')[0], content: 'Probrali jsme call skript a trénink první schůzky. Zpětná vazba pozitivní.', tasksNov: 'Nastudovat pyramidu osobních financí\nUskutečnit 5 hovorů z Projektu 100\nPřipravit se na první schůzku u reálného klienta', tasksMgr: 'Zajistit přístupy do BrokerTrust\nPoslat odkaz na vzdělávací portál 4edu'}] });
-  activePersonId = 'demo1';
-  save();
+if(!people.length){
+  const d=new Date();d.setDate(d.getDate()-14);
+  const ds=d.toISOString().split('T')[0];
+  const demo={id:'demo1',name:'Jindřich Úspěšný',position:'Junior konzultant',startDate:ds,email:'jindrich@priklad.cz',mode:'mng',ik:[{date:ds,content:'Probrali jsme call skript a trénink první schůzky.',tasksNov:'Nastudovat pyramidu osobních financí\nUskutečnit 5 hovorů z Projektu 100\nPřipravit se na první schůzku u klienta',tasksMgr:'Zajistit přístupy do BrokerTrust\nPoslat odkaz na 4edu'}]};
+  demo.checklist=cloneTemplate('mng');
+  demo.state={'1_0_0_0':'done','1_0_0_1':'done','1_0_0_2':'done','1_0_1_0':'waiting','1_0_1_1':'waiting','1_0_1_2':'done','0_0_0_0':'done','0_0_0_1':'waiting','0_0_0_2':'done','0_0_0_3':'waiting'};
+  people.push(demo);
+  activePersonId='demo1';save();
 }
-
 renderAll();
 </script>
 </body>
