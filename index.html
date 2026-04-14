@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IK Karta 2.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#f5f6f8;--bg2:#fff;--bg3:#f0f1f4;--bg4:#e4e6ec;
@@ -53,7 +53,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .pi-info{flex:1;min-width:0}
 .pi-name{font-size:12px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pi-pos{font-size:10px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pi-badge{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);background:var(--bg4);border-radius:4px;padding:1px 5px;flex-shrink:0}
+.pi-badge{font-size:10px;font-family:'Outfit',sans-serif;color:var(--text3);background:var(--bg4);border-radius:4px;padding:1px 5px;flex-shrink:0}
 .add-person-btn{margin:6px 10px;padding:7px;border-radius:var(--rs);border:1px dashed var(--border2);background:transparent;color:var(--text2);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:all .15s}
 .add-person-btn:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-dim)}
 /* MAIN */
@@ -66,7 +66,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .mhav-p{background:rgba(108,79,214,0.12);color:var(--purple);border:1px solid var(--purple-border)}
 .mh-name{font-size:16px;font-weight:600;letter-spacing:-.3px}
 .mh-meta{font-size:12px;color:var(--text2);margin-top:1px}
-.mh-meta em{color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;font-style:normal}
+.mh-meta em{color:var(--accent);font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;font-style:normal}
 .mh-actions{display:flex;gap:7px;align-items:center;flex-shrink:0}
 .btn{padding:6px 13px;border-radius:var(--rs);border:1px solid var(--border2);background:transparent;color:var(--text2);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap}
 .btn:hover{background:var(--bg3);color:var(--text)}
@@ -79,7 +79,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .prog-wrap{margin-bottom:-1px}
 .prog-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
 .prog-lbl{font-size:11px;color:var(--text2)}
-.prog-pct{font-size:11px;font-family:'DM Mono',monospace;color:var(--accent)}
+.prog-pct{font-size:12px;font-family:'Outfit',sans-serif;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums}
 .prog-track{height:3px;background:var(--bg4);border-radius:2px}
 .prog-fill{height:3px;border-radius:2px;background:var(--accent);transition:width .4s}
 .tabs-row{display:flex}
@@ -91,7 +91,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
 .stat-c{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px}
 .stat-c-lbl{font-size:11px;color:var(--text3);margin-bottom:3px}
-.stat-c-val{font-size:21px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:-1px}
+.stat-c-val{font-size:24px;font-weight:700;font-family:'Outfit',sans-serif;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
 .stat-c-sub{font-size:11px;color:var(--text3);margin-top:2px}
 /* Legend */
 .legend{display:flex;align-items:center;gap:14px;margin-bottom:12px;padding:7px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);flex-wrap:wrap}
@@ -103,8 +103,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .phase-hdr:hover{background:var(--bg3)}
 .phase-title-txt{font-size:13px;font-weight:500}
 .phase-meta{display:flex;align-items:center;gap:8px}
-.phase-count{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace}
-.phase-pct{font-size:11px;font-family:'DM Mono',monospace;color:var(--green)}
+.phase-count{font-size:11px;color:var(--text3);font-family:'Outfit',sans-serif;font-variant-numeric:tabular-nums}
+.phase-pct{font-size:11px;font-family:'Outfit',sans-serif;font-weight:600;color:var(--green);font-variant-numeric:tabular-nums}
 .chevron{font-size:10px;color:var(--text3);transition:transform .2s}
 .phase-block.collapsed .chevron{transform:rotate(-90deg)}
 .phase-block.collapsed .phase-body{display:none}
@@ -236,10 +236,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .prov-diff.neg{color:var(--text3);font-style:italic;font-size:11px}
 .prov-ob-inp{width:100px;padding:4px 8px;border:1px solid var(--border2);border-radius:4px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);background:transparent;text-align:right;outline:none}
 .prov-ob-inp:focus{border-color:var(--accent-border);background:#fff}
-.prov-result-inp{font-family:'DM Mono',monospace;color:var(--accent)}
+.prov-result-inp{font-family:'Outfit',sans-serif;font-weight:600;font-variant-numeric:tabular-nums;color:var(--accent)}
 .prov-total-row td{border-top:2px solid var(--border2);border-bottom:none;font-weight:600;font-size:14px;padding-top:10px}
 .prov-total-row td:first-child{color:var(--text)}
-.prov-total-row td:last-child{color:var(--accent);font-size:16px}
+.prov-total-row td:last-child{color:var(--accent);font-size:22px;font-family:'Outfit',sans-serif;font-weight:700;font-variant-numeric:tabular-nums}
 .prov-note{font-size:12px;color:var(--text3);margin-top:8px;padding:10px 12px;background:var(--bg3);border-radius:var(--rs)}
 
 /* IK */
@@ -911,18 +911,17 @@ function renderProvize(){
       <td><span class="prov-pos-name">${p.label}</span> <span class="prov-koef">(${p.abbr})</span></td>
       <td class="prov-koef">${p.koef} → rozdíl <strong style="color:var(--accent)">${diff.toFixed(1)}</strong></td>
       <td><input class="prov-ob-inp" type="number" min="0" value="${ob||''}" placeholder="0" onchange="setProvizeOB('${p.key}',this.value)"></td>
-      <td class="prov-result-inp">${ob>0?result.toLocaleString('cs-CZ')+' b':'–'}</td>
+      <td class="prov-result-inp">${ob>0?result.toLocaleString('cs-CZ')+' Kč':'–'}</td>
     </tr>`;
   });
   h+=`<tr class="prov-total-row">
     <td colspan="3">Celková rozdílovka za tým</td>
-    <td style="color:var(--accent)">${totalDiff.toLocaleString('cs-CZ')} b</td>
+    <td style="color:var(--accent)">${totalDiff.toLocaleString('cs-CZ')} Kč</td>
   </tr></tbody></table>`;
 
   const myKoef=myPos.koef;
-  const kcEst=totalDiff>0?Math.round(totalDiff*myKoef):0;
   h+=`<div class="prov-note">
-    💡 <strong>Jak to číst:</strong> Body × koeficient vaší pozice = hrubý příjem. Při pozici ${myPos.label} (koef. ${myKoef}) a rozdílovce ${totalDiff.toLocaleString('cs-CZ')} b = přibližně <strong>${(totalDiff*myKoef).toLocaleString('cs-CZ')} Kč</strong> z týmové produkce. Přidejte svoji vlastní produkci pro celkový příjem.<br>
+    💡 <strong>Jak to číst:</strong> Rozdílovka je váš přímý příjem v Kč z týmové produkce – čísla v pravém sloupci jsou finální, není třeba nic dalšího násobit. Celková rozdílovka <strong>${totalDiff.toLocaleString('cs-CZ')} Kč</strong> + vaše vlastní produkce (OB × ${myKoef}) = celkový hrubý příjem.<br>
     <span style="color:var(--text3);margin-top:4px;display:block">Hodnoty OB se ukládají a přetrvají po restartu prohlížeče.</span>
   </div></div>`;
   return h;
