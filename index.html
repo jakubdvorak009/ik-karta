@@ -3,307 +3,389 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adaptační systém · IK Karta 2.0</title>
+<title>IK Karta 2.0</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f5f6f8;
-  --bg2: #ffffff;
-  --bg3: #f0f1f4;
-  --bg4: #e4e6ec;
-  --border: rgba(0,0,0,0.07);
-  --border2: rgba(0,0,0,0.12);
-  --text: #1a1d27;
-  --text2: #555b72;
-  --text3: #949ab0;
-  --accent: #3b6ef5;
-  --accent-dim: rgba(59,110,245,0.08);
-  --accent-border: rgba(59,110,245,0.25);
-  --purple: #6c4fd6;
-  --purple-dim: rgba(108,79,214,0.08);
-  --purple-border: rgba(108,79,214,0.25);
-  --green: #1a9e68;
-  --green-dim: rgba(26,158,104,0.08);
-  --amber: #c47d0a;
-  --amber-bg: #fffbf0;
-  --amber-border: rgba(196,125,10,0.3);
-  --red: #d94444;
-  --radius: 10px;
-  --radius-sm: 6px;
+:root{
+  --bg:#f5f6f8;--bg2:#fff;--bg3:#f0f1f4;--bg4:#e4e6ec;
+  --border:rgba(0,0,0,0.07);--border2:rgba(0,0,0,0.12);
+  --text:#1a1d27;--text2:#555b72;--text3:#949ab0;
+  --accent:#3b6ef5;--accent-dim:rgba(59,110,245,0.08);--accent-border:rgba(59,110,245,0.25);
+  --purple:#6c4fd6;--purple-dim:rgba(108,79,214,0.08);--purple-border:rgba(108,79,214,0.25);
+  --green:#1a9e68;--green-dim:rgba(26,158,104,0.08);--green-border:rgba(26,158,104,0.25);
+  --amber:#c47d0a;--amber-bg:#fffbf0;--amber-border:rgba(196,125,10,0.3);
+  --red:#d94444;--red-dim:rgba(217,68,68,0.08);
+  --r:10px;--rs:6px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{font-size:14px}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.6}
 .shell{display:flex;height:100vh;overflow:hidden}
-.sidebar{width:260px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
-.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
-.sidebar-header{padding:20px 18px 14px;border-bottom:1px solid var(--border)}
-.app-logo{display:flex;align-items:center;gap:9px;margin-bottom:4px}
-.logo-mark{width:28px;height:28px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff;letter-spacing:-.3px}
-.app-name{font-size:14px;font-weight:600;color:var(--text);letter-spacing:-.2px}
-.app-sub{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace}
-.sidebar-section{padding:10px 10px 4px}
-.sidebar-label{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--text3);text-transform:uppercase;padding:0 8px 6px}
-.mode-tabs{display:flex;gap:4px;padding:0 0 8px}
-.mode-tab{flex:1;padding:6px 4px;border-radius:var(--radius-sm);border:1px solid var(--border);background:transparent;color:var(--text2);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;transition:all .15s;line-height:1.3}
-.mode-tab.active-mgr{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
-.mode-tab.active-dir{background:var(--purple-dim);border-color:var(--purple-border);color:var(--purple)}
-.mode-tab:hover:not(.active-mgr):not(.active-dir){background:var(--bg3);border-color:var(--border2)}
-.person-list{padding:0 10px;flex:1;overflow-y:auto}
-.person-item{display:flex;align-items:center;gap:9px;padding:8px 8px;border-radius:var(--radius-sm);cursor:pointer;transition:background .1s;margin-bottom:2px;border:1px solid transparent}
+/* SIDEBAR */
+.sidebar{width:240px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0}
+.sb-logo{padding:16px 16px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px}
+.logo-mark{width:28px;height:28px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff}
+.app-name{font-size:13px;font-weight:600;color:var(--text);letter-spacing:-.2px}
+.app-sub{font-size:10px;color:var(--text3);font-family:'DM Mono',monospace}
+.sb-modes{padding:10px 10px 6px;display:flex;gap:4px}
+.mode-tab{flex:1;padding:5px 3px;border-radius:var(--rs);border:1px solid var(--border);background:transparent;color:var(--text2);font-size:10px;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;transition:all .15s;line-height:1.3}
+.mode-tab.am{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
+.mode-tab.ad{background:var(--purple-dim);border-color:var(--purple-border);color:var(--purple)}
+.mode-tab:hover:not(.am):not(.ad){background:var(--bg3)}
+/* Module nav */
+.sb-nav{padding:6px 10px;border-bottom:1px solid var(--border)}
+.sb-nav-lbl{font-size:10px;font-weight:600;letter-spacing:.07em;color:var(--text3);text-transform:uppercase;padding:0 6px 5px}
+.mod-btn{display:flex;align-items:center;gap:8px;width:100%;padding:7px 8px;border-radius:var(--rs);border:none;background:transparent;color:var(--text2);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:left;transition:all .12s;margin-bottom:2px}
+.mod-btn:hover{background:var(--bg3);color:var(--text)}
+.mod-btn.active{background:var(--bg3);color:var(--text);font-weight:500}
+.mod-icon{width:18px;height:18px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;background:var(--bg4)}
+.mod-btn.active .mod-icon{background:var(--accent-dim);color:var(--accent)}
+/* Person list */
+.sb-people-lbl{font-size:10px;font-weight:600;letter-spacing:.07em;color:var(--text3);text-transform:uppercase;padding:8px 16px 4px}
+.person-list{flex:1;overflow-y:auto;padding:0 10px}
+.person-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:var(--rs);cursor:pointer;transition:background .1s;margin-bottom:2px;border:1px solid transparent}
 .person-item:hover{background:var(--bg3)}
 .person-item.active{background:var(--bg3);border-color:var(--border2)}
-.pav{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
-.pav-blue{background:rgba(59,110,245,0.12);color:var(--accent)}
-.pav-purple{background:rgba(108,79,214,0.12);color:var(--purple)}
-.person-info{flex:1;min-width:0}
-.person-name-s{font-size:12px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.person-pos{font-size:11px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.person-week-badge{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);background:var(--bg4);border-radius:4px;padding:1px 5px;flex-shrink:0}
-.add-person-btn{margin:8px 10px 0;padding:8px;border-radius:var(--radius-sm);border:1px dashed var(--border2);background:transparent;color:var(--text2);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;width:calc(100% - 20px);display:flex;align-items:center;justify-content:center;gap:5px;transition:all .15s}
+.pav{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0}
+.pav-b{background:rgba(59,110,245,0.12);color:var(--accent)}
+.pav-p{background:rgba(108,79,214,0.12);color:var(--purple)}
+.pi-info{flex:1;min-width:0}
+.pi-name{font-size:12px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pi-pos{font-size:10px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pi-badge{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);background:var(--bg4);border-radius:4px;padding:1px 5px;flex-shrink:0}
+.add-person-btn{margin:6px 10px;padding:7px;border-radius:var(--rs);border:1px dashed var(--border2);background:transparent;color:var(--text2);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:all .15s}
 .add-person-btn:hover{border-color:var(--accent-border);color:var(--accent);background:var(--accent-dim)}
-.sidebar-nav{border-top:1px solid var(--border);padding:10px}
-.nav-item{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:var(--radius-sm);cursor:pointer;color:var(--text2);font-size:12px;transition:background .1s}
-.nav-item:hover{background:var(--bg3);color:var(--text)}
-.nav-item.active{background:var(--bg3);color:var(--text)}
-.nav-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
-.main-header{padding:20px 28px 0;border-bottom:1px solid var(--border);background:var(--bg2);position:sticky;top:0;z-index:10}
-.mh-top{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:16px;gap:16px}
-.mh-person{display:flex;align-items:center;gap:12px}
-.mh-av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0}
-.mh-av-blue{background:rgba(59,110,245,0.12);color:var(--accent);border:1px solid var(--accent-border)}
-.mh-av-purple{background:rgba(108,79,214,0.12);color:var(--purple);border:1px solid var(--purple-border)}
-.mh-name{font-size:17px;font-weight:600;letter-spacing:-.3px;color:var(--text)}
+/* MAIN */
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.main-hdr{padding:18px 26px 0;border-bottom:1px solid var(--border);background:var(--bg2);position:sticky;top:0;z-index:10}
+.mh-top{display:flex;align-items:flex-start;justify-content:space-between;padding-bottom:14px;gap:14px}
+.mh-person{display:flex;align-items:center;gap:11px}
+.mh-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0}
+.mhav-b{background:rgba(59,110,245,0.12);color:var(--accent);border:1px solid var(--accent-border)}
+.mhav-p{background:rgba(108,79,214,0.12);color:var(--purple);border:1px solid var(--purple-border)}
+.mh-name{font-size:16px;font-weight:600;letter-spacing:-.3px}
 .mh-meta{font-size:12px;color:var(--text2);margin-top:1px}
-.mh-meta span{color:var(--accent);font-family:'DM Mono',monospace;font-size:11px}
-.mh-actions{display:flex;gap:8px;align-items:center;flex-shrink:0}
-.btn{padding:7px 14px;border-radius:var(--radius-sm);border:1px solid var(--border2);background:transparent;color:var(--text2);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap}
-.btn:hover{background:var(--bg3);color:var(--text);border-color:var(--border2)}
-.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn-primary:hover{background:#2d5fe0;border-color:#2d5fe0;color:#fff}
-.btn-purple{background:var(--purple);border-color:var(--purple);color:#fff}
-.btn-purple:hover{background:#5b40c0;border-color:#5b40c0;color:#fff}
-.progress-bar-wrap{padding-bottom:0}
-.prog-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
-.prog-label-txt{font-size:11px;color:var(--text2)}
-.prog-pct-txt{font-size:11px;font-family:'DM Mono',monospace;color:var(--accent)}
-.prog-track{height:3px;background:var(--bg4);border-radius:2px;margin-bottom:-1px}
-.prog-fill{height:3px;border-radius:2px;background:var(--accent);transition:width .4s ease}
-.tabs-row{display:flex;gap:0;margin-top:1px}
-.tab-btn{padding:10px 16px;font-size:12px;font-weight:500;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
+.mh-meta em{color:var(--accent);font-family:'DM Mono',monospace;font-size:11px;font-style:normal}
+.mh-actions{display:flex;gap:7px;align-items:center;flex-shrink:0}
+.btn{padding:6px 13px;border-radius:var(--rs);border:1px solid var(--border2);background:transparent;color:var(--text2);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap}
+.btn:hover{background:var(--bg3);color:var(--text)}
+.btn-p{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn-p:hover{background:#2d5fe0;color:#fff}
+.btn-pu{background:var(--purple);border-color:var(--purple);color:#fff}
+.btn-pu:hover{background:#5b40c0;color:#fff}
+.btn-g{background:var(--green);border-color:var(--green);color:#fff}
+.btn-g:hover{background:#158a59;color:#fff}
+.prog-wrap{margin-bottom:-1px}
+.prog-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.prog-lbl{font-size:11px;color:var(--text2)}
+.prog-pct{font-size:11px;font-family:'DM Mono',monospace;color:var(--accent)}
+.prog-track{height:3px;background:var(--bg4);border-radius:2px}
+.prog-fill{height:3px;border-radius:2px;background:var(--accent);transition:width .4s}
+.tabs-row{display:flex}
+.tab-btn{padding:9px 15px;font-size:12px;font-weight:500;color:var(--text2);background:transparent;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
 .tab-btn:hover{color:var(--text)}
 .tab-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
-.content{padding:24px 28px;flex:1}
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-.stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px}
-.stat-card-label{font-size:11px;color:var(--text3);margin-bottom:4px}
-.stat-card-val{font-size:22px;font-weight:600;color:var(--text);font-family:'DM Mono',monospace;letter-spacing:-1px}
-.stat-card-sub{font-size:11px;color:var(--text3);margin-top:2px}
-
+.content{padding:22px 26px;flex:1}
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.stat-c{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px 14px}
+.stat-c-lbl{font-size:11px;color:var(--text3);margin-bottom:3px}
+.stat-c-val{font-size:21px;font-weight:600;font-family:'DM Mono',monospace;letter-spacing:-1px}
+.stat-c-sub{font-size:11px;color:var(--text3);margin-top:2px}
 /* Legend */
-.legend{display:flex;align-items:center;gap:16px;margin-bottom:14px;padding:8px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm)}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2)}
-.legend-cb{width:16px;height:16px;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.lcb-none{border:1.5px solid var(--border2);background:#fff}
-.lcb-wait{border:1.5px solid var(--amber-border);background:var(--amber-bg)}
-.lcb-done{border:1.5px solid var(--accent-border);background:var(--accent)}
-
-/* Phase blocks */
-.phase-block{margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
-.phase-hdr{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;cursor:pointer;background:var(--bg2);transition:background .1s;user-select:none}
+.legend{display:flex;align-items:center;gap:14px;margin-bottom:12px;padding:7px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
+.leg-cb{width:14px;height:14px;border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700}
+/* Phase/checklist */
+.phase-block{margin-bottom:7px;border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.phase-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 15px;cursor:pointer;background:var(--bg2);user-select:none}
 .phase-hdr:hover{background:var(--bg3)}
-.phase-title-txt{font-size:13px;font-weight:500;color:var(--text)}
-.phase-meta{display:flex;align-items:center;gap:10px}
+.phase-title-txt{font-size:13px;font-weight:500}
+.phase-meta{display:flex;align-items:center;gap:8px}
 .phase-count{font-size:11px;color:var(--text3);font-family:'DM Mono',monospace}
 .phase-pct{font-size:11px;font-family:'DM Mono',monospace;color:var(--green)}
-.chevron{font-size:10px;color:var(--text3);transition:transform .2s;display:inline-block}
+.chevron{font-size:10px;color:var(--text3);transition:transform .2s}
 .phase-block.collapsed .chevron{transform:rotate(-90deg)}
-.phase-body{display:block}
 .phase-block.collapsed .phase-body{display:none}
 .week-block{border-top:1px solid var(--border)}
-.week-block.current-week{border-left:3px solid var(--accent)}
-.week-hdr{display:flex;align-items:center;gap:10px;padding:9px 16px;background:var(--bg3)}
-.week-label-txt{font-size:11px;font-weight:600;color:var(--text2);letter-spacing:.02em;text-transform:uppercase;font-family:'DM Mono',monospace}
-.current-badge{font-size:10px;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border);border-radius:20px;padding:1px 8px;font-weight:500}
+.week-block.cw{border-left:3px solid var(--accent)}
+.week-hdr{display:flex;align-items:center;gap:9px;padding:8px 15px;background:var(--bg3)}
+.week-lbl{font-size:10px;font-weight:600;color:var(--text2);letter-spacing:.03em;text-transform:uppercase;font-family:'DM Mono',monospace}
+.cur-badge{font-size:10px;background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border);border-radius:20px;padding:1px 7px;font-weight:500}
 .week-prog{height:2px;background:var(--bg4)}
 .week-prog-fill{height:2px;background:var(--accent);transition:width .3s}
+.sec-hdr{display:flex;align-items:center;gap:6px;padding:6px 15px 2px}
+.sec-lbl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3)}
+.role-badge{font-size:10px;border-radius:3px;padding:1px 6px;font-weight:500}
+.rb-m{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border)}
+.rb-n{background:var(--green-dim);color:var(--green);border:1px solid var(--green-border)}
+.rb-d{background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-border)}
+.edit-sec-btn{margin-left:auto;font-size:10px;color:var(--text3);background:transparent;border:none;cursor:pointer;padding:2px 5px;border-radius:3px;font-family:'DM Sans',sans-serif;transition:all .12s}
+.edit-sec-btn:hover{background:var(--bg4);color:var(--text2)}
+.edit-sec-btn.on{background:var(--accent-dim);color:var(--accent)}
+.check-item{display:flex;align-items:flex-start;gap:9px;padding:5px 15px;cursor:pointer;transition:background .1s;user-select:none}
+.check-item:hover{background:rgba(0,0,0,0.02)}
+.cb3{width:15px;height:15px;border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .12s;border:1.5px solid var(--border2);background:#fff}
+.cb3.w{border-color:var(--amber-border);background:var(--amber-bg)}
+.cb3.d{background:var(--accent);border-color:var(--accent)}
+.cb3.d::after{content:'';display:block;width:7px;height:4px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translateY(-1px)}
+.cb3.w::after{content:'~';font-size:10px;color:var(--amber);line-height:1;font-weight:700}
+.item-txt{font-size:13px;line-height:1.5;flex:1;transition:color .1s}
+.check-item.sd .item-txt{color:var(--text3);text-decoration:line-through}
+.check-item.sw .item-txt{color:var(--amber)}
+.wait-lbl{font-size:10px;color:var(--amber);background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:3px;padding:1px 5px;white-space:nowrap;margin-top:3px;flex-shrink:0}
+.edit-item-row{display:flex;align-items:center;gap:5px;padding:3px 15px}
+.edit-inp{flex:1;padding:4px 7px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rs);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;outline:none}
+.edit-inp:focus{border-color:var(--accent-border);background:#fff}
+.del-btn{width:20px;height:20px;border-radius:3px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s}
+.del-btn:hover{background:var(--red-dim);color:var(--red)}
+.add-row{padding:4px 15px 7px;display:flex;gap:5px}
+.add-inp{flex:1;padding:4px 7px;background:var(--bg3);border:1px dashed var(--border2);border-radius:var(--rs);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;outline:none}
+.add-inp:focus{border-color:var(--accent-border);background:#fff;border-style:solid}
+.add-inp::placeholder{color:var(--text3)}
+.add-btn-sm{padding:4px 9px;border-radius:var(--rs);border:1px solid var(--accent-border);background:var(--accent-dim);color:var(--accent);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer}
+.add-btn-sm:hover{background:var(--accent);color:#fff}
 
-/* Section header with edit button */
-.section-hdr{display:flex;align-items:center;gap:7px;padding:7px 16px 3px}
-.section-lbl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3)}
-.role-badge{font-size:10px;border-radius:4px;padding:1px 7px;font-weight:500}
-.rb-mgr{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent-border)}
-.rb-nov{background:var(--green-dim);color:var(--green);border:1px solid rgba(26,158,104,0.25)}
-.rb-dir{background:var(--purple-dim);color:var(--purple);border:1px solid var(--purple-border)}
-.edit-section-btn{margin-left:auto;font-size:10px;color:var(--text3);background:transparent;border:none;cursor:pointer;padding:2px 6px;border-radius:4px;font-family:'DM Sans',sans-serif;transition:all .12s;display:flex;align-items:center;gap:3px}
-.edit-section-btn:hover{background:var(--bg4);color:var(--text2)}
-.edit-section-btn.active{background:var(--accent-dim);color:var(--accent)}
+/* AKTIVITY STATS MODULE */
+.aktivity-wrap{overflow-x:auto}
+.stats-table{width:100%;border-collapse:collapse;min-width:700px}
+.stats-table th{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;padding:6px 10px;text-align:center;white-space:nowrap;border-bottom:2px solid var(--border);background:var(--bg2);position:sticky;top:0}
+.stats-table th.metric-col{text-align:left;width:160px}
+.stats-table th.cur-month{background:var(--accent-dim);color:var(--accent)}
+.stats-table td{padding:5px 10px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
+.stats-table td.metric-name{font-size:12px;font-weight:500;color:var(--text2);white-space:nowrap}
+.stats-table td.plan-cell{font-family:'DM Mono',monospace;font-size:12px;color:var(--text2);text-align:center}
+.num-inp{width:60px;padding:3px 5px;border:1px solid var(--border2);border-radius:4px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);background:transparent;text-align:center;outline:none;transition:border-color .15s}
+.num-inp:focus{border-color:var(--accent-border);background:#fff}
+.num-inp.cur{border-color:var(--accent-border)}
+.cell-green{background:rgba(26,158,104,0.08);color:var(--green)}
+.cell-amber{background:rgba(196,125,10,0.08);color:var(--amber)}
+.cell-red{background:rgba(217,68,68,0.08);color:var(--red)}
+.cell-empty{color:var(--text3)}
+.metric-section-hdr td{padding:10px 10px 4px;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);background:var(--bg3);border-top:1px solid var(--border)}
 
-/* Check items – 3 states */
-.check-item{display:flex;align-items:flex-start;gap:10px;padding:6px 16px;cursor:pointer;transition:background .1s;user-select:none}
-.check-item:hover{background:rgba(0,0,0,0.025)}
-.cb3{width:16px;height:16px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .12s;cursor:pointer;border:1.5px solid var(--border2);background:#fff}
-.cb3.waiting{border-color:var(--amber-border);background:var(--amber-bg)}
-.cb3.done{background:var(--accent);border-color:var(--accent)}
-.cb3.done::after{content:'';display:block;width:8px;height:5px;border-left:1.5px solid #fff;border-bottom:1.5px solid #fff;transform:rotate(-45deg) translateY(-1px)}
-.cb3.waiting::after{content:'~';font-size:11px;color:var(--amber);line-height:1;font-weight:600}
-.item-txt{font-size:13px;color:var(--text);line-height:1.5;transition:color .1s;flex:1}
-.check-item.state-done .item-txt{color:var(--text3);text-decoration:line-through}
-.check-item.state-waiting .item-txt{color:var(--amber)}
-.waiting-label{font-size:10px;color:var(--amber);background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:4px;padding:1px 6px;white-space:nowrap;margin-left:4px;flex-shrink:0;margin-top:3px}
+/* PIPELINE MODULE */
+.pipe-top-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.filter-btn{font-size:11px;padding:4px 10px;border-radius:var(--rs);border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .15s}
+.filter-btn.active{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
+.filter-btn:hover:not(.active){background:var(--bg3)}
+.pipe-board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:start}
+.pipe-col-hdr{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;padding:0 2px}
+.pipe-col-count{font-size:10px;background:var(--bg4);border-radius:20px;padding:1px 7px;color:var(--text3);font-family:'DM Mono',monospace}
+.cand-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 11px;margin-bottom:7px;cursor:pointer;transition:border-color .15s}
+.cand-card:hover{border-color:var(--border2)}
+.cand-card.expanded{border-color:var(--accent-border)}
+.cand-name{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px}
+.cand-employer{font-size:11px;color:var(--text2);margin-bottom:6px}
+.cand-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:5px}
+.src-tag{font-size:10px;border-radius:3px;padding:1px 6px;font-weight:500}
+.st-bank{background:#E6F1FB;color:#185FA5}
+.st-poj{background:#EEEDFE;color:#534AB7}
+.st-konk{background:#FAECE7;color:#993C1D}
+.st-dop{background:#EAF3DE;color:#3B6D11}
+.st-other{background:var(--bg4);color:var(--text2)}
+.last-contact{font-size:10px;color:var(--text3);display:flex;align-items:center;gap:3px}
+.lc-warn{color:var(--red)}
+.lc-ok{color:var(--green)}
+.cand-detail{display:none;border-top:1px solid var(--border);margin-top:8px;padding-top:8px}
+.cand-card.expanded .cand-detail{display:block}
+.det-row{display:flex;justify-content:space-between;font-size:11px;padding:2px 0}
+.det-lbl{color:var(--text3)}
+.det-val{color:var(--text2);text-align:right;max-width:60%}
+.obstacle-box{background:var(--red-dim);border-radius:4px;padding:5px 7px;font-size:11px;color:var(--red);margin:5px 0 3px}
+.solution-box{background:var(--green-dim);border-radius:4px;padding:5px 7px;font-size:11px;color:var(--green);margin:3px 0}
+/* Contact log */
+.contact-log{margin-top:8px}
+.contact-log-hdr{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
+.contact-entry{display:flex;gap:7px;padding:4px 0;border-bottom:1px solid var(--border)}
+.ce-date{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);flex-shrink:0;width:70px;padding-top:1px}
+.ce-note{font-size:11px;color:var(--text2);flex:1;line-height:1.4}
+.ce-del{font-size:10px;color:var(--text3);background:none;border:none;cursor:pointer;padding:0 3px;flex-shrink:0}
+.ce-del:hover{color:var(--red)}
+.add-contact-form{display:flex;gap:5px;margin-top:6px;flex-wrap:wrap}
+.mini-inp{padding:4px 7px;border:1px solid var(--border2);border-radius:4px;font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text);background:var(--bg3);outline:none}
+.mini-inp:focus{border-color:var(--accent-border);background:#fff}
+.mini-date{width:120px}
+.mini-note{flex:1;min-width:100px}
+.mini-add-btn{padding:4px 9px;border-radius:4px;border:1px solid var(--accent-border);background:var(--accent-dim);color:var(--accent);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap}
+.mini-add-btn:hover{background:var(--accent);color:#fff}
+.stage-btns{display:flex;gap:4px;margin-top:7px;flex-wrap:wrap}
+.stage-btn{font-size:10px;padding:3px 8px;border-radius:3px;border:1px solid var(--border2);background:transparent;color:var(--text2);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .12s}
+.stage-btn.cur{background:var(--accent);border-color:var(--accent);color:#fff}
+.stage-btn:hover:not(.cur){background:var(--bg3)}
+.archive-btn-c{font-size:10px;padding:3px 8px;border-radius:3px;border:1px solid var(--border2);background:transparent;color:var(--text3);cursor:pointer;font-family:'DM Sans',sans-serif}
+.archive-btn-c:hover{color:var(--red);border-color:rgba(217,68,68,0.3)}
+.add-cand-col-btn{width:100%;font-size:11px;padding:6px 0;border-radius:var(--rs);border:1px dashed var(--border2);background:transparent;color:var(--text3);cursor:pointer;margin-top:3px;font-family:'DM Sans',sans-serif;transition:all .15s}
+.add-cand-col-btn:hover{color:var(--accent);border-color:var(--accent-border);background:var(--accent-dim)}
 
-/* Edit mode for section */
-.edit-item-row{display:flex;align-items:center;gap:6px;padding:4px 16px}
-.edit-item-input{flex:1;padding:5px 8px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none}
-.edit-item-input:focus{border-color:var(--accent-border);background:#fff}
-.del-item-btn{width:22px;height:22px;border-radius:4px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s}
-.del-item-btn:hover{background:rgba(217,68,68,0.1);color:var(--red)}
-.drag-handle{color:var(--text3);font-size:12px;cursor:grab;padding:0 2px;flex-shrink:0}
-.add-item-row{padding:5px 16px 8px;display:flex;gap:6px}
-.add-item-input{flex:1;padding:5px 8px;background:var(--bg3);border:1px dashed var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;outline:none}
-.add-item-input:focus{border-color:var(--accent-border);background:#fff;border-style:solid}
-.add-item-input::placeholder{color:var(--text3)}
-.add-item-btn-sm{padding:5px 10px;border-radius:var(--radius-sm);border:1px solid var(--accent-border);background:var(--accent-dim);color:var(--accent);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;white-space:nowrap}
-.add-item-btn-sm:hover{background:var(--accent);color:#fff}
+/* PROVIZE */
+.provize-wrap{max-width:760px}
+.prov-selector{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding:14px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r)}
+.prov-sel-lbl{font-size:13px;font-weight:500;color:var(--text2)}
+.prov-sel{padding:6px 10px;border:1px solid var(--border2);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:13px;color:var(--text);background:var(--bg3);outline:none;min-width:220px}
+.prov-sel:focus{border-color:var(--accent-border)}
+.prov-table{width:100%;border-collapse:collapse;margin-bottom:16px}
+.prov-table th{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;padding:7px 12px;text-align:left;border-bottom:2px solid var(--border)}
+.prov-table th:not(:first-child){text-align:right}
+.prov-table td{padding:6px 12px;border-bottom:1px solid var(--border);font-size:13px}
+.prov-table td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
+.prov-pos-name{font-weight:500;color:var(--text)}
+.prov-koef{color:var(--text3);font-size:12px}
+.prov-diff{color:var(--accent)}
+.prov-diff.neg{color:var(--text3);font-style:italic;font-size:11px}
+.prov-ob-inp{width:100px;padding:4px 8px;border:1px solid var(--border2);border-radius:4px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);background:transparent;text-align:right;outline:none}
+.prov-ob-inp:focus{border-color:var(--accent-border);background:#fff}
+.prov-result-inp{font-family:'DM Mono',monospace;color:var(--accent)}
+.prov-total-row td{border-top:2px solid var(--border2);border-bottom:none;font-weight:600;font-size:14px;padding-top:10px}
+.prov-total-row td:first-child{color:var(--text)}
+.prov-total-row td:last-child{color:var(--accent);font-size:16px}
+.prov-note{font-size:12px;color:var(--text3);margin-top:8px;padding:10px 12px;background:var(--bg3);border-radius:var(--rs)}
 
 /* IK */
-.ik-empty{text-align:center;padding:40px 20px;color:var(--text3);font-size:13px}
-.ik-record{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;background:var(--bg2)}
-.ik-record-hdr{padding:12px 16px;background:var(--bg3);display:flex;align-items:center;justify-content:space-between}
+.ik-record{border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;background:var(--bg2)}
+.ik-rec-hdr{padding:10px 14px;background:var(--bg3);display:flex;align-items:center;justify-content:space-between}
 .ik-date{font-size:12px;font-family:'DM Mono',monospace;color:var(--text2)}
-.ik-record-body{padding:12px 16px}
-.ik-field{margin-bottom:10px}
-.ik-label{font-size:11px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
-.ik-text{font-size:13px;color:var(--text2);line-height:1.6}
+.ik-body{padding:12px 14px}
+.ik-fld{margin-bottom:8px}
+.ik-lbl{font-size:10px;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.ik-txt{font-size:13px;color:var(--text2);line-height:1.6}
 .ik-tasks{list-style:none}
-.ik-task-item{display:flex;align-items:flex-start;gap:7px;padding:3px 0;font-size:13px;color:var(--text2)}
-.ik-task-item::before{content:'·';color:var(--accent);flex-shrink:0;margin-top:1px}
-.ik-footer{padding:10px 16px;background:var(--bg3);border-top:1px solid var(--border);display:flex;gap:8px;align-items:center;justify-content:flex-end}
+.ik-task-item{display:flex;align-items:flex-start;gap:6px;padding:2px 0;font-size:13px;color:var(--text2)}
+.ik-task-item::before{content:'·';color:var(--accent);flex-shrink:0}
+.ik-footer{padding:8px 14px;background:var(--bg3);border-top:1px solid var(--border);display:flex;gap:7px;justify-content:flex-end}
 
-/* Modals */
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.35);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
+/* MODALS */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px}
 .modal-bg.hidden{display:none}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;width:100%;max-width:440px;padding:24px;box-shadow:0 8px 40px rgba(0,0,0,0.12)}
-.modal-title{font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px}
-.modal-sub{font-size:12px;color:var(--text2);margin-bottom:18px}
-.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}
-.form-group{margin-bottom:10px}
-.form-label{font-size:11px;color:var(--text2);margin-bottom:4px;display:block;font-weight:500}
-.form-input,.form-textarea{width:100%;padding:8px 10px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--radius-sm);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .15s}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:14px;width:100%;max-width:460px;padding:22px;box-shadow:0 8px 40px rgba(0,0,0,0.1)}
+.modal-title{font-size:15px;font-weight:600;margin-bottom:3px}
+.modal-sub{font-size:12px;color:var(--text2);margin-bottom:16px}
+.modal-actions{display:flex;gap:7px;justify-content:flex-end;margin-top:16px}
+.form-group{margin-bottom:9px}
+.form-label{font-size:11px;color:var(--text2);margin-bottom:3px;display:block;font-weight:500}
+.form-input,.form-textarea{width:100%;padding:7px 9px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--rs);color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;outline:none;transition:border-color .15s}
 .form-input:focus,.form-textarea:focus{border-color:var(--accent-border);background:#fff}
-.form-textarea{min-height:70px;resize:vertical;line-height:1.5}
-
+.form-textarea{min-height:65px;resize:vertical;line-height:1.5}
 /* Toast */
-.toast{position:fixed;bottom:20px;right:20px;background:var(--text);border-radius:var(--radius);padding:10px 16px;font-size:13px;color:#fff;z-index:200;transform:translateY(60px);opacity:0;transition:all .25s;pointer-events:none}
+.toast{position:fixed;bottom:18px;right:18px;background:var(--text);border-radius:var(--r);padding:9px 14px;font-size:13px;color:#fff;z-index:200;transform:translateY(50px);opacity:0;transition:all .22s;pointer-events:none}
 .toast.show{transform:translateY(0);opacity:1}
-
-/* Empty state */
-.empty-state{text-align:center;padding:60px 20px;color:var(--text3)}
-.empty-state-title{font-size:15px;font-weight:500;color:var(--text2);margin-bottom:6px}
-
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
-@media(max-width:768px){.sidebar{display:none}.stats-row{grid-template-columns:repeat(2,1fr)}}
+.empty-state{text-align:center;padding:50px 20px;color:var(--text3)}
+.empty-state-title{font-size:15px;font-weight:500;color:var(--text2);margin-bottom:5px}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
+@media(max-width:768px){.sidebar{display:none}.stats-row{grid-template-columns:repeat(2,1fr)}.pipe-board{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="shell">
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <div class="app-logo">
-        <div class="logo-mark">IK</div>
-        <div><div class="app-name">IK Karta 2.0</div><div class="app-sub">preview · beta</div></div>
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="logo-mark">IK</div>
+    <div><div class="app-name">IK Karta 2.0</div><div class="app-sub">preview · beta</div></div>
+  </div>
+  <div class="sb-modes">
+    <button class="mode-tab am" id="mode-mgr" onclick="setMode('mng')">Manažer<br>adaptuje poradce</button>
+    <button class="mode-tab" id="mode-dir" onclick="setMode('dir')">Ředitel<br>adaptuje manažera</button>
+  </div>
+  <div class="sb-nav">
+    <div class="sb-nav-lbl">Moduly</div>
+    <button class="mod-btn active" id="mod-adaptace" onclick="setModule('adaptace')"><div class="mod-icon">✓</div>Adaptace</button>
+    <button class="mod-btn" id="mod-aktivity" onclick="setModule('aktivity')"><div class="mod-icon">📊</div>Aktivity & statistiky</button>
+    <button class="mod-btn" id="mod-pipeline" onclick="setModule('pipeline')"><div class="mod-icon">👥</div>Náborová pipeline</button>
+    <button class="mod-btn" id="mod-provize" onclick="setModule('provize')"><div class="mod-icon">Kč</div>Rozdílové provize</button>
+  </div>
+  <div class="sb-people-lbl" id="sb-people-lbl">Poradci v adaptaci</div>
+  <div class="person-list" id="person-list"></div>
+  <button class="add-person-btn" onclick="openAddModal()">
+    <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Přidat osobu
+  </button>
+</aside>
+<main class="main">
+  <div class="main-hdr" id="main-hdr">
+    <div class="mh-top">
+      <div class="mh-person">
+        <div class="mh-av mhav-b" id="mh-av">IK</div>
+        <div><div class="mh-name" id="mh-name">IK Karta 2.0</div><div class="mh-meta" id="mh-meta">Vyberte modul nebo osobu</div></div>
       </div>
+      <div class="mh-actions" id="mh-actions"></div>
     </div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Režim</div>
-      <div class="mode-tabs">
-        <button class="mode-tab active-mgr" id="mode-mgr" onclick="setMode('mng')">Manažer<br>adaptuje poradce</button>
-        <button class="mode-tab" id="mode-dir" onclick="setMode('dir')">Ředitel<br>adaptuje manažera</button>
-      </div>
+    <div class="prog-wrap" id="prog-wrap" style="display:none">
+      <div class="prog-row"><span class="prog-lbl">Celkový postup adaptace</span><span class="prog-pct" id="prog-pct">0 %</span></div>
+      <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
     </div>
-    <div class="sidebar-section"><div class="sidebar-label" id="people-label">Poradci v adaptaci</div></div>
-    <div class="person-list" id="person-list"></div>
-    <button class="add-person-btn" onclick="openAddModal()">
-      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      Přidat osobu
-    </button>
-    <div class="sidebar-nav">
-      <div class="nav-item active" id="nav-checklist" onclick="setTab('checklist')"><span class="nav-dot"></span> Checklist adaptace</div>
-      <div class="nav-item" id="nav-ik" onclick="setTab('ik')"><span class="nav-dot"></span> IK záznamy</div>
+    <div class="tabs-row" id="tabs-row" style="display:none">
+      <button class="tab-btn active" id="tab-checklist" onclick="setTab('checklist')">Checklist</button>
+      <button class="tab-btn" id="tab-ik" onclick="setTab('ik')">IK záznamy</button>
     </div>
-  </aside>
-
-  <main class="main">
-    <div class="main-header" id="main-header">
-      <div class="mh-top">
-        <div class="mh-person">
-          <div class="mh-av mh-av-blue" id="mh-av">--</div>
-          <div><div class="mh-name" id="mh-name">Vyberte osobu</div><div class="mh-meta" id="mh-meta">–</div></div>
-        </div>
-        <div class="mh-actions" id="mh-actions"></div>
-      </div>
-      <div class="progress-bar-wrap">
-        <div class="prog-label-row">
-          <span class="prog-label-txt">Celkový postup adaptace</span>
-          <span class="prog-pct-txt" id="prog-pct">0 %</span>
-        </div>
-        <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-      </div>
-      <div class="tabs-row">
-        <button class="tab-btn active" id="tab-checklist" onclick="setTab('checklist')">Checklist</button>
-        <button class="tab-btn" id="tab-ik" onclick="setTab('ik')">IK záznamy</button>
-      </div>
-    </div>
-    <div class="content" id="main-content">
-      <div class="empty-state">
-        <div class="empty-state-title">Žádná osoba vybrána</div>
-        <p style="font-size:13px;margin-top:6px">Přidejte osobu v levém panelu.</p>
-        <button class="btn btn-primary" style="margin-top:16px" onclick="openAddModal()">+ Přidat osobu</button>
-      </div>
-    </div>
-  </main>
+  </div>
+  <div class="content" id="main-content">
+    <div class="empty-state"><div class="empty-state-title">Vítejte v IK Karta 2.0</div><p style="font-size:13px;margin-top:5px">Vyberte modul v levém panelu nebo přidejte osobu.</p></div>
+  </div>
+</main>
 </div>
 
 <!-- ADD PERSON MODAL -->
 <div class="modal-bg hidden" id="add-modal">
-  <div class="modal">
-    <div class="modal-title">Přidat osobu do adaptace</div>
-    <div class="modal-sub" id="add-modal-sub">Nový poradce</div>
-    <div class="form-group"><label class="form-label">Celé jméno *</label><input class="form-input" id="inp-name" type="text" placeholder="Jan Novák"></div>
-    <div class="form-group"><label class="form-label">Pozice *</label><input class="form-input" id="inp-pos" type="text" placeholder="Junior konzultant"></div>
-    <div class="form-group"><label class="form-label">Datum nástupu *</label><input class="form-input" id="inp-date" type="date"></div>
-    <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="inp-email" type="email" placeholder="jan.novak@firma.cz"></div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeAddModal()">Zrušit</button>
-      <button class="btn btn-primary" onclick="savePerson()">Přidat</button>
+<div class="modal">
+  <div class="modal-title">Přidat osobu do adaptace</div>
+  <div class="modal-sub" id="add-modal-sub">Nový poradce</div>
+  <div class="form-group"><label class="form-label">Celé jméno *</label><input class="form-input" id="inp-name" type="text" placeholder="Jan Novák"></div>
+  <div class="form-group"><label class="form-label">Pozice *</label><input class="form-input" id="inp-pos" type="text" placeholder="Junior konzultant"></div>
+  <div class="form-group"><label class="form-label">Datum nástupu *</label><input class="form-input" id="inp-date" type="date"></div>
+  <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="inp-email" type="email" placeholder="jan.novak@firma.cz"></div>
+  <div class="modal-actions"><button class="btn" onclick="closeAddModal()">Zrušit</button><button class="btn btn-p" onclick="savePerson()">Přidat</button></div>
+</div>
+</div>
+
+<!-- ADD CANDIDATE MODAL -->
+<div class="modal-bg hidden" id="cand-modal">
+<div class="modal">
+  <div class="modal-title">Přidat kandidáta</div>
+  <div class="modal-sub">Nový kontakt do náborové pipeline</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div class="form-group"><label class="form-label">Jméno a příjmení *</label><input class="form-input" id="c-name" type="text" placeholder="Petra Nováková"></div>
+    <div class="form-group"><label class="form-label">Aktuální zaměstnavatel</label><input class="form-input" id="c-employer" type="text" placeholder="Česká spořitelna"></div>
+    <div class="form-group"><label class="form-label">Aktuální pozice</label><input class="form-input" id="c-role" type="text" placeholder="Hypoteční specialista"></div>
+    <div class="form-group"><label class="form-label">Telefon</label><input class="form-input" id="c-phone" type="text" placeholder="+420 777 000 000"></div>
+    <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="c-email" type="email" placeholder="petra@firma.cz"></div>
+    <div class="form-group"><label class="form-label">Zdroj</label>
+      <select class="form-input" id="c-source">
+        <option value="bank">Banka</option>
+        <option value="poj">Pojišťovna</option>
+        <option value="konk">Konkurence</option>
+        <option value="dop">Doporučení</option>
+        <option value="other">Ostatní</option>
+      </select>
     </div>
   </div>
+  <div class="form-group"><label class="form-label">Doporučil</label><input class="form-input" id="c-rec" type="text" placeholder="Jméno doporučitele (pokud relevantní)"></div>
+  <div class="form-group"><label class="form-label">Překážka / problémový stav</label><input class="form-input" id="c-obstacle" type="text" placeholder="Vázán loajalitou, strach z proměnného příjmu..."></div>
+  <div class="form-group"><label class="form-label">Navržené řešení</label><input class="form-input" id="c-solution" type="text" placeholder="Ukázat výpočet příjmu po 12 měsících..."></div>
+  <div class="modal-actions"><button class="btn" onclick="closeCandModal()">Zrušit</button><button class="btn btn-p" onclick="saveCandidate()">Přidat kandidáta</button></div>
+</div>
 </div>
 
 <!-- IK MODAL -->
 <div class="modal-bg hidden" id="ik-modal">
-  <div class="modal">
-    <div class="modal-title">Nový záznam z IK</div>
-    <div class="modal-sub" id="ik-modal-sub">Záznam ze schůzky</div>
-    <div class="form-group"><label class="form-label">Datum IK</label><input class="form-input" id="ik-date" type="date"></div>
-    <div class="form-group"><label class="form-label">Obsah / co jsme probírali</label><textarea class="form-textarea" id="ik-content" placeholder="Zpětná vazba k aktivitám, produktové školení..."></textarea></div>
-    <div class="form-group"><label class="form-label">Úkoly pro nováčka (každý na nový řádek)</label><textarea class="form-textarea" id="ik-tasks-nov" placeholder="Nastudovat pyramidu&#10;Uskutečnit 5 hovorů&#10;Odevzdat produkci do pátku"></textarea></div>
-    <div class="form-group"><label class="form-label">Úkoly pro manažera (každý na nový řádek)</label><textarea class="form-textarea" id="ik-tasks-mgr" placeholder="Zajistit školení na investice&#10;Zkontrolovat KM"></textarea></div>
-    <div class="modal-actions">
-      <button class="btn" onclick="closeIkModal()">Zrušit</button>
-      <button class="btn btn-primary" onclick="saveIkRecord()">Uložit záznam</button>
-    </div>
-  </div>
+<div class="modal">
+  <div class="modal-title">Nový záznam z IK</div>
+  <div class="modal-sub" id="ik-modal-sub">Záznam ze schůzky</div>
+  <div class="form-group"><label class="form-label">Datum IK</label><input class="form-input" id="ik-date" type="date"></div>
+  <div class="form-group"><label class="form-label">Obsah / co jsme probírali</label><textarea class="form-textarea" id="ik-content" placeholder="Zpětná vazba k aktivitám, produktové školení..."></textarea></div>
+  <div class="form-group"><label class="form-label">Úkoly pro nováčka (každý na nový řádek)</label><textarea class="form-textarea" id="ik-tasks-nov" placeholder="Nastudovat pyramidu&#10;Uskutečnit 5 hovorů&#10;Odevzdat produkci do pátku"></textarea></div>
+  <div class="form-group"><label class="form-label">Úkoly pro manažera (každý na nový řádek)</label><textarea class="form-textarea" id="ik-tasks-mgr" placeholder="Zajistit školení&#10;Zkontrolovat KM"></textarea></div>
+  <div class="modal-actions"><button class="btn" onclick="closeIkModal()">Zrušit</button><button class="btn btn-p" onclick="saveIkRecord()">Uložit záznam</button></div>
+</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── DEFAULT CHECKLIST TEMPLATE ───────────────────────────────────────────────
-const TEMPLATE = {
+// ═══════════════════════════════════════════════════════════════════
+// CHECKLIST TEMPLATE (from Excel)
+// ═══════════════════════════════════════════════════════════════════
+const TEMPLATE={
   mng:[
     {label:'Předadaptační fáze',open:true,weeks:[
       {label:'Před nástupem',weekNum:null,sections:[
@@ -375,329 +457,575 @@ const TEMPLATE = {
   ]
 };
 
-// Deep clone template into person's custom checklist
-function cloneTemplate(m) {
-  return JSON.parse(JSON.stringify(TEMPLATE[m]));
-}
+// ═══════════════════════════════════════════════════════════════════
+// PROVIZE COEFFICIENTS (from Excel Data sheet)
+// ═══════════════════════════════════════════════════════════════════
+const POSITIONS=[
+  {key:'jk',label:'Junior konzultant',abbr:'JK',koef:4.0},
+  {key:'k',label:'Konzultant',abbr:'K',koef:5.5},
+  {key:'sk',label:'Senior konzultant',abbr:'SK',koef:7.3},
+  {key:'sak',label:'Samostatný konzultant',abbr:'SAK',koef:9.2},
+  {key:'top',label:'TOP konzultant',abbr:'TOP',koef:10.2},
+  {key:'topii',label:'TOP konzultant II',abbr:'TOPII',koef:10.7},
+  {key:'ek',label:'Exkluzivní konzultant',abbr:'EK',koef:11.2},
+  {key:'ekii',label:'Exkluzivní konzultant II',abbr:'EKII',koef:11.6},
+  {key:'sek',label:'Senior exkluzivní konzultant',abbr:'SEK',koef:12.0},
+  {key:'jmng',label:'Junior manažer',abbr:'JMNG',koef:9.0},
+  {key:'mng',label:'Manažer',abbr:'MNG',koef:9.6},
+  {key:'smng',label:'Senior manažer',abbr:'SMNG',koef:10.3},
+  {key:'or',label:'Oblastní ředitel',abbr:'OŘ',koef:11.1},
+  {key:'sor',label:'Senior oblastní ředitel',abbr:'SOŘ',koef:11.6},
+  {key:'rr',label:'Regionální ředitel',abbr:'RŘ',koef:12.1},
+  {key:'srr',label:'Senior regionální ředitel',abbr:'SRŘ',koef:12.5},
+  {key:'zr',label:'Zemský ředitel',abbr:'ZŘ',koef:13.0},
+];
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
+const STAGE_LABELS=['Osloven','1. schůzka','Zvažuje','Nabídka','Podpis'];
+const MONTHS=['Led','Úno','Bře','Dub','Kvě','Čer','Čvc','Srp','Zář','Říj','Lis','Pro'];
+const METRICS=[
+  {key:'klient_schuze',label:'Klientské 1. schůzky',section:'Klienti'},
+  {key:'klient_ob',label:'OB podepsané',section:'Klienti',currency:true},
+  {key:'nabor_schuze',label:'Náborové 1. schůzky',section:'Nábory'},
+  {key:'nabor_podpisy',label:'Nové podpisy (nábor)',section:'Nábory'},
+];
+
+// ═══════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════
 let mode='mng', people=[], activePersonId=null, activeTab='checklist';
-// editMode: set of sectionKeys currently in edit mode
-const editMode = new Set();
+let activeModule='adaptace';
+let candidates=[], showArchived=false, pipeFilter='all';
+let provizeMyPos='jmng', provizeOB={};
+const editMode=new Set();
 
-function storageKey(){return 'ik_karta_v2'}
-function load(){try{const d=localStorage.getItem(storageKey());if(d){const p=JSON.parse(d);people=p.people||[];mode=p.mode||'mng';activePersonId=p.activePersonId||null}}catch(e){}}
-function save(){try{localStorage.setItem(storageKey(),JSON.stringify({people,mode,activePersonId}))}catch(e){}}
-
+function SK(){return'ik_karta_v3'}
+function load(){
+  try{
+    const d=localStorage.getItem(SK());
+    if(d){const p=JSON.parse(d);people=p.people||[];mode=p.mode||'mng';activePersonId=p.activePersonId||null;candidates=p.candidates||[];provizeMyPos=p.provizeMyPos||'jmng';provizeOB=p.provizeOB||{}}
+  }catch(e){}
+}
+function save(){
+  try{localStorage.setItem(SK(),JSON.stringify({people,mode,activePersonId,candidates,provizeMyPos,provizeOB}))}catch(e){}
+}
 function getPerson(){return people.find(p=>p.id===activePersonId)||null}
-function getChecklist(person){
-  if(!person.checklist) person.checklist=cloneTemplate(person.mode||mode);
-  return person.checklist;
-}
+function getCL(person){if(!person.checklist)person.checklist=JSON.parse(JSON.stringify(TEMPLATE[person.mode||mode]));return person.checklist}
 
-// ─── HELPERS ──────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════════════════════════════
 function initials(name){if(!name)return'?';const p=name.trim().split(' ');return p.length>=2?(p[0][0]+p[p.length-1][0]).toUpperCase():name.slice(0,2).toUpperCase()}
-function getCurrentWeekNum(d){if(!d)return null;const diff=Math.floor((new Date()-new Date(d))/(1000*60*60*24*7));return diff+1}
-function formatDate(d){if(!d)return'–';try{return new Date(d).toLocaleDateString('cs-CZ')}catch{return d}}
-function sectionKey(pi,wi,si){return`s_${pi}_${wi}_${si}`}
-function itemKey(pi,wi,si,ii){return`${pi}_${wi}_${si}_${ii}`}
+function getWeekNum(d){if(!d)return null;const diff=Math.floor((new Date()-new Date(d))/(1000*60*60*24*7));return diff+1}
+function fmtDate(d){if(!d)return'–';try{return new Date(d).toLocaleDateString('cs-CZ')}catch{return d}}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function fmtKc(n){return n?Number(n).toLocaleString('cs-CZ'):'–'}
+function IK(pi,wi,si,ii){return`${pi}_${wi}_${si}_${ii}`}
+function SK2(pi,wi,si){return`s_${pi}_${wi}_${si}`}
+function daysSince(dateStr){if(!dateStr)return null;return Math.floor((new Date()-new Date(dateStr))/(1000*60*60*24))}
 
-// ─── PROGRESS ─────────────────────────────────────────────────────────────────
-function countProgress(person){
-  const cl=getChecklist(person);
-  const st=person.state||{};
-  let total=0,done=0,waiting=0;
-  cl.forEach((ph,pi)=>ph.weeks.forEach((wk,wi)=>wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{
-    total++;
-    const v=st[itemKey(pi,wi,si,ii)];
-    if(v==='done')done++;
-    else if(v==='waiting')waiting++;
-  }))));
-  return{total,done,waiting};
-}
-
-// ─── SIDEBAR ──────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════
+// SIDEBAR RENDER
+// ═══════════════════════════════════════════════════════════════════
 function renderSidebar(){
-  document.getElementById('mode-mgr').className='mode-tab '+(mode==='mng'?'active-mgr':'');
-  document.getElementById('mode-dir').className='mode-tab '+(mode==='dir'?'active-dir':'');
-  document.getElementById('people-label').textContent=mode==='mng'?'Poradci v adaptaci':'Manažeři v adaptaci';
-  document.getElementById('nav-checklist').className='nav-item'+(activeTab==='checklist'?' active':'');
-  document.getElementById('nav-ik').className='nav-item'+(activeTab==='ik'?' active':'');
+  document.getElementById('mode-mgr').className='mode-tab '+(mode==='mng'?'am':'');
+  document.getElementById('mode-dir').className='mode-tab '+(mode==='dir'?'ad':'');
+  ['adaptace','aktivity','pipeline','provize'].forEach(m=>{
+    document.getElementById('mod-'+m).className='mod-btn'+(activeModule===m?' active':'');
+  });
+  const showPeople=['adaptace','aktivity'].includes(activeModule);
+  document.getElementById('sb-people-lbl').style.display=showPeople?'':'none';
+  document.getElementById('person-list').style.display=showPeople?'':'none';
+  document.querySelector('.add-person-btn').style.display=showPeople?'':'none';
+  if(!showPeople)return;
+  document.getElementById('sb-people-lbl').textContent=mode==='mng'?'Poradci v adaptaci':'Manažeři v adaptaci';
   const list=document.getElementById('person-list');
   const filtered=people.filter(p=>p.mode===mode);
-  if(!filtered.length){list.innerHTML='<div style="padding:8px 10px;font-size:12px;color:var(--text3)">Žádné osoby</div>';return}
+  if(!filtered.length){list.innerHTML='<div style="padding:6px 8px;font-size:11px;color:var(--text3)">Žádné osoby</div>';return}
   list.innerHTML=filtered.map(p=>{
-    const wn=getCurrentWeekNum(p.startDate);
-    const wl=wn?(wn>12?'12+ týd.':wn+'. týd.'):'–';
-    const av=mode==='mng'?'pav-blue':'pav-purple';
+    const wn=getWeekNum(p.startDate);
+    const wl=wn?(wn>12?'12+':wn+'. t.'):'–';
+    const av=mode==='mng'?'pav-b':'pav-p';
     return`<div class="person-item${p.id===activePersonId?' active':''}" onclick="selectPerson('${p.id}')">
       <div class="pav ${av}">${initials(p.name)}</div>
-      <div class="person-info"><div class="person-name-s">${p.name}</div><div class="person-pos">${p.position||'–'}</div></div>
-      <span class="person-week-badge">${wl}</span>
+      <div class="pi-info"><div class="pi-name">${p.name}</div><div class="pi-pos">${p.position||'–'}</div></div>
+      <span class="pi-badge">${wl}</span>
     </div>`;
   }).join('');
 }
 
-// ─── HEADER ───────────────────────────────────────────────────────────────────
-function renderHeader(person){
-  if(!person){
-    document.getElementById('mh-av').textContent='--';
-    document.getElementById('mh-name').textContent='Vyberte osobu';
-    document.getElementById('mh-meta').innerHTML='–';
-    document.getElementById('mh-actions').innerHTML='';
-    document.getElementById('prog-fill').style.width='0%';
-    document.getElementById('prog-pct').textContent='0 %';
-    return;
+// ═══════════════════════════════════════════════════════════════════
+// HEADER RENDER
+// ═══════════════════════════════════════════════════════════════════
+function renderHeader(){
+  const progWrap=document.getElementById('prog-wrap');
+  const tabsRow=document.getElementById('tabs-row');
+  const mhAv=document.getElementById('mh-av');
+  const mhName=document.getElementById('mh-name');
+  const mhMeta=document.getElementById('mh-meta');
+  const mhActions=document.getElementById('mh-actions');
+
+  if(activeModule==='pipeline'){
+    mhAv.textContent='👥';mhAv.className='mh-av';
+    mhName.textContent='Náborová pipeline';
+    mhMeta.innerHTML='Správa kandidátů a kontaktní CRM';
+    const tot=candidates.filter(c=>!c.archived).length;
+    const signed=candidates.filter(c=>c.stage===4).length;
+    mhActions.innerHTML=`<span style="font-size:12px;color:var(--text3)">${tot} aktivní · ${signed} podpisy</span><button class="btn btn-p" onclick="openCandModal()">+ Přidat kandidáta</button>`;
+    progWrap.style.display='none';tabsRow.style.display='none';return;
   }
-  const wn=getCurrentWeekNum(person.startDate);
-  document.getElementById('mh-av').textContent=initials(person.name);
-  document.getElementById('mh-av').className='mh-av '+(mode==='mng'?'mh-av-blue':'mh-av-purple');
-  document.getElementById('mh-name').textContent=person.name;
+  if(activeModule==='provize'){
+    mhAv.textContent='Kč';mhAv.className='mh-av';
+    mhName.textContent='Rozdílové provize';
+    mhMeta.innerHTML='Kalkulačka výdělku z týmové produkce';
+    mhActions.innerHTML='';
+    progWrap.style.display='none';tabsRow.style.display='none';return;
+  }
+  const person=getPerson();
+  if(!person){
+    mhAv.textContent='IK';mhAv.className='mh-av mhav-b';
+    mhName.textContent=activeModule==='aktivity'?'Aktivity & statistiky':'Adaptace';
+    mhMeta.innerHTML='Vyberte osobu v levém panelu';
+    mhActions.innerHTML='';progWrap.style.display='none';tabsRow.style.display='none';return;
+  }
+  const wn=getWeekNum(person.startDate);
+  mhAv.textContent=initials(person.name);
+  mhAv.className='mh-av '+(mode==='mng'?'mhav-b':'mhav-p');
+  mhName.textContent=person.name;
   const started=person.startDate?new Date(person.startDate).toLocaleDateString('cs-CZ'):'–';
-  document.getElementById('mh-meta').innerHTML=`${person.position||'–'} · nastoupil ${started}${wn?` <span>týden ${wn}</span>`:''}`;
-  const bc=mode==='mng'?'btn-primary':'btn-purple';
-  const emailBtn=person.email?`<button class="btn" onclick="sendEmail('${person.id}')"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 4l6 4 6-4" stroke="currentColor" stroke-width="1.2"/></svg>Poslat úkoly e-mailem</button>`:'';
-  document.getElementById('mh-actions').innerHTML=`${emailBtn}<button class="btn ${bc}" onclick="openIkModal()">+ Nová IK</button><button class="btn" onclick="deletePerson('${person.id}')" style="color:var(--red)">Odebrat</button>`;
-  const {total,done}=countProgress(person);
-  const pct=total>0?Math.round(done/total*100):0;
-  document.getElementById('prog-fill').style.width=pct+'%';
-  document.getElementById('prog-pct').textContent=pct+' %';
+  mhMeta.innerHTML=`${person.position||'–'} · nastoupil ${started}${wn?` <em>týden ${wn}</em>`:''}`;
+  const bc=mode==='mng'?'btn-p':'btn-pu';
+  const emailBtn=person.email?`<button class="btn" onclick="sendEmail('${person.id}')"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="1.5" stroke="currentColor" stroke-width="1.2"/><path d="M1 4l6 4 6-4" stroke="currentColor" stroke-width="1.2"/></svg>Poslat e-mailem</button>`:'';
+  if(activeModule==='adaptace'){
+    mhActions.innerHTML=`${emailBtn}<button class="btn ${bc}" onclick="openIkModal()">+ Nová IK</button><button class="btn" onclick="deletePerson('${person.id}')" style="color:var(--red)">Odebrat</button>`;
+    const{total,done}=countProgress(person);
+    const pct=total>0?Math.round(done/total*100):0;
+    document.getElementById('prog-fill').style.width=pct+'%';
+    document.getElementById('prog-pct').textContent=pct+' %';
+    progWrap.style.display='block';
+    document.getElementById('tab-checklist').className='tab-btn'+(activeTab==='checklist'?' active':'');
+    document.getElementById('tab-ik').className='tab-btn'+(activeTab==='ik'?' active':'');
+    tabsRow.style.display='flex';
+  } else {
+    mhActions.innerHTML=`${emailBtn}<button class="btn" onclick="deletePerson('${person.id}')" style="color:var(--red)">Odebrat</button>`;
+    progWrap.style.display='none';tabsRow.style.display='none';
+  }
 }
 
-// ─── CHECKLIST RENDER ─────────────────────────────────────────────────────────
-function renderChecklist(person){
-  const cl=getChecklist(person);
-  const st=person.state||{};
-  const wn=getCurrentWeekNum(person.startDate);
-  const {total,done,waiting}=countProgress(person);
-  const ik=(person.ik||[]).length;
+function countProgress(person){
+  const cl=getCL(person);const st=person.state||{};let total=0,done=0,waiting=0;
+  cl.forEach((ph,pi)=>ph.weeks.forEach((wk,wi)=>wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{
+    total++;const v=st[IK(pi,wi,si,ii)];if(v==='done')done++;else if(v==='waiting')waiting++;
+  }))));
+  return{total,done,waiting};
+}
 
-  let html=`<div class="legend">
-    <div class="legend-item"><div class="legend-cb lcb-none"></div>Nezahájeno</div>
-    <div class="legend-item"><div class="legend-cb lcb-wait" style="display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--amber);font-weight:600">~</div>Čekám na protistranu</div>
-    <div class="legend-item"><div class="legend-cb lcb-done"></div>Hotovo</div>
-    <div class="legend-item" style="margin-left:auto;font-size:11px;color:var(--text3)">Kliknutím na položku cyklujete stav</div>
+// ═══════════════════════════════════════════════════════════════════
+// MODULE: ADAPTACE CHECKLIST
+// ═══════════════════════════════════════════════════════════════════
+function renderAdaptace(person){
+  if(!person)return`<div class="empty-state"><div class="empty-state-title">Vyberte osobu</div><p style="font-size:13px;margin-top:5px">Nebo přidejte novou tlačítkem v levém panelu.</p><button class="btn btn-p" style="margin-top:14px" onclick="openAddModal()">+ Přidat osobu</button></div>`;
+  if(activeTab==='ik')return renderIK(person);
+  const cl=getCL(person);const st=person.state||{};const wn=getWeekNum(person.startDate);
+  const{total,done,waiting}=countProgress(person);const ik=(person.ik||[]).length;
+  let h=`<div class="legend">
+    <div class="leg-item"><div class="leg-cb" style="border:1.5px solid var(--border2);background:#fff"></div>Nezahájeno</div>
+    <div class="leg-item"><div class="leg-cb" style="border:1.5px solid var(--amber-border);background:var(--amber-bg);color:var(--amber)">~</div>Čekám na protistranu</div>
+    <div class="leg-item"><div class="leg-cb" style="background:var(--accent)"></div>Hotovo</div>
+    <div style="margin-left:auto;font-size:11px;color:var(--text3)">Kliknutím cyklujete stav</div>
   </div>`;
-
-  html+=`<div class="stats-row">
-    <div class="stat-card"><div class="stat-card-label">Hotovo</div><div class="stat-card-val">${done}</div><div class="stat-card-sub">z ${total} položek</div></div>
-    <div class="stat-card"><div class="stat-card-label">Čekám na protistranu</div><div class="stat-card-val" style="color:var(--amber)">${waiting}</div><div class="stat-card-sub">položek čeká</div></div>
-    <div class="stat-card"><div class="stat-card-label">IK záznamy</div><div class="stat-card-val">${ik}</div><div class="stat-card-sub">schůzek</div></div>
-    <div class="stat-card"><div class="stat-card-label">Postup</div><div class="stat-card-val">${total>0?Math.round(done/total*100):0} %</div><div class="stat-card-sub">dokončeno</div></div>
+  h+=`<div class="stats-row">
+    <div class="stat-c"><div class="stat-c-lbl">Hotovo</div><div class="stat-c-val">${done}</div><div class="stat-c-sub">z ${total} položek</div></div>
+    <div class="stat-c"><div class="stat-c-lbl">Čekám na protistranu</div><div class="stat-c-val" style="color:var(--amber)">${waiting}</div><div class="stat-c-sub">položek čeká</div></div>
+    <div class="stat-c"><div class="stat-c-lbl">IK záznamy</div><div class="stat-c-val">${ik}</div><div class="stat-c-sub">schůzek</div></div>
+    <div class="stat-c"><div class="stat-c-lbl">Postup</div><div class="stat-c-val">${total>0?Math.round(done/total*100):0} %</div><div class="stat-c-sub">dokončeno</div></div>
   </div>`;
-
   cl.forEach((phase,pi)=>{
-    let phTotal=0,phDone=0;
-    phase.weeks.forEach((wk,wi)=>wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{phTotal++;if(st[itemKey(pi,wi,si,ii)]==='done')phDone++;})));
-    const phPct=phTotal>0?Math.round(phDone/phTotal*100):0;
-    const collapsed=phase.open?'':'collapsed';
-    html+=`<div class="phase-block ${collapsed}" id="phase-${pi}">
-      <div class="phase-hdr" onclick="togglePhase(${pi})">
-        <span class="phase-title-txt">${phase.label}</span>
-        <span class="phase-meta"><span class="phase-count">${phDone}/${phTotal}</span><span class="phase-pct">${phPct}%</span><span class="chevron">▾</span></span>
-      </div>
+    let phT=0,phD=0;phase.weeks.forEach((wk,wi)=>wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{phT++;if(st[IK(pi,wi,si,ii)]==='done')phD++;})));
+    const phPct=phT>0?Math.round(phD/phT*100):0;
+    h+=`<div class="phase-block${phase.open?'':' collapsed'}" id="phase-${pi}">
+      <div class="phase-hdr" onclick="togglePhase(${pi})"><span class="phase-title-txt">${phase.label}</span>
+      <span class="phase-meta"><span class="phase-count">${phD}/${phT}</span><span class="phase-pct">${phPct}%</span><span class="chevron">▾</span></span></div>
       <div class="phase-body">`;
-
     phase.weeks.forEach((wk,wi)=>{
-      const isCurrent=wk.weekNum&&wn&&wn===wk.weekNum;
-      let wkTotal=0,wkDone=0;
-      wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{wkTotal++;if(st[itemKey(pi,wi,si,ii)]==='done')wkDone++;}));
-      const wkPct=wkTotal>0?Math.round(wkDone/wkTotal*100):0;
-      html+=`<div class="week-block${isCurrent?' current-week':''}">
-        <div class="week-hdr"><span class="week-label-txt">${wk.label}</span>${isCurrent?'<span class="current-badge">Aktuální týden</span>':''}</div>
+      const isCur=wk.weekNum&&wn&&wn===wk.weekNum;
+      let wkT=0,wkD=0;wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{wkT++;if(st[IK(pi,wi,si,ii)]==='done')wkD++;}));
+      const wkPct=wkT>0?Math.round(wkD/wkT*100):0;
+      h+=`<div class="week-block${isCur?' cw':''}">
+        <div class="week-hdr"><span class="week-lbl">${wk.label}</span>${isCur?'<span class="cur-badge">Aktuální týden</span>':''}</div>
         <div class="week-prog"><div class="week-prog-fill" style="width:${wkPct}%"></div></div>`;
-
       wk.sections.forEach((sec,si)=>{
-        const sk=sectionKey(pi,wi,si);
-        const inEdit=editMode.has(sk);
-        const roleClass={mgr:'rb-mgr',nov:'rb-nov',dir:'rb-dir'}[sec.role]||'rb-mgr';
-        const roleLabel={mgr:'manažer',nov:'nováček',dir:'ředitel'}[sec.role]||'';
-        html+=`<div class="section-hdr">
-          <span class="section-lbl">${sec.title}</span>
-          <span class="role-badge ${roleClass}">${roleLabel}</span>
-          <button class="edit-section-btn${inEdit?' active':''}" onclick="toggleEditSection('${person.id}','${sk}',${pi},${wi},${si})">
-            <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-            ${inEdit?'Hotovo':'Upravit'}
-          </button>
-        </div>`;
-
+        const sk=SK2(pi,wi,si);const inEdit=editMode.has(sk);
+        const rc={'mgr':'rb-m','nov':'rb-n','dir':'rb-d'}[sec.role]||'rb-m';
+        const rl={'mgr':'manažer','nov':'nováček','dir':'ředitel'}[sec.role]||'';
+        h+=`<div class="sec-hdr"><span class="sec-lbl">${sec.title}</span><span class="role-badge ${rc}">${rl}</span>
+          <button class="edit-sec-btn${inEdit?' on':''}" onclick="toggleEdit('${person.id}','${sk}',${pi},${wi},${si})">${inEdit?'Hotovo':'Upravit'}</button></div>`;
         if(inEdit){
-          // Edit mode: show inputs
           sec.items.forEach((item,ii)=>{
-            const k=itemKey(pi,wi,si,ii);
-            html+=`<div class="edit-item-row">
-              <span class="drag-handle">⠿</span>
-              <input class="edit-item-input" value="${escHtml(item)}" 
-                onchange="updateItemText('${person.id}',${pi},${wi},${si},${ii},this.value)"
-                onblur="updateItemText('${person.id}',${pi},${wi},${si},${ii},this.value)">
-              <button class="del-item-btn" onclick="deleteItem('${person.id}',${pi},${wi},${si},${ii})" title="Smazat položku">×</button>
-            </div>`;
+            h+=`<div class="edit-item-row"><input class="edit-inp" value="${esc(item)}" onchange="updateItem('${person.id}',${pi},${wi},${si},${ii},this.value)">
+              <button class="del-btn" onclick="delItem('${person.id}',${pi},${wi},${si},${ii})">×</button></div>`;
           });
-          html+=`<div class="add-item-row">
-            <input class="add-item-input" id="new-item-${sk}" placeholder="+ Nová položka..." 
-              onkeydown="if(event.key==='Enter')addItem('${person.id}',${pi},${wi},${si})">
-            <button class="add-item-btn-sm" onclick="addItem('${person.id}',${pi},${wi},${si})">Přidat</button>
-          </div>`;
+          h+=`<div class="add-row"><input class="add-inp" id="ai-${sk}" placeholder="+ Nová položka..." onkeydown="if(event.key==='Enter')addItem('${person.id}',${pi},${wi},${si})">
+            <button class="add-btn-sm" onclick="addItem('${person.id}',${pi},${wi},${si})">Přidat</button></div>`;
         } else {
-          // Normal view mode
           sec.items.forEach((item,ii)=>{
-            const k=itemKey(pi,wi,si,ii);
-            const v=st[k]||'none';
-            html+=`<div class="check-item state-${v}" onclick="cycleState('${person.id}','${k}')">
-              <div class="cb3 ${v==='done'?'done':v==='waiting'?'waiting':''}"></div>
-              <span class="item-txt">${escHtml(item)}</span>
-              ${v==='waiting'?'<span class="waiting-label">čekám</span>':''}
+            const k=IK(pi,wi,si,ii);const v=st[k]||'none';
+            h+=`<div class="check-item s${v==='done'?'d':v==='waiting'?'w':''}" onclick="cycleState('${person.id}','${k}')">
+              <div class="cb3${v==='done'?' d':v==='waiting'?' w':''}"></div>
+              <span class="item-txt">${esc(item)}</span>${v==='waiting'?'<span class="wait-lbl">čekám</span>':''}
             </div>`;
           });
         }
       });
-      html+=`</div>`;
+      h+=`</div>`;
     });
-    html+=`</div></div>`;
+    h+=`</div></div>`;
   });
-
-  html+=`<div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap">
-    <button class="btn" onclick="checkAll('${person.id}')">Označit vše jako hotovo</button>
+  h+=`<div style="display:flex;gap:7px;margin-top:14px;flex-wrap:wrap">
+    <button class="btn" onclick="checkAll('${person.id}')">Označit vše hotovo</button>
     <button class="btn" onclick="uncheckAll('${person.id}')">Resetovat stavy</button>
-    <button class="btn" onclick="resetChecklist('${person.id}')">Obnovit výchozí checklist</button>
-  </div>`;
-  return html;
+    <button class="btn" onclick="resetCL('${person.id}')">Obnovit výchozí checklist</button></div>`;
+  return h;
 }
 
-function escHtml(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-
-// ─── IK RENDER ────────────────────────────────────────────────────────────────
 function renderIK(person){
   const ik=person.ik||[];
-  let html=`<div style="display:flex;justify-content:flex-end;margin-bottom:16px">
-    <button class="btn btn-primary" onclick="openIkModal()">+ Nová IK schůzka</button></div>`;
-  if(!ik.length){
-    html+=`<div class="ik-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4M3 10h18M8 14h4M8 17h6"/></svg><div style="margin-top:8px">Zatím žádné záznamy z IK schůzek</div></div>`;
-  } else {
-    [...ik].reverse().forEach((rec,ri)=>{
-      const idx=ik.length-1-ri;
-      const tNov=(rec.tasksNov||'').split('\n').filter(Boolean);
-      const tMgr=(rec.tasksMgr||'').split('\n').filter(Boolean);
-      html+=`<div class="ik-record">
-        <div class="ik-record-hdr"><span class="ik-date">IK · ${formatDate(rec.date)}</span>
-          <button class="btn" style="font-size:11px;padding:4px 10px;color:var(--red)" onclick="deleteIkRecord('${person.id}',${idx})">Smazat</button></div>
-        <div class="ik-record-body">`;
-      if(rec.content) html+=`<div class="ik-field"><div class="ik-label">Obsah schůzky</div><div class="ik-text">${rec.content}</div></div>`;
-      if(tNov.length) html+=`<div class="ik-field"><div class="ik-label">Úkoly pro nováčka</div><ul class="ik-tasks">${tNov.map(t=>`<li class="ik-task-item">${escHtml(t)}</li>`).join('')}</ul></div>`;
-      if(tMgr.length) html+=`<div class="ik-field"><div class="ik-label">Úkoly pro manažera</div><ul class="ik-tasks">${tMgr.map(t=>`<li class="ik-task-item">${escHtml(t)}</li>`).join('')}</ul></div>`;
-      html+=`</div><div class="ik-footer">${person.email?`<button class="btn" onclick="sendEmailRecord('${person.id}',${idx})">Poslat e-mailem</button>`:''}</div></div>`;
+  let h=`<div style="display:flex;justify-content:flex-end;margin-bottom:14px"><button class="btn btn-p" onclick="openIkModal()">+ Nová IK schůzka</button></div>`;
+  if(!ik.length)return h+`<div class="empty-state"><div class="empty-state-title">Zatím žádné záznamy</div></div>`;
+  [...ik].reverse().forEach((rec,ri)=>{
+    const idx=ik.length-1-ri;
+    const tN=(rec.tasksNov||'').split('\n').filter(Boolean);
+    const tM=(rec.tasksMgr||'').split('\n').filter(Boolean);
+    h+=`<div class="ik-record"><div class="ik-rec-hdr"><span class="ik-date">IK · ${fmtDate(rec.date)}</span>
+      <button class="btn" style="font-size:11px;padding:3px 9px;color:var(--red)" onclick="delIK('${person.id}',${idx})">Smazat</button></div>
+      <div class="ik-body">`;
+    if(rec.content)h+=`<div class="ik-fld"><div class="ik-lbl">Obsah schůzky</div><div class="ik-txt">${esc(rec.content)}</div></div>`;
+    if(tN.length)h+=`<div class="ik-fld"><div class="ik-lbl">Úkoly pro nováčka</div><ul class="ik-tasks">${tN.map(t=>`<li class="ik-task-item">${esc(t)}</li>`).join('')}</ul></div>`;
+    if(tM.length)h+=`<div class="ik-fld"><div class="ik-lbl">Úkoly pro manažera</div><ul class="ik-tasks">${tM.map(t=>`<li class="ik-task-item">${esc(t)}</li>`).join('')}</ul></div>`;
+    h+=`</div><div class="ik-footer">${person.email?`<button class="btn" onclick="sendEmailRec('${person.id}',${idx})">Poslat e-mailem</button>`:''}</div></div>`;
+  });
+  return h;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MODULE: AKTIVITY & STATISTIKY
+// ═══════════════════════════════════════════════════════════════════
+function renderAktivity(person){
+  if(!person)return`<div class="empty-state"><div class="empty-state-title">Vyberte osobu</div><p style="font-size:13px;margin-top:5px">Vyberte poradce v levém panelu pro zobrazení statistik.</p></div>`;
+  const year=new Date().getFullYear();
+  const curMonth=new Date().getMonth(); // 0-indexed
+  if(!person.stats)person.stats={};
+  if(!person.stats[year])person.stats[year]={};
+  const yd=person.stats[year];
+
+  // Summary cards for current month
+  const mKey=`m${curMonth}`;
+  const md=yd[mKey]||{};
+  let h=`<div class="stats-row">`;
+  const plan_ks=yd.plan_klient_schuze||0;
+  const plan_ob=yd.plan_ob||0;
+  const plan_ns=yd.plan_nabor_schuze||0;
+  const plan_np=yd.plan_nabor_podpisy||0;
+  const act_ks=md.klient_schuze||0;
+  const act_ob=md.ob||0;
+  const act_ns=md.nabor_schuze||0;
+  const act_np=md.nabor_podpisy||0;
+  function pctColor(a,p){if(!p)return'var(--text)';const r=a/p;return r>=1?'var(--green)':r>=0.7?'var(--amber)':'var(--red)'}
+  h+=`<div class="stat-c"><div class="stat-c-lbl">Kl. schůzky – ${MONTHS[curMonth]}</div><div class="stat-c-val" style="color:${pctColor(act_ks,plan_ks)}">${act_ks}</div><div class="stat-c-sub">plán ${plan_ks}</div></div>`;
+  h+=`<div class="stat-c"><div class="stat-c-lbl">OB podepsané – ${MONTHS[curMonth]}</div><div class="stat-c-val" style="color:${pctColor(act_ob,plan_ob)}">${fmtKc(act_ob)}</div><div class="stat-c-sub">plán ${fmtKc(plan_ob)}</div></div>`;
+  h+=`<div class="stat-c"><div class="stat-c-lbl">Náb. schůzky – ${MONTHS[curMonth]}</div><div class="stat-c-val" style="color:${pctColor(act_ns,plan_ns)}">${act_ns}</div><div class="stat-c-sub">plán ${plan_ns}</div></div>`;
+  h+=`<div class="stat-c"><div class="stat-c-lbl">Nábory podpisy – ${MONTHS[curMonth]}</div><div class="stat-c-val" style="color:${pctColor(act_np,plan_np)}">${act_np}</div><div class="stat-c-sub">plán ${plan_np}</div></div>`;
+  h+=`</div>`;
+
+  // Full year table
+  h+=`<div class="aktivity-wrap"><table class="stats-table"><thead><tr>
+    <th class="metric-col">Metrika</th>
+    <th>Plán / měsíc</th>`;
+  MONTHS.forEach((m,i)=>{h+=`<th${i===curMonth?' class="cur-month"':''}>${m}</th>`;});
+  h+=`</tr></thead><tbody>`;
+
+  const rows=[
+    {key:'klient_schuze',label:'Klientské 1. schůzky',planKey:'plan_klient_schuze',section:'Klientské aktivity'},
+    {key:'ob',label:'OB podepsané (body)',planKey:'plan_ob',section:'Klientské aktivity'},
+    {key:'nabor_schuze',label:'Náborové schůzky',planKey:'plan_nabor_schuze',section:'Náborové aktivity'},
+    {key:'nabor_podpisy',label:'Nové podpisy (nábor)',planKey:'plan_nabor_podpisy',section:'Náborové aktivity'},
+  ];
+  let lastSection='';
+  rows.forEach(row=>{
+    if(row.section!==lastSection){
+      h+=`<tr class="metric-section-hdr"><td colspan="${14}">${row.section}</td></tr>`;
+      lastSection=row.section;
+    }
+    const plan=yd[row.planKey]||0;
+    h+=`<tr><td class="metric-name">${row.label}</td>
+      <td class="plan-cell"><input class="num-inp" type="number" min="0" value="${plan}" onchange="setPlan('${person.id}',${year},'${row.planKey}',this.value)" placeholder="–"></td>`;
+    MONTHS.forEach((_,i)=>{
+      const mk=`m${i}`;
+      const val=(yd[mk]||{})[row.key]||'';
+      let cls=i===curMonth?'num-inp cur':'num-inp';
+      let tdCls='';
+      if(val&&plan){const r=val/plan;tdCls=r>=1?'cell-green':r>=0.7?'cell-amber':'cell-red'}
+      else if(!val)tdCls='cell-empty';
+      h+=`<td class="${tdCls}"><input class="${cls}" type="number" min="0" value="${val}" onchange="setActual('${person.id}',${year},${i},'${row.key}',this.value)" placeholder="–"></td>`;
     });
-  }
-  return html;
+    h+=`</tr>`;
+  });
+  h+=`</tbody></table></div>`;
+  h+=`<div style="font-size:11px;color:var(--text3);margin-top:10px;padding:8px 10px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--border)">Hodnoty zadávejte přímo do buněk. Barva buňky = porovnání s měsíčním plánem: <span style="color:var(--green)">zelená ≥ 100 %</span> · <span style="color:var(--amber)">oranžová 70–99 %</span> · <span style="color:var(--red)">červená &lt; 70 %</span>.</div>`;
+  return h;
 }
 
-// ─── MAIN RENDER ──────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════
+// MODULE: NÁBOROVÁ PIPELINE (CRM)
+// ═══════════════════════════════════════════════════════════════════
+function lastContactDate(c){
+  if(!c.contacts||!c.contacts.length)return null;
+  const dates=c.contacts.map(x=>x.date).filter(Boolean).sort();
+  return dates[dates.length-1];
+}
+function renderPipeline(){
+  const active=candidates.filter(c=>!c.archived);
+  const filtered=pipeFilter==='all'?active:active.filter(c=>c.source===pipeFilter);
+  const signed=active.filter(c=>c.stage===4).length;
+  const offers=active.filter(c=>c.stage===3).length;
+  const contactedThisMonth=active.filter(c=>{
+    const ld=lastContactDate(c);
+    if(!ld)return false;
+    const d=new Date(ld);const n=new Date();
+    return d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear();
+  }).length;
+
+  let h=`<div class="stats-row">
+    <div class="stat-c"><div class="stat-c-lbl">Aktivní kandidáti</div><div class="stat-c-val">${active.filter(c=>c.stage<4).length}</div><div class="stat-c-sub">v pipeline</div></div>
+    <div class="stat-c"><div class="stat-c-lbl">Kontaktováno letos</div><div class="stat-c-val">${contactedThisMonth}</div><div class="stat-c-sub">tento měsíc</div></div>
+    <div class="stat-c"><div class="stat-c-lbl">Nabídka podána</div><div class="stat-c-val">${offers}</div><div class="stat-c-sub">čekají na odpověď</div></div>
+    <div class="stat-c"><div class="stat-c-lbl">Podpisy celkem</div><div class="stat-c-val" style="color:var(--green)">${signed}</div><div class="stat-c-sub">úspěšné nábory</div></div>
+  </div>`;
+
+  h+=`<div class="pipe-top-bar">
+    <button class="filter-btn${pipeFilter==='all'?' active':''}" onclick="setPipeFilter('all')">Vše</button>
+    <button class="filter-btn${pipeFilter==='bank'?' active':''}" onclick="setPipeFilter('bank')">Banky</button>
+    <button class="filter-btn${pipeFilter==='poj'?' active':''}" onclick="setPipeFilter('poj')">Pojišťovny</button>
+    <button class="filter-btn${pipeFilter==='konk'?' active':''}" onclick="setPipeFilter('konk')">Konkurence</button>
+    <button class="filter-btn${pipeFilter==='dop'?' active':''}" onclick="setPipeFilter('dop')">Doporučení</button>
+    <button class="filter-btn" style="margin-left:auto" onclick="toggleArchived()">${showArchived?'Skrýt archiv':'Zobrazit archiv ('+candidates.filter(c=>c.archived).length+')'}</button>
+  </div>`;
+
+  if(showArchived){
+    const arch=candidates.filter(c=>c.archived);
+    h+=`<div style="margin-bottom:16px;padding:12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r)">
+      <div style="font-size:12px;font-weight:500;color:var(--text2);margin-bottom:8px">Archiv (${arch.length})</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">`;
+    arch.forEach(c=>{
+      h+=`<div style="display:flex;align-items:center;gap:7px;padding:5px 10px;border:1px solid var(--border);border-radius:var(--rs);background:var(--bg3)">
+        <span style="font-size:12px;color:var(--text2)">${esc(c.name)}</span>
+        <span style="font-size:10px;color:var(--text3)">${esc(c.currentEmployer||'')}</span>
+        <button onclick="unarchive('${c.id}')" style="font-size:10px;color:var(--accent);background:none;border:none;cursor:pointer">Obnovit</button>
+      </div>`;
+    });
+    h+=`</div></div>`;
+  }
+
+  h+=`<div class="pipe-board">`;
+  STAGE_LABELS.forEach((stage,si)=>{
+    const cols=filtered.filter(c=>c.stage===si);
+    h+=`<div><div class="pipe-col-hdr">${stage}<span class="pipe-col-count">${cols.length}</span></div>`;
+    cols.forEach(c=>{
+      const ld=lastContactDate(c);
+      const ds=ld?daysSince(ld):null;
+      const lcClass=ds===null?'':ds>14?'lc-warn':ds<=5?'lc-ok':'';
+      const lcTxt=ds===null?'Bez kontaktu':`${ds}d bez kontaktu`;
+      const srcMap={bank:'st-bank',poj:'st-poj',konk:'st-konk',dop:'st-dop',other:'st-other'};
+      const srcLbl={bank:'Banka',poj:'Pojišťovna',konk:'Konkurence',dop:'Doporučení',other:'Ostatní'};
+      const isExp=c.expanded;
+      h+=`<div class="cand-card${isExp?' expanded':''}" id="cc-${c.id}" onclick="toggleCard('${c.id}',event)">
+        <div class="cand-name">${esc(c.name)}</div>
+        <div class="cand-employer">${esc(c.currentRole||'')}${c.currentRole&&c.currentEmployer?' · ':''}${esc(c.currentEmployer||'')}</div>
+        <div class="cand-tags">
+          <span class="src-tag ${srcMap[c.source]||'st-other'}">${srcLbl[c.source]||'Ostatní'}</span>
+        </div>
+        <div class="last-contact ${lcClass}">${ds===null?'◦':'●'} ${lcTxt}</div>
+        <div class="cand-detail">`;
+
+      if(c.phone||c.email){
+        h+=`<div class="det-row"><span class="det-lbl">Kontakt</span><span class="det-val">${[c.phone,c.email].filter(Boolean).map(esc).join(' · ')}</span></div>`;
+      }
+      if(c.recommender){h+=`<div class="det-row"><span class="det-lbl">Doporučil</span><span class="det-val">${esc(c.recommender)}</span></div>`;}
+      if(c.obstacle){h+=`<div class="obstacle-box">⚠ ${esc(c.obstacle)}</div>`;}
+      if(c.solution){h+=`<div class="solution-box">→ ${esc(c.solution)}</div>`;}
+
+      // Contact log
+      h+=`<div class="contact-log"><div class="contact-log-hdr">Historie kontaktů</div>`;
+      if(c.contacts&&c.contacts.length){
+        [...c.contacts].reverse().forEach((ct,ri)=>{
+          const idx=c.contacts.length-1-ri;
+          h+=`<div class="contact-entry"><span class="ce-date">${fmtDate(ct.date)}</span><span class="ce-note">${esc(ct.note)}</span><button class="ce-del" onclick="delContact('${c.id}',${idx},event)">×</button></div>`;
+        });
+      } else {
+        h+=`<div style="font-size:11px;color:var(--text3);padding:4px 0">Zatím žádný kontakt</div>`;
+      }
+      h+=`<div class="add-contact-form">
+        <input class="mini-inp mini-date" type="date" id="cd-${c.id}" value="${new Date().toISOString().split('T')[0]}">
+        <input class="mini-inp mini-note" id="cn-${c.id}" placeholder="Co proběhlo, co je next step..." onkeydown="if(event.key==='Enter')addContact('${c.id}',event)">
+        <button class="mini-add-btn" onclick="addContact('${c.id}',event)">Přidat</button>
+      </div></div>`;
+
+      // Stage buttons
+      h+=`<div class="stage-btns">`;
+      STAGE_LABELS.forEach((sl,sj)=>{
+        h+=`<button class="stage-btn${c.stage===sj?' cur':''}" onclick="setStage('${c.id}',${sj},event)">${sl}</button>`;
+      });
+      h+=`<button class="archive-btn-c" onclick="archiveCand('${c.id}',event)">Archivovat</button>`;
+      h+=`</div></div></div>`;
+    });
+    h+=`<button class="add-cand-col-btn" onclick="openCandModal(${si})">+ Přidat</button></div>`;
+  });
+  h+=`</div>`;
+  return h;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MODULE: ROZDÍLOVÉ PROVIZE
+// ═══════════════════════════════════════════════════════════════════
+function renderProvize(){
+  const myPos=POSITIONS.find(p=>p.key===provizeMyPos)||POSITIONS[9];
+  let totalDiff=0;
+  let h=`<div class="provize-wrap">`;
+  h+=`<div class="prov-selector">
+    <span class="prov-sel-lbl">Moje pozice:</span>
+    <select class="prov-sel" onchange="setProvizePos(this.value)">`;
+  POSITIONS.filter(p=>p.koef>=9.0).forEach(p=>{
+    h+=`<option value="${p.key}"${p.key===provizeMyPos?' selected':''}>${p.label} (koef. ${p.koef})</option>`;
+  });
+  h+=`</select></div>`;
+
+  h+=`<table class="prov-table">
+    <thead><tr><th>Pozice v týmu</th><th>Koeficient</th><th>OB týmu (body)</th><th>Má rozdílovka</th></tr></thead>
+    <tbody>`;
+
+  POSITIONS.filter(p=>p.koef<myPos.koef).forEach(p=>{
+    const diff=Math.round((myPos.koef-p.koef)*100)/100;
+    const ob=Number(provizeOB[p.key]||0);
+    const result=Math.round(ob*diff);
+    if(ob>0)totalDiff+=result;
+    h+=`<tr>
+      <td><span class="prov-pos-name">${p.label}</span> <span class="prov-koef">(${p.abbr})</span></td>
+      <td class="prov-koef">${p.koef} → rozdíl <strong style="color:var(--accent)">${diff.toFixed(1)}</strong></td>
+      <td><input class="prov-ob-inp" type="number" min="0" value="${ob||''}" placeholder="0" onchange="setProvizeOB('${p.key}',this.value)"></td>
+      <td class="prov-result-inp">${ob>0?result.toLocaleString('cs-CZ')+' b':'–'}</td>
+    </tr>`;
+  });
+  h+=`<tr class="prov-total-row">
+    <td colspan="3">Celková rozdílovka za tým</td>
+    <td style="color:var(--accent)">${totalDiff.toLocaleString('cs-CZ')} b</td>
+  </tr></tbody></table>`;
+
+  const myKoef=myPos.koef;
+  const kcEst=totalDiff>0?Math.round(totalDiff*myKoef):0;
+  h+=`<div class="prov-note">
+    💡 <strong>Jak to číst:</strong> Body × koeficient vaší pozice = hrubý příjem. Při pozici ${myPos.label} (koef. ${myKoef}) a rozdílovce ${totalDiff.toLocaleString('cs-CZ')} b = přibližně <strong>${(totalDiff*myKoef).toLocaleString('cs-CZ')} Kč</strong> z týmové produkce. Přidejte svoji vlastní produkci pro celkový příjem.<br>
+    <span style="color:var(--text3);margin-top:4px;display:block">Hodnoty OB se ukládají a přetrvají po restartu prohlížeče.</span>
+  </div></div>`;
+  return h;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// MAIN RENDER
+// ═══════════════════════════════════════════════════════════════════
 function renderAll(){
-  renderSidebar();
-  const person=getPerson();
-  renderHeader(person);
-  document.getElementById('tab-checklist').className='tab-btn'+(activeTab==='checklist'?' active':'');
-  document.getElementById('tab-ik').className='tab-btn'+(activeTab==='ik'?' active':'');
+  renderSidebar();renderHeader();
   const content=document.getElementById('main-content');
-  if(!person){
-    content.innerHTML=`<div class="empty-state"><div class="empty-state-title">Žádná osoba vybrána</div><p style="font-size:13px;margin-top:6px">Přidejte osobu v levém panelu.</p><button class="btn btn-primary" style="margin-top:16px" onclick="openAddModal()">+ Přidat osobu</button></div>`;
-    return;
+  const person=getPerson();
+  switch(activeModule){
+    case'adaptace': content.innerHTML=renderAdaptace(person);break;
+    case'aktivity': content.innerHTML=renderAktivity(person);break;
+    case'pipeline': content.innerHTML=renderPipeline();break;
+    case'provize': content.innerHTML=renderProvize();break;
   }
-  content.innerHTML=activeTab==='checklist'?renderChecklist(person):renderIK(person);
 }
 
-// ─── ACTIONS ──────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════
+// ACTIONS: GENERAL
+// ═══════════════════════════════════════════════════════════════════
 function setMode(m){mode=m;activePersonId=null;editMode.clear();save();renderAll()}
 function selectPerson(id){activePersonId=id;editMode.clear();save();renderAll()}
+function setModule(m){activeModule=m;editMode.clear();if(m!=='adaptace')activeTab='checklist';renderAll()}
 function setTab(t){activeTab=t;renderAll()}
 function togglePhase(pi){const el=document.getElementById('phase-'+pi);if(el)el.classList.toggle('collapsed')}
 
-// 3-state cycle: none → waiting → done → none
+// CHECKLIST ACTIONS
 function cycleState(pid,key){
+  const p=people.find(x=>x.id===pid);if(!p)return;if(!p.state)p.state={};
+  const c=p.state[key]||'none';const n={none:'waiting',waiting:'done',done:'none'}[c];
+  if(n==='none')delete p.state[key];else p.state[key]=n;save();renderAll();
+}
+function toggleEdit(pid,sk,pi,wi,si){if(editMode.has(sk))editMode.delete(sk);else editMode.add(sk);renderAll()}
+function updateItem(pid,pi,wi,si,ii,val){const p=people.find(x=>x.id===pid);if(!p)return;getCL(p)[pi].weeks[wi].sections[si].items[ii]=val;save()}
+function delItem(pid,pi,wi,si,ii){
   const p=people.find(x=>x.id===pid);if(!p)return;
-  if(!p.state)p.state={};
-  const cur=p.state[key]||'none';
-  const next={none:'waiting',waiting:'done',done:'none'}[cur];
-  if(next==='none')delete p.state[key];else p.state[key]=next;
-  save();renderAll();
+  getCL(p)[pi].weeks[wi].sections[si].items.splice(ii,1);
+  if(!p.state)p.state={};const ns={};
+  Object.entries(p.state).forEach(([k,v])=>{const pts=k.split('_');if(pts.length===4){const[pp,pw,ps,pi2]=pts.map(Number);if(pp===pi&&pw===wi&&ps===si){if(pi2<ii)ns[k]=v;else if(pi2>ii)ns[`${pp}_${pw}_${ps}_${pi2-1}`]=v;}else ns[k]=v;}else ns[k]=v;});
+  p.state=ns;save();renderAll();
 }
-
-function toggleEditSection(pid,sk,pi,wi,si){
-  if(editMode.has(sk))editMode.delete(sk);else editMode.add(sk);
-  renderAll();
-}
-
-function updateItemText(pid,pi,wi,si,ii,val){
-  const p=people.find(x=>x.id===pid);if(!p)return;
-  const cl=getChecklist(p);
-  if(cl[pi]&&cl[pi].weeks[wi]&&cl[pi].weeks[wi].sections[si]){
-    cl[pi].weeks[wi].sections[si].items[ii]=val;save();
-  }
-}
-
-function deleteItem(pid,pi,wi,si,ii){
-  const p=people.find(x=>x.id===pid);if(!p)return;
-  const cl=getChecklist(p);
-  cl[pi].weeks[wi].sections[si].items.splice(ii,1);
-  // clean state keys for this section (reindex)
-  if(!p.state)p.state={};
-  const newState={};
-  Object.entries(p.state).forEach(([k,v])=>{
-    const parts=k.split('_');
-    if(parts.length===4){
-      const [ppi,wwi,ssi,iii]=parts.map(Number);
-      if(ppi===pi&&wwi===wi&&ssi===si){
-        if(iii<ii)newState[k]=v;
-        else if(iii>ii)newState[`${ppi}_${wwi}_${ssi}_${iii-1}`]=v;
-      }else newState[k]=v;
-    }else newState[k]=v;
-  });
-  p.state=newState;save();renderAll();
-}
-
 function addItem(pid,pi,wi,si){
-  const sk=sectionKey(pi,wi,si);
-  const inp=document.getElementById('new-item-'+sk);
-  if(!inp)return;
-  const val=inp.value.trim();if(!val)return;
+  const sk=SK2(pi,wi,si);const inp=document.getElementById('ai-'+sk);if(!inp)return;
+  const v=inp.value.trim();if(!v)return;
   const p=people.find(x=>x.id===pid);if(!p)return;
-  const cl=getChecklist(p);
-  cl[pi].weeks[wi].sections[si].items.push(val);
-  save();renderAll();
-  // re-focus
-  setTimeout(()=>{const ni=document.getElementById('new-item-'+sk);if(ni)ni.focus();},50);
+  getCL(p)[pi].weeks[wi].sections[si].items.push(v);save();renderAll();
+  setTimeout(()=>{const ni=document.getElementById('ai-'+sk);if(ni)ni.focus();},50);
+}
+function checkAll(pid){const p=people.find(x=>x.id===pid);if(!p)return;if(!p.state)p.state={};getCL(p).forEach((ph,pi)=>ph.weeks.forEach((wk,wi)=>wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{p.state[IK(pi,wi,si,ii)]='done';}))));save();renderAll();toast('Vše označeno jako hotovo')}
+function uncheckAll(pid){const p=people.find(x=>x.id===pid);if(!p)return;p.state={};save();renderAll();toast('Stavy resetovány')}
+function resetCL(pid){if(!confirm('Obnovit výchozí šablonu? Vlastní úpravy budou ztraceny.'))return;const p=people.find(x=>x.id===pid);if(!p)return;p.checklist=JSON.parse(JSON.stringify(TEMPLATE[p.mode||mode]));p.state={};save();renderAll();toast('Checklist obnoven')}
+function deletePerson(pid){if(!confirm('Odebrat tuto osobu a všechny záznamy?'))return;people=people.filter(p=>p.id!==pid);activePersonId=null;save();renderAll()}
+function delIK(pid,idx){const p=people.find(x=>x.id===pid);if(!p)return;p.ik=p.ik||[];p.ik.splice(idx,1);save();renderAll()}
+
+// AKTIVITY ACTIONS
+function setPlan(pid,year,key,val){
+  const p=people.find(x=>x.id===pid);if(!p)return;if(!p.stats)p.stats={};if(!p.stats[year])p.stats[year]={};
+  p.stats[year][key]=Number(val)||0;save();// no full rerender needed for plan inputs
+}
+function setActual(pid,year,month,key,val){
+  const p=people.find(x=>x.id===pid);if(!p)return;if(!p.stats)p.stats={};if(!p.stats[year])p.stats[year]={};
+  const mk=`m${month}`;if(!p.stats[year][mk])p.stats[year][mk]={};
+  p.stats[year][mk][key]=Number(val)||0;save();
+  // Update summary cards only
+  const yr=p.stats[year];const curM=new Date().getMonth();if(month!==curM)return;
+  const md=yr[`m${curM}`]||{};
+  const pcs=['klient_schuze','ob','nabor_schuze','nabor_podpisy'];
+  const pkeys=['plan_klient_schuze','plan_ob','plan_nabor_schuze','plan_nabor_podpisy'];
+  // just update color of changed cell
 }
 
-function checkAll(pid){
-  const p=people.find(x=>x.id===pid);if(!p)return;
-  const cl=getChecklist(p);if(!p.state)p.state={};
-  cl.forEach((ph,pi)=>ph.weeks.forEach((wk,wi)=>wk.sections.forEach((sec,si)=>sec.items.forEach((_,ii)=>{p.state[itemKey(pi,wi,si,ii)]='done';}))));
-  save();renderAll();toast('Vše označeno jako hotovo');
+// PIPELINE ACTIONS
+function setPipeFilter(f){pipeFilter=f;renderAll()}
+function toggleArchived(){showArchived=!showArchived;renderAll()}
+function toggleCard(id,e){if(e&&e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='BUTTON'||e.target.tagName==='SELECT'))return;const c=candidates.find(x=>x.id===id);if(!c)return;c.expanded=!c.expanded;renderAll()}
+function setStage(id,stage,e){if(e)e.stopPropagation();const c=candidates.find(x=>x.id===id);if(!c)return;c.stage=stage;save();renderAll()}
+function archiveCand(id,e){if(e)e.stopPropagation();const c=candidates.find(x=>x.id===id);if(!c)return;c.archived=true;c.expanded=false;save();renderAll();toast('Kandidát archivován')}
+function unarchive(id){const c=candidates.find(x=>x.id===id);if(!c)return;c.archived=false;save();renderAll()}
+function addContact(id,e){
+  if(e)e.stopPropagation();
+  const dateInp=document.getElementById('cd-'+id);
+  const noteInp=document.getElementById('cn-'+id);
+  if(!dateInp||!noteInp)return;
+  const note=noteInp.value.trim();if(!note)return;
+  const c=candidates.find(x=>x.id===id);if(!c)return;
+  if(!c.contacts)c.contacts=[];
+  c.contacts.push({date:dateInp.value,note});
+  save();renderAll();toast('Kontakt přidán');
 }
-function uncheckAll(pid){
-  const p=people.find(x=>x.id===pid);if(!p)return;
-  p.state={};save();renderAll();toast('Stavy resetovány');
-}
-function resetChecklist(pid){
-  if(!confirm('Obnovit výchozí šablonu checklistu? Vaše vlastní úpravy budou ztraceny.'))return;
-  const p=people.find(x=>x.id===pid);if(!p)return;
-  p.checklist=cloneTemplate(p.mode||mode);p.state={};
-  save();renderAll();toast('Checklist obnoven na výchozí šablonu');
-}
-function deletePerson(pid){
-  if(!confirm('Opravdu odebrat tuto osobu a všechny záznamy?'))return;
-  people=people.filter(p=>p.id!==pid);activePersonId=null;save();renderAll();
-}
-function deleteIkRecord(pid,idx){
-  const p=people.find(x=>x.id===pid);if(!p)return;
-  p.ik=p.ik||[];p.ik.splice(idx,1);save();renderAll();
-}
+function delContact(id,idx,e){if(e)e.stopPropagation();const c=candidates.find(x=>x.id===id);if(!c)return;c.contacts.splice(idx,1);save();renderAll()}
 
-// ─── ADD PERSON ───────────────────────────────────────────────────────────────
+// PROVIZE ACTIONS
+function setProvizePos(key){provizeMyPos=key;save();renderAll()}
+function setProvizeOB(key,val){provizeOB[key]=Number(val)||0;save();// no full rerender, just update totals
+  renderAll();}
+
+// PERSON MODAL
 function openAddModal(){
-  document.getElementById('add-modal-sub').textContent=mode==='mng'?'Nový poradce – manažer sleduje adaptaci':'Nový manažer – ředitel sleduje adaptaci';
-  document.getElementById('inp-name').value='';
-  document.getElementById('inp-pos').value='';
+  document.getElementById('add-modal-sub').textContent=mode==='mng'?'Nový poradce':'Nový manažer';
+  document.getElementById('inp-name').value='';document.getElementById('inp-pos').value='';
   document.getElementById('inp-date').value=new Date().toISOString().split('T')[0];
   document.getElementById('inp-email').value='';
   document.getElementById('add-modal').classList.remove('hidden');
@@ -705,75 +1033,92 @@ function openAddModal(){
 }
 function closeAddModal(){document.getElementById('add-modal').classList.add('hidden')}
 function savePerson(){
-  const name=document.getElementById('inp-name').value.trim();
-  if(!name){document.getElementById('inp-name').focus();return}
+  const name=document.getElementById('inp-name').value.trim();if(!name){document.getElementById('inp-name').focus();return}
   const id='p_'+Date.now();
-  people.push({id,name,position:document.getElementById('inp-pos').value.trim(),startDate:document.getElementById('inp-date').value,email:document.getElementById('inp-email').value.trim(),mode,state:{},ik:[],checklist:cloneTemplate(mode)});
+  people.push({id,name,position:document.getElementById('inp-pos').value.trim(),startDate:document.getElementById('inp-date').value,email:document.getElementById('inp-email').value.trim(),mode,state:{},ik:[],checklist:JSON.parse(JSON.stringify(TEMPLATE[mode]))});
   activePersonId=id;save();closeAddModal();renderAll();toast('Osoba přidána');
 }
 
-// ─── IK ───────────────────────────────────────────────────────────────────────
+// CANDIDATE MODAL
+let candInitStage=0;
+function openCandModal(stage=0){candInitStage=stage;document.getElementById('cand-modal').classList.remove('hidden');setTimeout(()=>document.getElementById('c-name').focus(),50)}
+function closeCandModal(){document.getElementById('cand-modal').classList.add('hidden')}
+function saveCandidate(){
+  const name=document.getElementById('c-name').value.trim();if(!name){document.getElementById('c-name').focus();return}
+  candidates.push({id:'c_'+Date.now(),name,currentEmployer:document.getElementById('c-employer').value.trim(),currentRole:document.getElementById('c-role').value.trim(),phone:document.getElementById('c-phone').value.trim(),email:document.getElementById('c-email').value.trim(),source:document.getElementById('c-source').value,recommender:document.getElementById('c-rec').value.trim(),obstacle:document.getElementById('c-obstacle').value.trim(),solution:document.getElementById('c-solution').value.trim(),stage:candInitStage,contacts:[],expanded:false,archived:false,createdAt:new Date().toISOString().split('T')[0]});
+  save();closeCandModal();renderAll();toast('Kandidát přidán');
+}
+
+// IK MODAL
 function openIkModal(){
-  const person=getPerson();if(!person)return;
-  document.getElementById('ik-modal-sub').textContent='Záznam z IK schůzky: '+person.name;
+  const p=getPerson();if(!p)return;
+  document.getElementById('ik-modal-sub').textContent='Záznam z IK: '+p.name;
   document.getElementById('ik-date').value=new Date().toISOString().split('T')[0];
-  document.getElementById('ik-content').value='';
-  document.getElementById('ik-tasks-nov').value='';
-  document.getElementById('ik-tasks-mgr').value='';
+  document.getElementById('ik-content').value='';document.getElementById('ik-tasks-nov').value='';document.getElementById('ik-tasks-mgr').value='';
   document.getElementById('ik-modal').classList.remove('hidden');
 }
 function closeIkModal(){document.getElementById('ik-modal').classList.add('hidden')}
 function saveIkRecord(){
-  const person=getPerson();if(!person)return;
-  if(!person.ik)person.ik=[];
-  person.ik.push({date:document.getElementById('ik-date').value,content:document.getElementById('ik-content').value.trim(),tasksNov:document.getElementById('ik-tasks-nov').value.trim(),tasksMgr:document.getElementById('ik-tasks-mgr').value.trim()});
+  const p=getPerson();if(!p)return;if(!p.ik)p.ik=[];
+  p.ik.push({date:document.getElementById('ik-date').value,content:document.getElementById('ik-content').value.trim(),tasksNov:document.getElementById('ik-tasks-nov').value.trim(),tasksMgr:document.getElementById('ik-tasks-mgr').value.trim()});
   save();closeIkModal();activeTab='ik';renderAll();toast('IK záznam uložen');
 }
 
-// ─── EMAIL ────────────────────────────────────────────────────────────────────
-function buildEmail(person,rec){
+// EMAIL
+function buildMail(person,rec){
   const tasks=(rec.tasksNov||'').split('\n').filter(Boolean);
-  const subject=`Úkoly z IK schůzky ${formatDate(rec.date)} – ${person.name}`;
-  let body=`Dobrý den ${person.name.split(' ')[0]},\n\nzasílám úkoly z IK schůzky dne ${formatDate(rec.date)}.\n\n`;
+  const subj=`Úkoly z IK schůzky ${fmtDate(rec.date)} – ${person.name}`;
+  let body=`Dobrý den ${person.name.split(' ')[0]},\n\nzasílám úkoly z IK schůzky dne ${fmtDate(rec.date)}.\n\n`;
   if(rec.content)body+=`Obsah schůzky:\n${rec.content}\n\n`;
   if(tasks.length)body+=`Vaše úkoly:\n${tasks.map((t,i)=>`${i+1}. ${t}`).join('\n')}\n\n`;
   body+=`S pozdravem`;
-  return{subject,body};
+  return{subj,body};
 }
 function sendEmail(pid){
   const p=people.find(x=>x.id===pid);if(!p||!p.email)return;
-  const ik=p.ik||[];if(!ik.length){toast('Nejsou žádné IK záznamy k odeslání');return}
-  const{subject,body}=buildEmail(p,ik[ik.length-1]);
-  window.location.href=`mailto:${p.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const ik=p.ik||[];if(!ik.length){toast('Nejsou žádné IK záznamy');return}
+  const{subj,body}=buildMail(p,ik[ik.length-1]);
+  window.location.href=`mailto:${p.email}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
 }
-function sendEmailRecord(pid,idx){
+function sendEmailRec(pid,idx){
   const p=people.find(x=>x.id===pid);if(!p||!p.email)return;
   const rec=(p.ik||[])[idx];if(!rec)return;
-  const{subject,body}=buildEmail(p,rec);
-  window.location.href=`mailto:${p.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  const{subj,body}=buildMail(p,rec);
+  window.location.href=`mailto:${p.email}?subject=${encodeURIComponent(subj)}&body=${encodeURIComponent(body)}`;
 }
 
-// ─── TOAST ────────────────────────────────────────────────────────────────────
-let toastTimer;
-function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2500)}
+// TOAST
+let toastT;
+function toast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove('show'),2500)}
 
-// ─── KEYBOARD ─────────────────────────────────────────────────────────────────
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAddModal();closeIkModal()}});
-document.getElementById('add-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeAddModal()});
-document.getElementById('ik-modal').addEventListener('click',e=>{if(e.target===e.currentTarget)closeIkModal()});
+// KEYBOARD + CLICK OUTSIDE
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAddModal();closeIkModal();closeCandModal()}});
+['add-modal','ik-modal','cand-modal'].forEach(id=>{document.getElementById(id).addEventListener('click',e=>{if(e.target===e.currentTarget)document.getElementById(id).classList.add('hidden')})});
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════
+// INIT + DEMO DATA
+// ═══════════════════════════════════════════════════════════════════
 load();
 if(!people.length){
-  const d=new Date();d.setDate(d.getDate()-14);
-  const ds=d.toISOString().split('T')[0];
-  const demo={id:'demo1',name:'Jindřich Úspěšný',position:'Junior konzultant',startDate:ds,email:'jindrich@priklad.cz',mode:'mng',ik:[{date:ds,content:'Probrali jsme call skript a trénink první schůzky.',tasksNov:'Nastudovat pyramidu osobních financí\nUskutečnit 5 hovorů z Projektu 100\nPřipravit se na první schůzku u klienta',tasksMgr:'Zajistit přístupy do BrokerTrust\nPoslat odkaz na 4edu'}]};
-  demo.checklist=cloneTemplate('mng');
+  const d=new Date();d.setDate(d.getDate()-14);const ds=d.toISOString().split('T')[0];
+  const demo={id:'demo1',name:'Jindřich Úspěšný',position:'Junior konzultant',startDate:ds,email:'jindrich@priklad.cz',mode:'mng',ik:[{date:ds,content:'Probrali jsme call skript a trénink první schůzky. Zpětná vazba pozitivní.',tasksNov:'Nastudovat pyramidu osobních financí\nUskutečnit 5 hovorů z Projektu 100\nPřipravit se na první schůzku',tasksMgr:'Zajistit přístupy do BrokerTrust\nPoslat odkaz na 4edu'}]};
+  demo.checklist=JSON.parse(JSON.stringify(TEMPLATE.mng));
   demo.state={'1_0_0_0':'done','1_0_0_1':'done','1_0_0_2':'done','1_0_1_0':'waiting','1_0_1_1':'waiting','1_0_1_2':'done','0_0_0_0':'done','0_0_0_1':'waiting','0_0_0_2':'done','0_0_0_3':'waiting'};
-  people.push(demo);
-  activePersonId='demo1';save();
+  demo.stats={2026:{plan_klient_schuze:12,plan_ob:5000,plan_nabor_schuze:4,plan_nabor_podpisy:1,m0:{klient_schuze:14,ob:5500,nabor_schuze:3,nabor_podpisy:1},m1:{klient_schuze:10,ob:4200,nabor_schuze:5,nabor_podpisy:0},m2:{klient_schuze:13,ob:6100,nabor_schuze:4,nabor_podpisy:1}}};
+  people.push(demo);activePersonId='demo1';
 }
-renderAll();
+if(!candidates.length){
+  const today=new Date().toISOString().split('T')[0];
+  const w2=new Date();w2.setDate(w2.getDate()-14);const d2=w2.toISOString().split('T')[0];
+  const w5=new Date();w5.setDate(w5.getDate()-5);const d5=w5.toISOString().split('T')[0];
+  candidates=[
+    {id:'c1',name:'Martin Kovář',currentEmployer:'Česká spořitelna',currentRole:'Hypoteční specialista',phone:'+420 777 100 200',email:'kovarm@priklad.cz',source:'bank',recommender:'',obstacle:'Strach z proměnného příjmu',solution:'Ukázat výpočet příjmu po 12 měsících',stage:0,contacts:[{date:d2,note:'První LinkedIn zpráva – pozitivní reakce, chce se potkat.'},{date:d5,note:'Telefonát 20 min. Zájem, ale čeká na výsledky Q1 v bance.'}],expanded:false,archived:false,createdAt:d2},
+    {id:'c2',name:'Jana Procházková',currentEmployer:'Kooperativa',currentRole:'Pojišťovací poradce',phone:'',email:'',source:'dop',recommender:'Pavel Novotný',obstacle:'Neví jak říct zaměstnavateli',solution:'Koučink jak ukončit vztah se zaměstnavatelem',stage:1,contacts:[{date:d5,note:'1. schůzka proběhla skvěle. Jana má silný zájem, potřebuje čas na rozmyšlení.'}],expanded:false,archived:false,createdAt:d5},
+    {id:'c3',name:'Kateřina Maršálková',currentEmployer:'Partners',currentRole:'Finanční poradce',phone:'+420 777 300 400',email:'marsalkova@priklad.cz',source:'konk',recommender:'',obstacle:'Nevýhodná rozvazovací smlouva',solution:'Doporučit právníka, přechodné období',stage:3,contacts:[{date:today,note:'Nabídka podána. Čeká na vyjádření právníka ohledně výstupní smlouvy. Termín odpovědi: do konce měsíce.'}],expanded:false,archived:false,createdAt:d2},
+  ];
+  provizeMyPos='or';provizeOB={jk:2000,k:5000,sk:6000,sak:7500};
+}
+save();renderAll();
 </script>
 </body>
 </html>
