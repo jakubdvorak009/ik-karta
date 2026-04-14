@@ -300,6 +300,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     Přidat osobu
   </button>
+  <div style="padding:6px 10px;border-top:1px solid var(--border);margin-top:auto">
+    <div style="font-size:10px;font-weight:600;letter-spacing:.07em;color:var(--text3);text-transform:uppercase;padding:0 6px 5px">Záloha dat</div>
+    <button class="mod-btn" onclick="exportData()" style="color:var(--green)">
+      <div class="mod-icon" style="background:var(--green-dim);color:var(--green)">↓</div>Exportovat zálohu
+    </button>
+    <label class="mod-btn" style="cursor:pointer;color:var(--accent)">
+      <div class="mod-icon" style="background:var(--accent-dim);color:var(--accent)">↑</div>Importovat zálohu
+      <input type="file" accept=".json" style="display:none" onchange="importData(this)">
+    </label>
+  </div>
 </aside>
 <main class="main">
   <div class="main-hdr" id="main-hdr">
@@ -1093,6 +1103,37 @@ function toast(msg){const el=document.getElementById('toast');el.textContent=msg
 // KEYBOARD + CLICK OUTSIDE
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAddModal();closeIkModal();closeCandModal()}});
 ['add-modal','ik-modal','cand-modal'].forEach(id=>{document.getElementById(id).addEventListener('click',e=>{if(e.target===e.currentTarget)document.getElementById(id).classList.add('hidden')})});
+
+// ═══════════════════════════════════════════════════════════════════
+// EXPORT / IMPORT
+// ═══════════════════════════════════════════════════════════════════
+function exportData(){
+  const data={people,candidates,provizeMyPos,provizeOB,mode,exportedAt:new Date().toISOString(),version:'v3'};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  const d=new Date();
+  a.download=`IK_Karta_zaloha_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.json`;
+  a.click();URL.revokeObjectURL(a.href);
+  toast('Záloha stažena – uložte soubor na bezpečné místo');
+}
+function importData(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      if(!data.people)throw new Error('Neplatný formát zálohy');
+      if(!confirm(`Importovat zálohu z ${fmtDate(data.exportedAt?.split('T')[0])}? Aktuální data budou přepsána.`)){input.value='';return}
+      people=data.people||[];candidates=data.candidates||[];
+      provizeMyPos=data.provizeMyPos||'jmng';provizeOB=data.provizeOB||{};
+      mode=data.mode||'mng';activePersonId=people.length?people[0].id:null;
+      save();renderAll();toast('Data úspěšně importována');
+    }catch(err){alert('Chyba při importu: '+err.message);}
+    input.value='';
+  };
+  reader.readAsText(file);
+}
 
 // ═══════════════════════════════════════════════════════════════════
 // INIT + DEMO DATA
