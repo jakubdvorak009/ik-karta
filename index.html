@@ -354,18 +354,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="login-card">
     <div class="login-logo">IK</div>
     <div class="login-title">IK Karta 2.0</div>
-    <div class="login-sub">Manažerský nástroj pro finanční poradenství.<br>Přihlaš se svým Google účtem pro vstup.</div>
-    <div id="g-btn-wrap"></div>
-    <div class="login-error" id="login-error-dup" style="display:none">Tento Google účet nemá přístup.</div>
-    <div class="login-divider"></div>
-    <div class="login-footer">Přístup je omezen pouze na pozvané uživatele.<br>Powered by Backfree</div>
-  </div>
-</div>
-<!-- LOGIN SCREEN -->
-<div class="login-screen" id="login-screen">
-  <div class="login-card">
-    <div class="login-logo">IK</div>
-    <div class="login-title">IK Karta 2.0</div>
     <div class="login-sub">Manažerský nástroj pro finanční poradenství.<br>Přihlaste se svým Google účtem pro pokračování.</div>
     <div id="g_id_onload"
       data-client_id="333345769758-gstb4vcrt5m72hq717iv0bgn250k6k9m.apps.googleusercontent.com"
@@ -1564,14 +1552,20 @@ function processCredential(credential){
 }
 
 function showApp(){
-  document.getElementById('login-screen').style.display='none';
-  document.getElementById('app-shell').style.display='flex';
-  if(currentUser){
-    const parts=currentUser.name.split(' ');
-    const short=parts.length>=2?parts[0][0]+parts[parts.length-1][0]:currentUser.name.slice(0,2);
-    document.getElementById('user-av').textContent=short.toUpperCase();
-    document.getElementById('user-name-short').textContent=parts[0];
-  }
+  const ls=document.getElementById('login-screen');
+  const as=document.getElementById('app-shell');
+  if(ls)ls.style.display='none';
+  if(as)as.style.display='flex';
+  try{
+    if(currentUser){
+      const av=document.getElementById('user-av');
+      const ns=document.getElementById('user-name-short');
+      const parts=(currentUser.name||currentUser.email).split(' ');
+      const short=parts.length>=2?parts[0][0]+parts[parts.length-1][0]:(currentUser.name||'?').slice(0,2);
+      if(av)av.textContent=short.toUpperCase();
+      if(ns)ns.textContent=parts[0];
+    }
+  }catch(e){}
   load();initDemoData();renderAll();
 }
 
