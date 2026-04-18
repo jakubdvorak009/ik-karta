@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IK Karta 2.0</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -272,7 +273,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .toast.show{transform:translateY(0);opacity:1}
 .empty-state{text-align:center;padding:50px 20px;color:var(--text3)}
 .empty-state-title{font-size:15px;font-weight:500;color:var(--text2);margin-bottom:5px}
-/* ── TODO MODULE ── */
+/* ── LOGIN SCREEN ── */
+.login-screen{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:40px 36px;width:100%;max-width:380px;text-align:center}
+.login-logo{width:52px;height:52px;background:var(--accent);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;margin:0 auto 20px;letter-spacing:-.5px}
+.login-title{font-size:22px;font-weight:600;color:var(--text);margin-bottom:6px;letter-spacing:-.3px}
+.login-sub{font-size:13px;color:var(--text2);margin-bottom:28px;line-height:1.5}
+.login-divider{display:flex;align-items:center;gap:10px;margin:20px 0;color:var(--text3);font-size:12px}
+.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--border2)}
+.login-error{background:var(--red-dim);border:1px solid rgba(217,68,68,0.25);border-radius:8px;padding:10px 14px;font-size:13px;color:var(--red);margin-top:16px;display:none}
+.user-badge{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--bg3);border-radius:6px;font-size:12px;color:var(--text2);cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:background .12s}
+.user-badge:hover{background:var(--bg4)}
+.user-av{width:24px;height:24px;border-radius:50%;background:var(--accent-dim);color:var(--accent);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .todo-wrap{max-width:720px}
 .todo-tabs-bar{display:flex;align-items:center;gap:6px;margin-bottom:16px;flex-wrap:wrap}
 .todo-tab-btn{padding:6px 14px;border-radius:20px;border:1px solid var(--border2);background:transparent;font-size:12px;font-family:'DM Sans',sans-serif;color:var(--text2);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px}
@@ -323,14 +335,67 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .todo-item.sliding{animation:slideOut .4s ease forwards}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
 @media(max-width:768px){.sidebar{display:none}.stats-row{grid-template-columns:repeat(2,1fr)}.pipe-board{grid-template-columns:1fr}}
+/* ── LOGIN SCREEN ── */
+.login-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:40px 36px;width:100%;max-width:380px;text-align:center}
+.login-logo{width:52px;height:52px;background:var(--accent);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff;margin:0 auto 20px;letter-spacing:-.5px}
+.login-title{font-size:22px;font-weight:600;color:var(--text);margin-bottom:6px;letter-spacing:-.3px}
+.login-sub{font-size:13px;color:var(--text2);margin-bottom:28px;line-height:1.6}
+.login-divider{height:1px;background:var(--border);margin:20px 0}
+.login-error{font-size:12px;color:var(--red);background:var(--red-dim);border:1px solid rgba(217,68,68,0.2);border-radius:6px;padding:8px 12px;margin-top:14px;display:none}
+.login-footer{font-size:11px;color:var(--text3);margin-top:20px}
+#g-btn-wrap{display:flex;justify-content:center;margin-top:4px}
 </style>
 </head>
 <body>
-<div class="shell">
+
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">IK</div>
+    <div class="login-title">IK Karta 2.0</div>
+    <div class="login-sub">Manažerský nástroj pro finanční poradenství.<br>Přihlaš se svým Google účtem pro vstup.</div>
+    <div id="g-btn-wrap"></div>
+    <div class="login-error" id="login-error">Tento Google účet nemá přístup k aplikaci. Požádej administrátora o přidání.</div>
+    <div class="login-divider"></div>
+    <div class="login-footer">Přístup je omezen pouze na pozvané uživatele.<br>Powered by Backfree</div>
+  </div>
+</div>
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">IK</div>
+    <div class="login-title">IK Karta 2.0</div>
+    <div class="login-sub">Manažerský nástroj pro finanční poradenství.<br>Přihlaste se svým Google účtem pro pokračování.</div>
+    <div id="g_id_onload"
+      data-client_id="333345769758-gstb4vcrt5m72hq717iv0bgn250k6k9m.apps.googleusercontent.com"
+      data-callback="handleGoogleLogin"
+      data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+      data-type="standard"
+      data-size="large"
+      data-theme="outline"
+      data-text="sign_in_with"
+      data-shape="rectangular"
+      data-logo_alignment="left"
+      data-width="308">
+    </div>
+    <div class="login-error" id="login-error">
+      Váš účet nemá přístup k této aplikaci. Kontaktujte správce.
+    </div>
+  </div>
+</div>
+
+<div class="shell" id="app-shell" style="display:none">
 <aside class="sidebar">
   <div class="sb-logo">
     <div class="logo-mark">IK</div>
     <div><div class="app-name">IK Karta 2.0</div><div class="app-sub">preview · beta</div></div>
+    <button class="user-badge" id="user-badge" onclick="logout()" style="margin-left:auto" title="Odhlásit se">
+      <div class="user-av" id="user-av">?</div>
+      <span id="user-name-short">...</span>
+    </button>
   </div>
   <div class="sb-modes">
     <button class="mode-tab am" id="mode-mgr" onclick="setMode('mng')">Manažer<br>adaptuje poradce</button>
@@ -360,6 +425,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <input type="file" accept=".json" style="display:none" onchange="importData(this)">
     </label>
   </div>
+  <div id="sb-user"></div>
 </aside>
 <main class="main">
   <div class="main-hdr" id="main-hdr">
@@ -383,6 +449,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="empty-state"><div class="empty-state-title">Vítejte v IK Karta 2.0</div><p style="font-size:13px;margin-top:5px">Vyberte modul v levém panelu nebo přidejte osobu.</p></div>
   </div>
 </main>
+</div>
 </div>
 
 <!-- ADD PERSON MODAL -->
@@ -1443,9 +1510,64 @@ function importData(input){
 }
 
 // ═══════════════════════════════════════════════════════════════════
+// GOOGLE AUTH
+// ═══════════════════════════════════════════════════════════════════
+const ALLOWED_EMAILS=[
+  'jakubdvorak009@gmail.com', // <- přidej sem emaily testerů
+];
+
+let currentUser=null;
+
+function handleGoogleLogin(response){
+  const payload=JSON.parse(atob(response.credential.split('.')[1]));
+  const email=payload.email;
+  if(ALLOWED_EMAILS.map(e=>e.toLowerCase()).includes(email.toLowerCase())){
+    currentUser={email,name:payload.name,picture:payload.picture};
+    localStorage.setItem('ik_auth',JSON.stringify(currentUser));
+    showApp();
+  } else {
+    document.getElementById('login-error').style.display='block';
+  }
+}
+
+function showApp(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app-shell').style.display='flex';
+  if(currentUser){
+    const parts=currentUser.name.split(' ');
+    const short=parts.length>=2?parts[0][0]+parts[parts.length-1][0]:currentUser.name.slice(0,2);
+    document.getElementById('user-av').textContent=short.toUpperCase();
+    document.getElementById('user-name-short').textContent=parts[0];
+  }
+  load();initDemoData();renderAll();
+}
+
+function logout(){
+  if(!confirm('Odhlásit se?'))return;
+  localStorage.removeItem('ik_auth');
+  currentUser=null;
+  document.getElementById('app-shell').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('login-error').style.display='none';
+  if(window.google)google.accounts.id.prompt();
+}
+
+function checkAuth(){
+  const stored=localStorage.getItem('ik_auth');
+  if(stored){
+    try{
+      currentUser=JSON.parse(stored);
+      showApp();return;
+    }catch(e){}
+  }
+  document.getElementById('login-screen').style.display='flex';
+}
+
+// ═══════════════════════════════════════════════════════════════════
 // INIT + DEMO DATA
 // ═══════════════════════════════════════════════════════════════════
-load();
+function initDemoData(){
+  load();
 if(!people.length){
   const d=new Date();d.setDate(d.getDate()-14);const ds=d.toISOString().split('T')[0];
   const demo={id:'demo1',name:'Jindřich Úspěšný',position:'Junior konzultant',startDate:ds,email:'jindrich@priklad.cz',mode:'mng',ik:[{date:ds,content:'Probrali jsme call skript a trénink první schůzky. Zpětná vazba pozitivní.',tasksNov:'Nastudovat pyramidu osobních financí\nUskutečnit 5 hovorů z Projektu 100\nPřipravit se na první schůzku',tasksMgr:'Zajistit přístupy do BrokerTrust\nPoslat odkaz na 4edu'}]};
@@ -1480,7 +1602,11 @@ if(!todos.length){
     {id:'td6',title:'Přečíst nové metodiky BrokerTrust',tab:'tym',due:null,note:'',delegate:'',source:'',done:true,doneAt:new Date(now.getTime()-2*3600000).toISOString(),createdAt:now.toISOString()},
   ];
 }
-save();renderAll();
+  save();
+}
+
+// Spustit auth check – aplikace se zobrazí až po přihlášení
+checkAuth();
 </script>
 </body>
 </html>
