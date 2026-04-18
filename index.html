@@ -356,7 +356,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="login-title">IK Karta 2.0</div>
     <div class="login-sub">Manažerský nástroj pro finanční poradenství.<br>Přihlaš se svým Google účtem pro vstup.</div>
     <div id="g-btn-wrap"></div>
-    <div class="login-error" id="login-error">Tento Google účet nemá přístup k aplikaci. Požádej administrátora o přidání.</div>
+    <div class="login-error" id="login-error-dup" style="display:none">Tento Google účet nemá přístup.</div>
     <div class="login-divider"></div>
     <div class="login-footer">Přístup je omezen pouze na pozvané uživatele.<br>Powered by Backfree</div>
   </div>
@@ -1519,13 +1519,20 @@ const ALLOWED_EMAILS=[
 let currentUser=null;
 
 function handleGoogleLogin(response){
-  const payload=JSON.parse(atob(response.credential.split('.')[1]));
-  const email=payload.email;
-  if(ALLOWED_EMAILS.map(e=>e.toLowerCase()).includes(email.toLowerCase())){
-    currentUser={email,name:payload.name,picture:payload.picture};
-    localStorage.setItem('ik_auth',JSON.stringify(currentUser));
-    showApp();
-  } else {
+  try{
+    const b64=response.credential.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+    const padded=b64+('='.repeat((4-b64.length%4)%4));
+    const payload=JSON.parse(atob(padded));
+    const email=payload.email;
+    if(ALLOWED_EMAILS.map(e=>e.toLowerCase()).includes(email.toLowerCase())){
+      currentUser={email,name:payload.name,picture:payload.picture};
+      localStorage.setItem('ik_auth',JSON.stringify(currentUser));
+      showApp();
+    } else {
+      document.getElementById('login-error').style.display='block';
+    }
+  }catch(e){
+    document.getElementById('login-error').textContent='Chyba přihlášení: '+e.message;
     document.getElementById('login-error').style.display='block';
   }
 }
