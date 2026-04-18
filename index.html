@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IK Karta 2.0</title>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
-<link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -370,7 +370,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div id="g_id_onload"
       data-client_id="333345769758-gstb4vcrt5m72hq717iv0bgn250k6k9m.apps.googleusercontent.com"
       data-callback="handleGoogleLogin"
-      data-auto_prompt="false">
+      data-auto_prompt="false"
+      data-ux_mode="redirect"
+      data-login_uri="https://ik-karta.vercel.app">
     </div>
     <div class="g_id_signin"
       data-type="standard"
@@ -379,7 +381,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       data-text="sign_in_with"
       data-shape="rectangular"
       data-logo_alignment="left"
-      data-width="308">
+      data-width="308"
+      data-ux_mode="redirect">
     </div>
     <div class="login-error" id="login-error">
       Váš účet nemá přístup k této aplikaci. Kontaktujte správce.
@@ -1530,19 +1533,33 @@ let currentUser=null;
 
 function handleGoogleLogin(response){
   try{
-    const b64=response.credential.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+    const credential=response.credential;
+    processCredential(credential);
+  }catch(e){
+    document.getElementById('login-error').textContent='Chyba přihlášení: '+e.message;
+    document.getElementById('login-error').style.display='block';
+  }
+}
+
+function processCredential(credential){
+  try{
+    const b64=credential.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
     const padded=b64+('='.repeat((4-b64.length%4)%4));
     const payload=JSON.parse(atob(padded));
     const email=payload.email;
     if(ALLOWED_EMAILS.map(e=>e.toLowerCase()).includes(email.toLowerCase())){
       currentUser={email,name:payload.name,picture:payload.picture};
       localStorage.setItem('ik_auth',JSON.stringify(currentUser));
+      // Clean URL after redirect flow
+      if(window.history&&window.history.replaceState){
+        window.history.replaceState({},'',window.location.pathname);
+      }
       showApp();
     } else {
       document.getElementById('login-error').style.display='block';
     }
   }catch(e){
-    document.getElementById('login-error').textContent='Chyba přihlášení: '+e.message;
+    document.getElementById('login-error').textContent='Chyba: '+e.message;
     document.getElementById('login-error').style.display='block';
   }
 }
@@ -1570,13 +1587,17 @@ function logout(){
 }
 
 function checkAuth(){
+  // Check localStorage first (already logged in)
   const stored=localStorage.getItem('ik_auth');
   if(stored){
-    try{
-      currentUser=JSON.parse(stored);
-      showApp();return;
-    }catch(e){}
+    try{currentUser=JSON.parse(stored);showApp();return;}catch(e){}
   }
+  // Check URL params for credential from Google redirect flow
+  const params=new URLSearchParams(window.location.search);
+  const hashParams=new URLSearchParams(window.location.hash.replace('#',''));
+  const credential=params.get('credential')||hashParams.get('credential');
+  if(credential){processCredential(credential);return;}
+  // No auth – show login
   document.getElementById('login-screen').style.display='flex';
 }
 
