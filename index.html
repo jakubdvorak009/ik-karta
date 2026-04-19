@@ -163,8 +163,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .stats-table th.cur-month{background:var(--accent-dim);color:var(--accent)}
 .stats-table td{padding:5px 10px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
 .stats-table td.metric-name{font-size:12px;font-weight:500;color:var(--text2);white-space:nowrap}
-.stats-table td.plan-cell{font-family:'DM Mono',monospace;font-size:12px;color:var(--text2);text-align:center}
-.num-inp{width:60px;padding:3px 5px;border:1px solid var(--border2);border-radius:4px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);background:transparent;text-align:center;outline:none;transition:border-color .15s}
+.stats-table td.plan-cell{font-family:'Outfit',sans-serif;font-size:12px;color:var(--text2);text-align:center}
+.num-inp{width:60px;padding:3px 5px;border:1px solid var(--border2);border-radius:4px;font-family:'Outfit',sans-serif;font-variant-numeric:tabular-nums;font-size:12px;color:var(--text);background:transparent;text-align:center;outline:none;transition:border-color .15s}
 .num-inp:focus{border-color:var(--accent-border);background:#fff}
 .num-inp.cur{border-color:var(--accent-border)}
 .cell-green{background:rgba(26,158,104,0.08);color:var(--green)}
@@ -180,7 +180,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .filter-btn:hover:not(.active){background:var(--bg3)}
 .pipe-board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:start}
 .pipe-col-hdr{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;padding:0 2px}
-.pipe-col-count{font-size:10px;background:var(--bg4);border-radius:20px;padding:1px 7px;color:var(--text3);font-family:'DM Mono',monospace}
+.pipe-col-count{font-size:10px;background:var(--bg4);border-radius:20px;padding:1px 7px;color:var(--text3);font-family:'Outfit',sans-serif;font-weight:600}
 .cand-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 11px;margin-bottom:7px;cursor:pointer;transition:border-color .15s}
 .cand-card:hover{border-color:var(--border2)}
 .cand-card.expanded{border-color:var(--accent-border)}
@@ -207,7 +207,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .contact-log{margin-top:8px}
 .contact-log-hdr{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:5px}
 .contact-entry{display:flex;gap:7px;padding:4px 0;border-bottom:1px solid var(--border)}
-.ce-date{font-size:10px;font-family:'DM Mono',monospace;color:var(--text3);flex-shrink:0;width:70px;padding-top:1px}
+.ce-date{font-size:10px;font-family:'Outfit',sans-serif;color:var(--text3);flex-shrink:0;width:70px;padding-top:1px}
 .ce-note{font-size:11px;color:var(--text2);flex:1;line-height:1.4}
 .ce-del{font-size:10px;color:var(--text3);background:none;border:none;cursor:pointer;padding:0 3px;flex-shrink:0}
 .ce-del:hover{color:var(--red)}
@@ -237,12 +237,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .prov-table th{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;padding:7px 12px;text-align:left;border-bottom:2px solid var(--border)}
 .prov-table th:not(:first-child){text-align:right}
 .prov-table td{padding:6px 12px;border-bottom:1px solid var(--border);font-size:13px}
-.prov-table td:not(:first-child){text-align:right;font-family:'DM Mono',monospace}
+.prov-table td:not(:first-child){text-align:right;font-family:'Outfit',sans-serif;font-variant-numeric:tabular-nums}
 .prov-pos-name{font-weight:500;color:var(--text)}
 .prov-koef{color:var(--text3);font-size:12px}
 .prov-diff{color:var(--accent)}
 .prov-diff.neg{color:var(--text3);font-style:italic;font-size:11px}
-.prov-ob-inp{width:100px;padding:4px 8px;border:1px solid var(--border2);border-radius:4px;font-family:'DM Mono',monospace;font-size:12px;color:var(--text);background:transparent;text-align:right;outline:none}
+.prov-ob-inp{width:100px;padding:4px 8px;border:1px solid var(--border2);border-radius:4px;font-family:'Outfit',sans-serif;font-variant-numeric:tabular-nums;font-size:12px;color:var(--text);background:transparent;text-align:right;outline:none}
 .prov-ob-inp:focus{border-color:var(--accent-border);background:#fff}
 .prov-result-inp{font-family:'Outfit',sans-serif;font-weight:600;font-variant-numeric:tabular-nums;color:var(--accent)}
 .prov-total-row td{border-top:2px solid var(--border2);border-bottom:none;font-weight:600;font-size:14px;padding-top:10px}
@@ -253,7 +253,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 /* IK */
 .ik-record{border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;overflow:hidden;background:var(--bg2)}
 .ik-rec-hdr{padding:10px 14px;background:var(--bg3);display:flex;align-items:center;justify-content:space-between}
-.ik-date{font-size:12px;font-family:'DM Mono',monospace;color:var(--text2)}
+.ik-date{font-size:12px;font-family:'Outfit',sans-serif;color:var(--text2)}
 .ik-body{padding:12px 14px}
 .ik-fld{margin-bottom:8px}
 .ik-lbl{font-size:10px;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
@@ -345,7 +345,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   .sidebar{display:none}
   .stats-row{grid-template-columns:repeat(2,1fr)}
   .pipe-board{grid-template-columns:1fr}
-  .main{padding-bottom:64px}
+  .main{padding-bottom:80px}
   .content{padding:14px 16px}
   .main-hdr{padding:14px 16px 0}
   .mh-name{font-size:14px}
@@ -359,9 +359,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .bottom-nav{display:none}
 @media(max-width:768px){
   .bottom-nav{
-    display:flex;position:fixed;bottom:0;left:0;right:0;height:60px;
+    display:flex;position:fixed;bottom:0;left:0;right:0;height:72px;
     background:var(--bg2);border-top:1px solid var(--border);
-    z-index:50;padding:0 4px;padding-bottom:env(safe-area-inset-bottom,0px);
+    z-index:50;padding:0 4px;padding-bottom:max(env(safe-area-inset-bottom,0px),10px);
     align-items:stretch;
   }
   .bn-item{
