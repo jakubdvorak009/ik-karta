@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IK Karta 2.0</title>
+<meta name="theme-color" content="#3b6ef5">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="IK Karta">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icon-192.png">
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
@@ -334,7 +341,71 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 @keyframes slideOut{0%{opacity:1;max-height:80px;margin-bottom:6px}100%{opacity:0;max-height:0;margin-bottom:0;padding:0}}
 .todo-item.sliding{animation:slideOut .4s ease forwards}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
-@media(max-width:768px){.sidebar{display:none}.stats-row{grid-template-columns:repeat(2,1fr)}.pipe-board{grid-template-columns:1fr}}
+@media(max-width:768px){
+  .sidebar{display:none}
+  .stats-row{grid-template-columns:repeat(2,1fr)}
+  .pipe-board{grid-template-columns:1fr}
+  .main{padding-bottom:64px}
+  .content{padding:14px 16px}
+  .main-hdr{padding:14px 16px 0}
+  .mh-name{font-size:14px}
+  .mh-top{padding-bottom:10px}
+  .stats-row{gap:8px;margin-bottom:12px}
+  .stat-c{padding:10px 12px}
+  .stat-c-val{font-size:18px}
+}
+
+/* ── BOTTOM NAV (mobile only) ── */
+.bottom-nav{display:none}
+@media(max-width:768px){
+  .bottom-nav{
+    display:flex;position:fixed;bottom:0;left:0;right:0;height:60px;
+    background:var(--bg2);border-top:1px solid var(--border);
+    z-index:50;padding:0 4px;padding-bottom:env(safe-area-inset-bottom,0px);
+    align-items:stretch;
+  }
+  .bn-item{
+    flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:3px;cursor:pointer;border:none;background:transparent;
+    color:var(--text3);font-size:10px;font-family:'DM Sans',sans-serif;
+    transition:color .15s;padding:6px 2px;position:relative;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .bn-item:hover{color:var(--text2)}
+  .bn-item.active{color:var(--accent)}
+  .bn-item.active.dir-mode{color:var(--purple)}
+  .bn-item.center-item{
+    flex:1.2;
+  }
+  .bn-item.center-item .bn-icon-wrap{
+    width:40px;height:40px;border-radius:12px;
+    background:var(--accent);display:flex;align-items:center;justify-content:center;
+    margin-bottom:0;
+  }
+  .bn-item.center-item.dir-mode .bn-icon-wrap{background:var(--purple)}
+  .bn-item.center-item .bn-label{display:none}
+  .bn-icon-wrap{width:24px;height:24px;display:flex;align-items:center;justify-content:center;position:relative}
+  .bn-icon{font-size:16px;line-height:1}
+  .bn-label{font-size:9px;font-weight:500;letter-spacing:.01em;line-height:1}
+  .bn-badge{
+    position:absolute;top:-3px;right:-5px;
+    min-width:15px;height:15px;border-radius:10px;
+    background:var(--red);color:#fff;font-size:9px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;padding:0 3px;
+    font-family:'Outfit',sans-serif;
+  }
+  /* Mode switcher in header on mobile */
+  .mobile-mode-bar{
+    display:flex;gap:6px;padding:0 16px 10px;
+  }
+  .mmb-btn{
+    flex:1;padding:6px 4px;border-radius:var(--rs);border:1px solid var(--border);
+    background:transparent;color:var(--text2);font-size:11px;font-family:'DM Sans',sans-serif;
+    cursor:pointer;text-align:center;transition:all .15s;
+  }
+  .mmb-btn.active-mgr{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent);font-weight:500}
+  .mmb-btn.active-dir{background:var(--purple-dim);border-color:var(--purple-border);color:var(--purple);font-weight:500}
+}
 /* ── LOGIN SCREEN ── */
 .login-screen{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
 .login-card{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:40px 36px;width:100%;max-width:380px;text-align:center}
@@ -434,11 +505,43 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <button class="tab-btn active" id="tab-checklist" onclick="setTab('checklist')">Checklist</button>
       <button class="tab-btn" id="tab-ik" onclick="setTab('ik')">IK záznamy</button>
     </div>
+    <!-- Mobile mode switcher -->
+    <div class="mobile-mode-bar" id="mobile-mode-bar">
+      <button class="mmb-btn active-mgr" id="mmb-mgr" onclick="setMode('mng')">Manažer</button>
+      <button class="mmb-btn" id="mmb-dir" onclick="setMode('dir')">Ředitel</button>
+    </div>
   </div>
   <div class="content" id="main-content">
     <div class="empty-state"><div class="empty-state-title">Vítejte v IK Karta 2.0</div><p style="font-size:13px;margin-top:5px">Vyberte modul v levém panelu nebo přidejte osobu.</p></div>
   </div>
 </main>
+
+<!-- BOTTOM NAV (mobile only) -->
+<nav class="bottom-nav" id="bottom-nav">
+  <button class="bn-item" id="bn-adaptace" onclick="bnSetModule('adaptace')">
+    <div class="bn-icon-wrap"><span class="bn-icon">✓</span></div>
+    <span class="bn-label">Adaptace</span>
+  </button>
+  <button class="bn-item" id="bn-aktivity" onclick="bnSetModule('aktivity')">
+    <div class="bn-icon-wrap"><span class="bn-icon">📊</span></div>
+    <span class="bn-label">Aktivity</span>
+  </button>
+  <button class="bn-item center-item" id="bn-todo" onclick="bnSetModule('todo')">
+    <div class="bn-icon-wrap">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="5" width="14" height="2" rx="1" fill="white"/><rect x="3" y="9" width="10" height="2" rx="1" fill="white"/><rect x="3" y="13" width="7" height="2" rx="1" fill="white"/><rect x="14" y="10" width="4" height="4" rx="1" stroke="white" stroke-width="1.5"/><path d="M14.5 12l1 1 2-2" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="bn-badge" id="bn-todo-badge" style="display:none">0</span>
+    </div>
+  </button>
+  <button class="bn-item" id="bn-pipeline" onclick="bnSetModule('pipeline')">
+    <div class="bn-icon-wrap"><span class="bn-icon">👥</span></div>
+    <span class="bn-label">Pipeline</span>
+  </button>
+  <button class="bn-item" id="bn-provize" onclick="bnSetModule('provize')">
+    <div class="bn-icon-wrap"><span class="bn-icon">Kč</span><span style="font-size:9px;font-family:'Outfit',sans-serif;font-weight:600"></span></div>
+    <span class="bn-label">Provize</span>
+  </button>
+</nav>
+
 </div>
 </div>
 
@@ -1090,7 +1193,7 @@ function renderProvize(){
 // MAIN RENDER
 // ═══════════════════════════════════════════════════════════════════
 function renderAll(){
-  renderSidebar();renderHeader();
+  renderSidebar();renderHeader();renderBottomNav();
   const content=document.getElementById('main-content');
   const person=getPerson();
   switch(activeModule){
@@ -1109,6 +1212,50 @@ function setMode(m){mode=m;activePersonId=null;editMode.clear();save();renderAll
 function selectPerson(id){activePersonId=id;editMode.clear();save();renderAll()}
 function setModule(m){activeModule=m;editMode.clear();if(m!=='adaptace')activeTab='checklist';renderAll()}
 function setTab(t){activeTab=t;renderAll()}
+
+// ── BOTTOM NAV ────────────────────────────────────────────────────
+const BN_MODULES_MGR=['adaptace','aktivity','todo','pipeline','provize'];
+const BN_MODULES_DIR=['adaptace','aktivity','todo','pipeline','provize'];
+
+function bnSetModule(m){
+  setModule(m);
+}
+
+function renderBottomNav(){
+  const isMobile=window.innerWidth<=768;
+  const bn=document.getElementById('bottom-nav');
+  const mmb=document.getElementById('mobile-mode-bar');
+  if(!bn)return;
+
+  if(!isMobile){bn.style.display='none';if(mmb)mmb.style.display='none';return;}
+
+  bn.style.display='flex';
+  if(mmb)mmb.style.display='flex';
+
+  // Mode bar
+  const mmbMgr=document.getElementById('mmb-mgr');
+  const mmbDir=document.getElementById('mmb-dir');
+  if(mmbMgr)mmbMgr.className='mmb-btn'+(mode==='mng'?' active-mgr':'');
+  if(mmbDir)mmbDir.className='mmb-btn'+(mode==='dir'?' active-dir':'');
+
+  // Nav items
+  const modules=mode==='dir'?BN_MODULES_DIR:BN_MODULES_MGR;
+  const isDirMode=mode==='dir';
+  modules.forEach(m=>{
+    const el=document.getElementById('bn-'+m);
+    if(!el)return;
+    el.classList.toggle('active',activeModule===m);
+    el.classList.toggle('dir-mode',isDirMode);
+  });
+
+  // Todo badge
+  const urgentCount=todos.filter(t=>!t.done&&getTodoUrgency(t)>0).length;
+  const badge=document.getElementById('bn-todo-badge');
+  if(badge){
+    if(urgentCount>0){badge.textContent=urgentCount;badge.style.display='flex';}
+    else badge.style.display='none';
+  }
+}
 function togglePhase(pi){const el=document.getElementById('phase-'+pi);if(el)el.classList.toggle('collapsed')}
 
 // CHECKLIST ACTIONS
@@ -1638,6 +1785,14 @@ if(!todos.length){
 
 // Spustit auth check – aplikace se zobrazí až po přihlášení
 checkAuth();
+window.addEventListener('resize',()=>renderBottomNav());
+
+// PWA Service Worker
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  });
+}
 </script>
 </body>
 </html>
