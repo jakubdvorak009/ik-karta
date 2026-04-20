@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-title" content="Arlo">
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -434,24 +434,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
     <div class="login-title" style="color:#1E2D5F;font-weight:700;letter-spacing:-.5px">Arlo</div>
     <div class="login-sub" style="color:#9E1830;font-size:14px;font-weight:500;margin-bottom:6px">Vede k výsledkům.</div>
     <div class="login-sub">Přihlaste se svým Google účtem pro pokračování.</div>
-    <div id="g_id_onload"
-      data-client_id="333345769758-gstb4vcrt5m72hq717iv0bgn250k6k9m.apps.googleusercontent.com"
-      data-callback="handleGoogleLogin"
-      data-auto_prompt="false"
-      data-ux_mode="redirect"
-      data-login_uri="https://www.arloapp.cz/api/auth">
+    <button onclick="signInWithGoogle()" style="margin-top:20px;width:100%;padding:12px 16px;border:1px solid #dadce0;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;gap:10px;font-size:14px;font-family:'DM Sans',sans-serif;color:#3c4043;cursor:pointer;transition:background .15s" onmouseover="this.style.background='#f8f9fa'" onmouseout="this.style.background='#fff'">
+      <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 002.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2.04a4.8 4.8 0 01-7.18-2.54H1.83v2.07A8 8 0 008.98 17z"/><path fill="#FBBC05" d="M4.5 10.48A4.8 4.8 0 014.5 7.52V5.45H1.83a8 8 0 000 7.1l2.67-2.07z"/><path fill="#EA4335" d="M8.98 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.59C13.46.89 11.64 0 8.98 0a8 8 0 00-7.15 4.45l2.67 2.07A4.77 4.77 0 018.98 3.58z"/></svg>
+      Přihlásit se přes Google
+    </button>
+    <div class="login-error" id="login-error" style="display:none;margin-top:14px;font-size:12px;color:#d94444;background:rgba(217,68,68,0.08);border:1px solid rgba(217,68,68,0.2);border-radius:6px;padding:8px 12px">
+      Chyba přihlášení. Zkuste to znovu.
     </div>
-    <div class="g_id_signin"
-      data-type="standard"
-      data-size="large"
-      data-theme="outline"
-      data-text="sign_in_with"
-      data-shape="rectangular"
-      data-logo_alignment="left"
-      data-width="308">
-    </div>
-    <div class="login-error" id="login-error">
-      Váš účet nemá přístup k této aplikaci. Kontaktujte správce.
+    <div class="login-footer" style="margin-top:20px;font-size:11px;color:#949ab0">
+      Powered by Backfree · <a href="https://www.arloapp.cz" style="color:#949ab0">arloapp.cz</a>
     </div>
   </div>
 </div>
@@ -755,7 +746,7 @@ let provizeMyPos='jmng', provizeOB={};
 let todos=[], todoTab='osobni', showDone=false;
 const editMode=new Set();
 
-function SK(){return'ik_karta_v3'}
+function SK(){return'arlo_v1'}
 function load(){
   try{
     const d=localStorage.getItem(SK());
@@ -763,7 +754,27 @@ function load(){
   }catch(e){}
 }
 function save(){
-  try{localStorage.setItem(SK(),JSON.stringify({people,mode,activePersonId,candidates,provizeMyPos,provizeOB,todos}))}catch(e){}
+  const data={people,mode,activePersonId,candidates,provizeMyPos,provizeOB,todos};
+  try{localStorage.setItem(SK(),JSON.stringify(data))}catch(e){}
+  // Async sync to Supabase
+  if(currentUser && window._supabase){
+    window._supabase.from('user_data')
+      .upsert({id:currentUser.id, email:currentUser.email, data:data})
+      .then(({error})=>{ if(error) console.warn('Supabase save error:',error.message); });
+  }
+}
+async function loadFromSupabase(){
+  if(!window._supabase||!currentUser)return;
+  try{
+    const {data,error}=await window._supabase
+      .from('user_data').select('data').eq('id',currentUser.id).single();
+    if(error||!data?.data)return;
+    const d=data.data;
+    people=d.people||[];mode=d.mode||'mng';activePersonId=d.activePersonId||null;
+    candidates=d.candidates||[];provizeMyPos=d.provizeMyPos||'jmng';provizeOB=d.provizeOB||{};todos=d.todos||[];
+    // Update localStorage cache
+    localStorage.setItem(SK(),JSON.stringify(d));
+  }catch(e){console.warn('Supabase load error:',e);}
 }
 function getPerson(){return people.find(p=>p.id===activePersonId)||null}
 function getCL(person){if(!person.checklist)person.checklist=JSON.parse(JSON.stringify(TEMPLATE[person.mode||mode]));return person.checklist}
@@ -1657,98 +1668,116 @@ function importData(input){
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// GOOGLE AUTH
+// SUPABASE AUTH
 // ═══════════════════════════════════════════════════════════════════
-const ALLOWED_EMAILS=[
-  'jakub.dvorak009@gmail.com',
-  'david.vitik@4fin.cz',
-  'marek.bokuvka@4fin.cz',
-  'michaela.dudkova@4fin.cz',
-  'dalibor.babiuch@4fin.cz',
-  'jan.burik@4fin.cz',
-  'irena.lesakova@4fin.cz',
-  'jakub.vlcnovsky@4fin.cz',
-  'klara.hajkova@4fin.cz',
-  'roman.psohlavec@4fin.cz',
-  'veronika.horutova@4fin.cz',
-];
+const SUPABASE_URL = 'https://mcfqwvdsivpynifldwmp.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_AzjtbgJpIg9PM8hjtT7fOg_90xfoKdn';
 
-let currentUser=null;
+let currentUser = null;
+let _sbReady = false;
 
-function handleGoogleLogin(response){
+function initSupabase(){
   try{
-    const credential=response.credential;
-    processCredential(credential);
+    window._supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    _sbReady = true;
+
+    window._supabase.auth.onAuthStateChange(async (event, session) => {
+      if(event === 'SIGNED_IN' && session?.user){
+        currentUser = {
+          id: session.user.id,
+          email: session.user.email,
+          name: session.user.user_metadata?.full_name || session.user.email,
+          picture: session.user.user_metadata?.avatar_url || null
+        };
+        localStorage.setItem('arlo_auth', JSON.stringify(currentUser));
+        load();
+        showApp();
+        await loadFromSupabase();
+        initDemoData();
+        renderAll();
+      } else if(event === 'SIGNED_OUT'){
+        currentUser = null;
+        localStorage.removeItem('arlo_auth');
+        document.getElementById('app-shell').style.display = 'none';
+        document.getElementById('login-screen').style.display = 'flex';
+      }
+    });
+
+    // Check existing session
+    window._supabase.auth.getSession().then(({data:{session}})=>{
+      if(!session){
+        // Check localStorage cache for faster startup
+        const stored = localStorage.getItem('arlo_auth');
+        if(stored){
+          try{
+            currentUser = JSON.parse(stored);
+            load();
+            showApp();
+            // Verify session is still valid in background
+            window._supabase.auth.refreshSession().then(({data})=>{
+              if(!data.session){ logout(); }
+            });
+          }catch(e){ showLogin(); }
+        } else {
+          showLogin();
+        }
+      }
+    });
   }catch(e){
-    document.getElementById('login-error').textContent='Chyba přihlášení: '+e.message;
-    document.getElementById('login-error').style.display='block';
+    console.error('Supabase init error:', e);
+    showLogin();
   }
 }
 
-function processCredential(credential){
-  try{
-    const b64=credential.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
-    const padded=b64+('='.repeat((4-b64.length%4)%4));
-    const payload=JSON.parse(atob(padded));
-    const email=payload.email;
-    if(ALLOWED_EMAILS.map(e=>e.toLowerCase()).includes(email.toLowerCase())){
-      currentUser={email,name:payload.name,picture:payload.picture};
-      localStorage.setItem('ik_auth',JSON.stringify(currentUser));
-      // Clean URL after redirect flow
-      if(window.history&&window.history.replaceState){
-        window.history.replaceState({},'',window.location.pathname);
-      }
-      showApp();
-    } else {
-      document.getElementById('login-error').style.display='block';
+function showLogin(){
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app-shell').style.display = 'none';
+}
+
+async function signInWithGoogle(){
+  if(!_sbReady){ alert('Aplikace se načítá, zkuste za chvíli.'); return; }
+  const btn = event.currentTarget;
+  btn.textContent = 'Přihlašování...';
+  btn.disabled = true;
+  const {error} = await window._supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: 'https://www.arloapp.cz',
+      queryParams: { access_type: 'offline', prompt: 'consent' }
     }
-  }catch(e){
-    document.getElementById('login-error').textContent='Chyba: '+e.message;
-    document.getElementById('login-error').style.display='block';
+  });
+  if(error){
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('login-error').textContent = 'Chyba: ' + error.message;
+    btn.textContent = 'Přihlásit se přes Google';
+    btn.disabled = false;
   }
 }
 
 function showApp(){
-  const ls=document.getElementById('login-screen');
-  const as=document.getElementById('app-shell');
-  if(ls)ls.style.display='none';
-  if(as)as.style.display='flex';
+  const ls = document.getElementById('login-screen');
+  const as = document.getElementById('app-shell');
+  if(ls) ls.style.display = 'none';
+  if(as) as.style.display = 'flex';
   try{
     if(currentUser){
-      const av=document.getElementById('user-av');
-      const ns=document.getElementById('user-name-short');
-      const parts=(currentUser.name||currentUser.email).split(' ');
-      const short=parts.length>=2?parts[0][0]+parts[parts.length-1][0]:(currentUser.name||'?').slice(0,2);
-      if(av)av.textContent=short.toUpperCase();
-      if(ns)ns.textContent=parts[0];
+      const av = document.getElementById('user-av');
+      const ns = document.getElementById('user-name-short');
+      const parts = (currentUser.name || currentUser.email).split(' ');
+      const short = parts.length >= 2 ? parts[0][0]+parts[parts.length-1][0] : (currentUser.name||'?').slice(0,2);
+      if(av) av.textContent = short.toUpperCase();
+      if(ns) ns.textContent = parts[0];
     }
   }catch(e){}
-  load();initDemoData();renderAll();
 }
 
-function logout(){
-  if(!confirm('Odhlásit se?'))return;
-  localStorage.removeItem('ik_auth');
-  currentUser=null;
-  document.getElementById('app-shell').style.display='none';
-  document.getElementById('login-screen').style.display='flex';
-  document.getElementById('login-error').style.display='none';
-  if(window.google)google.accounts.id.prompt();
-}
-
-function checkAuth(){
-  // Check localStorage first (already logged in)
-  const stored=localStorage.getItem('ik_auth');
-  if(stored){
-    try{currentUser=JSON.parse(stored);showApp();return;}catch(e){}
-  }
-  // Check URL params for credential from Google redirect flow
-  const params=new URLSearchParams(window.location.search);
-  const hashParams=new URLSearchParams(window.location.hash.replace('#',''));
-  const credential=params.get('credential')||hashParams.get('credential');
-  if(credential){processCredential(credential);return;}
-  // No auth – show login
-  document.getElementById('login-screen').style.display='flex';
+async function logout(){
+  if(!confirm('Odhlásit se?')) return;
+  if(window._supabase) await window._supabase.auth.signOut();
+  currentUser = null;
+  localStorage.removeItem('arlo_auth');
+  document.getElementById('app-shell').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -1793,8 +1822,42 @@ if(!todos.length){
   save();
 }
 
-// Spustit auth check – aplikace se zobrazí až po přihlášení
-checkAuth();
+async function loadFromSupabase(){
+  if(!currentUser?.id||!window._supabase)return;
+  try{
+    const{data:row}=await window._supabase.from('user_data').select('data').eq('id',currentUser.id).single();
+    if(!row?.data)return;
+    const d=row.data;
+    people=d.people||people;
+    mode=d.mode||mode;
+    candidates=d.candidates||candidates;
+    provizeMyPos=d.provizeMyPos||provizeMyPos;
+    provizeOB=d.provizeOB||provizeOB;
+    todos=d.todos||todos;
+    if(people.length&&!activePersonId)activePersonId=people[0].id;
+    try{localStorage.setItem(SK(),JSON.stringify({people,mode,activePersonId,candidates,provizeMyPos,provizeOB,todos}))}catch(e){}
+  }catch(e){console.warn('Cloud load error:',e);}
+}
+
+let _saveTimer=null;
+function save(){
+  try{localStorage.setItem(SK(),JSON.stringify({people,mode,activePersonId,candidates,provizeMyPos,provizeOB,todos}))}catch(e){}
+  if(currentUser?.id&&window._supabase){
+    clearTimeout(_saveTimer);
+    _saveTimer=setTimeout(async()=>{
+      try{
+        await window._supabase.from('user_data').upsert({
+          id:currentUser.id,
+          email:currentUser.email,
+          data:{people,mode,candidates,provizeMyPos,provizeOB,todos}
+        },{onConflict:'id'});
+      }catch(e){console.warn('Cloud save failed:',e);}
+    },1500);
+  }
+}
+
+// Inicializace Supabase a auth
+initSupabase();
 window.addEventListener('resize',()=>renderBottomNav());
 
 // PWA Service Worker
