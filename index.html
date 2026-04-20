@@ -1861,12 +1861,7 @@ function save(){
 initSupabase();
 window.addEventListener('resize',()=>renderBottomNav());
 
-// PWA Service Worker
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('/sw.js').catch(()=>{});
-  });
-}
+// Service worker disabled temporarily
 </script>
 </body>
 </html>
