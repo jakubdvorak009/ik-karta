@@ -5,4 +5,3 @@ module.exports = function handler(req, res) {
   }
   return res.redirect(302, '/?credential=' + encodeURIComponent(credential));
 };
- 
