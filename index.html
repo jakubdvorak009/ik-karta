@@ -1679,11 +1679,19 @@ let _sbReady = false;
 
 function initSupabase(){
   try{
-    window._supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    window._supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+      auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true,
+        flowType: 'pkce'
+      }
+    });
     _sbReady = true;
 
     window._supabase.auth.onAuthStateChange(async (event, session) => {
-      if(event === 'SIGNED_IN' && session?.user){
+      console.log('Auth event:', event, session?.user?.email);
+      if((event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') && session?.user){
         currentUser = {
           id: session.user.id,
           email: session.user.email,
@@ -1691,7 +1699,6 @@ function initSupabase(){
           picture: session.user.user_metadata?.avatar_url || null
         };
         localStorage.setItem('arlo_auth', JSON.stringify(currentUser));
-        load();
         showApp();
         await loadFromSupabase();
         initDemoData();
@@ -1704,24 +1711,21 @@ function initSupabase(){
       }
     });
 
-    // Check existing session
-    window._supabase.auth.getSession().then(({data:{session}})=>{
-      if(!session){
-        // Check localStorage cache for faster startup
-        const stored = localStorage.getItem('arlo_auth');
-        if(stored){
-          try{
-            currentUser = JSON.parse(stored);
-            load();
-            showApp();
-            // Verify session is still valid in background
-            window._supabase.auth.refreshSession().then(({data})=>{
-              if(!data.session){ logout(); }
-            });
-          }catch(e){ showLogin(); }
-        } else {
-          showLogin();
-        }
+    // Check for existing session
+    window._supabase.auth.getSession().then(({data:{session}, error})=>{
+      console.log('getSession:', session?.user?.email, error);
+      if(session?.user){
+        currentUser = {
+          id: session.user.id,
+          email: session.user.email,
+          name: session.user.user_metadata?.full_name || session.user.email,
+          picture: session.user.user_metadata?.avatar_url || null
+        };
+        localStorage.setItem('arlo_auth', JSON.stringify(currentUser));
+        showApp();
+        loadFromSupabase().then(()=>{ initDemoData(); renderAll(); });
+      } else {
+        showLogin();
       }
     });
   }catch(e){
