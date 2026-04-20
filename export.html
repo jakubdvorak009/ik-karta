@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arlo – Export zálohy</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f5f6f8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{background:#fff;border-radius:16px;padding:40px 36px;width:100%;max-width:420px;text-align:center;box-shadow:0 2px 16px rgba(0,0,0,0.08)}
+.logo{width:56px;height:56px;background:#1E2D5F;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 20px}
+h1{font-size:22px;font-weight:700;color:#1E2D5F;margin-bottom:6px}
+.tagline{font-size:14px;color:#9E1830;font-weight:500;margin-bottom:24px}
+.info{font-size:13px;color:#555b72;line-height:1.7;margin-bottom:28px;background:#f0f1f4;border-radius:10px;padding:16px}
+.btn{display:inline-block;width:100%;padding:14px;border-radius:10px;border:none;font-size:15px;font-weight:600;cursor:pointer;transition:all .15s;margin-bottom:10px}
+.btn-primary{background:#1E2D5F;color:#fff}
+.btn-primary:hover{background:#162347}
+.btn-secondary{background:#f0f1f4;color:#555b72;font-size:13px}
+.btn-secondary:hover{background:#e4e6ec}
+.status{margin-top:16px;font-size:12px;padding:10px;border-radius:8px;display:none}
+.status.ok{background:#e8f7f1;color:#1a9e68;display:block}
+.status.err{background:#fdeaea;color:#d94444;display:block}
+.status.warn{background:#fff8ec;color:#c47d0a;display:block}
+.new-url{margin-top:20px;padding-top:20px;border-top:1px solid #e4e6ec;font-size:12px;color:#949ab0}
+.new-url a{color:#1E2D5F;font-weight:600;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+      <path d="M16 4L5 27h4l2-5h10l2 5h4L16 4zm0 6l3 7h-6l3-7z" fill="white"/>
+      <path d="M7 22 Q16 13 25 18" stroke="white" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      <polygon points="25,18 22,16 24,20" fill="white"/>
+    </svg>
+  </div>
+  <h1>Arlo</h1>
+  <div class="tagline">Vede k výsledkům.</div>
+
+  <div class="info">
+    Přesunuli jsme aplikaci na novou adresu.<br>
+    Klikni na tlačítko níže a stáhni si zálohu svých dat.<br>
+    Pak ji nahraj na nové adrese <strong>ik-karta.vercel.app</strong>.
+  </div>
+
+  <button class="btn btn-primary" onclick="exportData()">⬇ Stáhnout zálohu dat</button>
+  <button class="btn btn-secondary" onclick="checkData()">Zkontrolovat co je uloženo</button>
+
+  <div class="status" id="status"></div>
+
+  <div class="new-url">
+    Nová adresa aplikace:<br>
+    <a href="https://ik-karta.vercel.app" target="_blank">ik-karta.vercel.app</a>
+  </div>
+</div>
+
+<script>
+function getStatus(el, msg, type){
+  el.textContent = msg;
+  el.className = 'status ' + type;
+}
+
+function checkData(){
+  const s = document.getElementById('status');
+  try {
+    const raw = localStorage.getItem('ik_karta_v3');
+    if(!raw){ getStatus(s, 'V tomto prohlížeči nejsou uložena žádná data. Zkus jiný prohlížeč nebo zařízení.', 'warn'); return; }
+    const d = JSON.parse(raw);
+    const people = (d.people||[]).length;
+    const cands = (d.candidates||[]).length;
+    const todos = (d.todos||[]).length;
+    getStatus(s, `Nalezeno: ${people} osob v adaptaci, ${cands} kandidátů v pipeline, ${todos} úkolů.`, 'ok');
+  } catch(e) {
+    getStatus(document.getElementById('status'), 'Chyba při čtení dat: ' + e.message, 'err');
+  }
+}
+
+function exportData(){
+  const s = document.getElementById('status');
+  try {
+    const raw = localStorage.getItem('ik_karta_v3');
+    if(!raw){ getStatus(s, 'V tomto prohlížeči nejsou žádná data k exportu. Zkus jiný prohlížeč nebo zařízení kde jsi aplikaci používal.', 'warn'); return; }
+    const data = JSON.parse(raw);
+    data.exportedAt = new Date().toISOString();
+    data.version = 'v3';
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    const d = new Date();
+    a.download = `Arlo_zaloha_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    getStatus(s, '✓ Záloha stažena. Nyní ji nahraj na ik-karta.vercel.app po přihlášení.', 'ok');
+  } catch(e) {
+    getStatus(s, 'Chyba při exportu: ' + e.message, 'err');
+  }
+}
+
+// Auto check on load
+window.onload = () => {
+  const raw = localStorage.getItem('ik_karta_v3');
+  if(raw) {
+    try {
+      const d = JSON.parse(raw);
+      const people = (d.people||[]).length;
+      if(people > 0) checkData();
+    } catch(e){}
+  }
+};
+</script>
+</body>
+</html>
