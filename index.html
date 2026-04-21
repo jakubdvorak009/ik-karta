@@ -1859,6 +1859,26 @@ function importData(input){
 const SUPABASE_URL='https://mcfqwvdsivpynifldwmp.supabase.co';
 const SUPABASE_KEY='sb_publishable_AzjtbgJpIg9PM8hjtT7fOg_90xfoKdn';
 
+// ─── WHITELIST ──────────────────────────────────────────
+// Přidejte sem emaily testerů/uživatelů. Pouze tito se dostanou do aplikace.
+const ALLOWED_EMAILS=[
+  'jakub.dvorak009@gmail.com',
+  'jakub.dvorak@4fin.cz',
+  'dalibor.babiuch@4fin.cz',
+  'jan.burik@4fin.cz',
+  'david.vitik@4fin.cz',
+  'marek.bokuvka@4fin.cz',
+  'irena.lesakova@4fin.cz',
+  'jakub.vlcnovsky@4fin.cz',
+  'klara.hajkova@4fin.cz',
+  'michaela.dudkova@4fin.cz',
+  'roman.psohlavec@4fin.cz',
+  'veronika.horutova@4fin.cz',
+  'karel.peter@4fin.cz',
+  // přidejte další emaily testerů:
+  // 'jmeno.prijmeni@domena.cz',
+];
+
 function initSupabase(){
   try{
     window._supabase=supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{autoRefreshToken:true,persistSession:true,detectSessionInUrl:true}});
@@ -1868,6 +1888,16 @@ function initSupabase(){
     let _appBooted=false;
     async function bootApp(user){
       if(_appBooted)return;_appBooted=true;
+      // Whitelist check
+      const email=(user.email||'').toLowerCase().trim();
+      const allowed=ALLOWED_EMAILS.map(e=>e.toLowerCase().trim());
+      if(!allowed.includes(email)){
+        _appBooted=false;
+        await window._supabase.auth.signOut();
+        const errEl=document.getElementById('login-error');
+        if(errEl){errEl.style.display='block';errEl.textContent=`Přístup zamítnut. Váš účet (${user.email}) není autorizován. Kontaktujte správce aplikace.`;}
+        return;
+      }
       currentUser={id:user.id,email:user.email,name:user.user_metadata?.full_name||user.email,picture:user.user_metadata?.avatar_url||null};
       localStorage.setItem('arlo_auth',JSON.stringify(currentUser));
       showApp();
