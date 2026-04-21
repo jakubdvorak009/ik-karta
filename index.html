@@ -374,6 +374,18 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .user-badge{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--bg3);border-radius:6px;font-size:12px;color:var(--text2);cursor:pointer;border:none;font-family:'DM Sans',sans-serif;transition:background .12s}
 .user-badge:hover{background:var(--bg4)}
 .user-av{width:24px;height:24px;border-radius:50%;background:var(--accent-dim);color:var(--accent);font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* User dropdown */
+.user-dropdown{position:absolute;bottom:calc(100% + 6px);right:0;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.12);min-width:200px;overflow:hidden;z-index:200;display:none}
+.user-dropdown.open{display:block}
+.ud-info{padding:12px 14px;border-bottom:1px solid var(--border)}
+.ud-name{font-size:13px;font-weight:600;color:var(--text)}
+.ud-email{font-size:11px;color:var(--text3);margin-top:1px;word-break:break-all}
+.ud-btn{display:flex;align-items:center;gap:8px;width:100%;padding:10px 14px;border:none;background:transparent;color:var(--text2);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:left;transition:background .1s}
+.ud-btn:hover{background:var(--bg3)}
+.ud-btn.danger{color:var(--red)}
+.ud-btn.danger:hover{background:var(--red-dim)}
+/* mobile-mode-bar hidden on desktop, shown only on mobile */
+.mobile-mode-bar{display:none}
 
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
 
@@ -442,10 +454,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 2L3 17h2.5l1.5-3h6l1.5 3H17L10 2zm0 4l2 4H8l2-4z" fill="white"/><path d="M5 14 Q10 8 15 11" stroke="white" stroke-width="1.2" stroke-linecap="round" fill="none"/><polygon points="15,11 13,9.5 14.5,12" fill="white"/></svg>
     </div>
     <div class="app-name">Arlo</div>
-    <button class="user-badge" id="user-badge" onclick="logout()" style="margin-left:auto" title="Odhlásit se">
-      <div class="user-av" id="user-av">?</div>
-      <span id="user-name-short">...</span>
-    </button>
+    <!-- User dropdown -->
+    <div style="margin-left:auto;position:relative">
+      <button class="user-badge" id="user-badge" onclick="toggleUserMenu(event)">
+        <div class="user-av" id="user-av">?</div>
+        <span id="user-name-short">...</span>
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style="opacity:0.4"><path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="user-dropdown" id="user-dropdown">
+        <div class="ud-info">
+          <div class="ud-name" id="ud-name">Uživatel</div>
+          <div class="ud-email" id="ud-email"></div>
+        </div>
+        <button class="ud-btn danger" onclick="logout()">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M5 7h7M9 5l2 2-2 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 3H3a1 1 0 00-1 1v6a1 1 0 001 1h2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Odhlásit se
+        </button>
+      </div>
+    </div>
   </div>
   <div class="sb-modes">
     <button class="mode-tab am" id="mode-mgr" onclick="setMode('mng')">Manažer<br>adaptuje poradce</button>
@@ -1945,15 +1971,26 @@ function showApp(){
   if(ls)ls.style.display='none';if(as)as.style.display='flex';
   try{
     if(currentUser){
-      const av=document.getElementById('user-av');const ns=document.getElementById('user-name-short');
       const parts=(currentUser.name||currentUser.email).split(' ');
       const short=parts.length>=2?parts[0][0]+parts[parts.length-1][0]:(currentUser.name||'?').slice(0,2);
-      if(av)av.textContent=short.toUpperCase();if(ns)ns.textContent=parts[0];
+      const av=document.getElementById('user-av');if(av)av.textContent=short.toUpperCase();
+      const ns=document.getElementById('user-name-short');if(ns)ns.textContent=parts[0];
+      const udn=document.getElementById('ud-name');if(udn)udn.textContent=currentUser.name||currentUser.email;
+      const ude=document.getElementById('ud-email');if(ude)ude.textContent=currentUser.email;
     }
   }catch(e){}
 }
+function toggleUserMenu(e){
+  e.stopPropagation();
+  const dd=document.getElementById('user-dropdown');
+  if(dd)dd.classList.toggle('open');
+}
+// Close dropdown when clicking outside
+document.addEventListener('click',()=>{
+  const dd=document.getElementById('user-dropdown');if(dd)dd.classList.remove('open');
+});
 async function logout(){
-  if(!confirm('Odhlásit se?'))return;
+  const dd=document.getElementById('user-dropdown');if(dd)dd.classList.remove('open');
   if(window._supabase)await window._supabase.auth.signOut();
   currentUser=null;localStorage.removeItem('arlo_auth');
   document.getElementById('app-shell').style.display='none';
