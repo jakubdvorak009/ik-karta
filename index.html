@@ -272,13 +272,27 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .ik-rec-hdr{padding:10px 14px;background:var(--bg3);display:flex;align-items:center;justify-content:space-between}
 .ik-date{font-size:12px;font-family:'Outfit',sans-serif;color:var(--text2)}
 .ik-body{padding:12px 14px}
-.ik-fld{margin-bottom:8px}
-.ik-lbl{font-size:10px;color:var(--text3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+.ik-fld{margin-bottom:10px;border-left:2px solid var(--border2);padding-left:10px}
+.ik-lbl{font-size:10px;color:var(--text3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
 .ik-txt{font-size:13px;color:var(--text2);line-height:1.6}
 .ik-tasks{list-style:none}
 .ik-task-item{display:flex;align-items:flex-start;gap:6px;padding:2px 0;font-size:13px;color:var(--text2)}
 .ik-task-item::before{content:'·';color:var(--accent);flex-shrink:0}
 .ik-footer{padding:8px 14px;background:var(--bg3);border-top:1px solid var(--border);display:flex;gap:7px;justify-content:flex-end}
+/* IK modal sections */
+.ik-modal-body{max-height:60vh;overflow-y:auto;padding-right:2px;margin-bottom:10px}
+.ik-sec{border:1px solid var(--border);border-radius:var(--rs);margin-bottom:7px;overflow:hidden;background:var(--bg2)}
+.ik-sec-hdr{display:flex;align-items:center;gap:7px;padding:5px 8px;background:var(--bg3);border-bottom:1px solid var(--border)}
+.ik-sec-num{font-size:10px;font-family:'Outfit',sans-serif;font-weight:700;color:var(--text3);background:var(--bg4);border-radius:3px;padding:1px 6px;flex-shrink:0;min-width:20px;text-align:center}
+.ik-sec-label{flex:1;padding:3px 7px;background:transparent;border:1px solid transparent;border-radius:4px;font-size:12px;font-weight:500;color:var(--text);font-family:'DM Sans',sans-serif;outline:none;transition:all .12s}
+.ik-sec-label:hover{border-color:var(--border2);background:var(--bg2)}
+.ik-sec-label:focus{border-color:var(--accent-border);background:var(--bg2)}
+.ik-sec-del{width:20px;height:20px;border-radius:3px;border:none;background:transparent;color:var(--text3);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s}
+.ik-sec-del:hover{background:var(--red-dim);color:var(--red)}
+.ik-sec-body{padding:7px 9px}
+.ik-sec-textarea{width:100%;padding:6px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:4px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.5;outline:none;resize:vertical;min-height:52px;transition:border-color .12s}
+.ik-sec-textarea:focus{border-color:var(--accent-border);background:#fff}
+.ik-sec-placeholder{font-size:11px;color:var(--text3);font-style:italic;padding:4px 8px 6px;line-height:1.4}
 
 /* ══ FOCUS KANBAN ══ */
 .focus-wrap{padding-bottom:20px}
@@ -576,14 +590,24 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 
 <!-- ADD/EDIT IK MODAL -->
 <div class="modal-bg hidden" id="ik-modal">
-<div class="modal">
-  <div class="modal-title" id="ik-modal-title">Nový záznam z IK</div>
+<div class="modal" style="max-width:600px">
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:3px">
+    <div class="modal-title" id="ik-modal-title">Nový záznam z IK</div>
+    <div class="form-group" style="margin:0;flex-shrink:0"><input class="form-input" id="ik-date" type="date" style="width:140px;font-size:12px;padding:4px 8px"></div>
+  </div>
   <div class="modal-sub" id="ik-modal-sub">Záznam ze schůzky</div>
   <input type="hidden" id="ik-edit-idx">
-  <div class="form-group"><label class="form-label">Datum IK</label><input class="form-input" id="ik-date" type="date"></div>
-  <div class="form-group"><label class="form-label">Obsah / co jsme probírali</label><textarea class="form-textarea" id="ik-content" placeholder="Zpětná vazba k aktivitám, produktové školení..."></textarea></div>
-  <div class="form-group"><label class="form-label">Úkoly pro nováčka (každý na nový řádek)</label><textarea class="form-textarea" id="ik-tasks-nov"></textarea></div>
-  <div class="form-group"><label class="form-label">Úkoly pro manažera (každý na nový řádek)</label><textarea class="form-textarea" id="ik-tasks-mgr"></textarea></div>
+  <!-- Dynamic sections -->
+  <div class="ik-modal-body" id="ik-sections-container"></div>
+  <!-- Controls -->
+  <div style="display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap">
+    <button type="button" class="btn" onclick="addIkSection()" style="font-size:11px;gap:4px">
+      <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Přidat sekci
+    </button>
+    <button type="button" class="btn" onclick="saveIkTemplate()" style="font-size:11px;color:var(--green);border-color:var(--green-border)">Uložit jako šablonu</button>
+    <button type="button" class="btn" onclick="resetIkTemplate()" style="font-size:11px;color:var(--text3);margin-left:auto">Obnovit výchozí</button>
+  </div>
   <div class="modal-actions"><button class="btn" onclick="closeIkModal()">Zrušit</button><button class="btn btn-p" id="ik-save-btn" onclick="saveIkRecord()">Uložit záznam</button></div>
 </div>
 </div>
@@ -715,6 +739,29 @@ const TEMPLATE={
   ]
 };
 
+// ═══════════════════════════════════════════════════════
+// IK SECTION TEMPLATE
+// ═══════════════════════════════════════════════════════
+const DEFAULT_IK_SECTIONS=[
+  {key:'feedback_minule',   label:'Zpětná vazba od minule – vyhodnocení úkolů'},
+  {key:'feedback_skoleni',  label:'Zpětná vazba školení za minulý týden'},
+  {key:'klientske_schuzky', label:'Proběhlé klientské schůzky'},
+  {key:'plany_tydne',       label:'Plány tohoto týdne'},
+  {key:'koucink',           label:'Manažerský koučink'},
+  {key:'ukoly_novacek',     label:'Úkoly pro nováčka'},
+  {key:'ukoly_manazer',     label:'Úkoly pro manažera'},
+];
+
+const IK_PLACEHOLDER={
+  feedback_minule:  'Jaké úkoly byly zadány minule? Co bylo splněno, co ne a proč?',
+  feedback_skoleni: 'Jaké školení proběhlo? Co nebylo jasné? Co je potřeba dovysvětlit?',
+  klientske_schuzky:'Kolik schůzek proběhlo vs. plán? Co se řešilo? Jaký je další postup? Je finanční plán vyplněný?',
+  plany_tydne:      'Jaké klientské schůzky jsou v plánu? Co se bude učit? Vzdělávání?',
+  koucink:          'S čím může manažer pomoct? Jaké jsou největší překážky?',
+  ukoly_novacek:    'Úkoly pro nováčka do příští IK (každý na nový řádek)',
+  ukoly_manazer:    'Úkoly pro manažera do příští IK (každý na nový řádek)',
+};
+
 const POSITIONS=[
   {key:'jk',label:'Junior konzultant',abbr:'JK',koef:4.0},{key:'k',label:'Konzultant',abbr:'K',koef:5.5},
   {key:'sk',label:'Senior konzultant',abbr:'SK',koef:7.3},{key:'sak',label:'Samostatný konzultant',abbr:'SAK',koef:9.2},
@@ -752,6 +799,7 @@ let candidates=[],showArchived=false,pipeFilter='all';
 let provizeMyPos='jmng',provizeOB={};
 let todos=[],kanbanGroups=JSON.parse(JSON.stringify(DEFAULT_GROUPS));
 let activeKanbanGroup='all',activeKanbanCol='nove';
+let ikSectionTemplate=JSON.parse(JSON.stringify(DEFAULT_IK_SECTIONS));
 const editMode=new Set();
 
 let currentUser=null,_sbReady=false;
@@ -778,12 +826,13 @@ function load(){
       candidates=p.candidates||[];provizeMyPos=p.provizeMyPos||'jmng';provizeOB=p.provizeOB||{};
       todos=migrateTodos(p.todos);
       if(p.kanbanGroups&&p.kanbanGroups.length)kanbanGroups=p.kanbanGroups;
+      if(p.ikSectionTemplate&&p.ikSectionTemplate.length)ikSectionTemplate=p.ikSectionTemplate;
     }
   }catch(e){}
 }
 
 function save(){
-  const data={people,mode,activePersonId,candidates,provizeMyPos,provizeOB,todos,kanbanGroups};
+  const data={people,mode,activePersonId,candidates,provizeMyPos,provizeOB,todos,kanbanGroups,ikSectionTemplate};
   try{localStorage.setItem(SK(),JSON.stringify(data))}catch(e){}
   if(currentUser?.id&&window._supabase){
     clearTimeout(_saveTimer);
@@ -791,7 +840,7 @@ function save(){
       try{
         await window._supabase.from('user_data').upsert({
           id:currentUser.id,email:currentUser.email,
-          data:{people,mode,candidates,provizeMyPos,provizeOB,todos,kanbanGroups}
+          data:{people,mode,candidates,provizeMyPos,provizeOB,todos,kanbanGroups,ikSectionTemplate}
         },{onConflict:'id'});
       }catch(e){console.warn('Cloud save failed:',e);}
     },1500);
@@ -808,6 +857,7 @@ async function loadFromSupabase(){
     provizeMyPos=d.provizeMyPos||provizeMyPos;provizeOB=d.provizeOB||provizeOB;
     todos=migrateTodos(d.todos);
     if(d.kanbanGroups&&d.kanbanGroups.length)kanbanGroups=d.kanbanGroups;
+    if(d.ikSectionTemplate&&d.ikSectionTemplate.length)ikSectionTemplate=d.ikSectionTemplate;
     if(people.length&&!activePersonId)activePersonId=people[0].id;
     try{localStorage.setItem(SK(),JSON.stringify({people,mode,activePersonId,candidates,provizeMyPos,provizeOB,todos,kanbanGroups}))}catch(e){}
   }catch(e){console.warn('Cloud load error:',e);}
@@ -1005,27 +1055,49 @@ function renderAdaptace(person){
 }
 
 // ═══════════════════════════════════════════════════════
+// IK RECORD MIGRATION (old → new format)
+// ═══════════════════════════════════════════════════════
+function migrateIkRecord(rec){
+  if(rec.sections)return rec;
+  const secs=[];
+  if(rec.content)secs.push({key:'content',label:'Obsah schůzky',content:rec.content});
+  if(rec.tasksNov)secs.push({key:'ukoly_novacek',label:'Úkoly pro nováčka',content:rec.tasksNov});
+  if(rec.tasksMgr)secs.push({key:'ukoly_manazer',label:'Úkoly pro manažera',content:rec.tasksMgr});
+  if(!secs.length)secs.push({key:'obsah',label:'Obsah',content:''});
+  return{...rec,sections:secs};
+}
+
+// ═══════════════════════════════════════════════════════
 // MODULE: IK ZÁZNAMY
 // ═══════════════════════════════════════════════════════
 function renderIK(person){
   const ik=person.ik||[];
   let h=`<div style="display:flex;justify-content:flex-end;margin-bottom:14px"><button class="btn btn-p" onclick="openIkModal()">+ Nová IK schůzka</button></div>`;
   if(!ik.length)return h+`<div class="empty-state"><div class="empty-state-title">Zatím žádné záznamy</div></div>`;
-  [...ik].reverse().forEach((rec,ri)=>{
+  [...ik].reverse().forEach((rawRec,ri)=>{
     const idx=ik.length-1-ri;
-    const tN=(rec.tasksNov||'').split('\n').filter(Boolean);
-    const tM=(rec.tasksMgr||'').split('\n').filter(Boolean);
+    const rec=migrateIkRecord(rawRec);
+    const nonEmpty=(rec.sections||[]).filter(s=>s.content);
     h+=`<div class="ik-record"><div class="ik-rec-hdr">
       <span class="ik-date">IK · ${fmtDate(rec.date)}</span>
       <div style="display:flex;gap:6px">
         <button class="btn" style="font-size:11px;padding:3px 9px" onclick="editIK('${person.id}',${idx})">Upravit</button>
         <button class="btn" style="font-size:11px;padding:3px 9px;color:var(--red)" onclick="delIK('${person.id}',${idx})">Smazat</button>
       </div>
-    </div>
-    <div class="ik-body">`;
-    if(rec.content)h+=`<div class="ik-fld"><div class="ik-lbl">Obsah schůzky</div><div class="ik-txt">${esc(rec.content)}</div></div>`;
-    if(tN.length)h+=`<div class="ik-fld"><div class="ik-lbl">Úkoly pro nováčka</div><ul class="ik-tasks">${tN.map(t=>`<li class="ik-task-item">${esc(t)}</li>`).join('')}</ul></div>`;
-    if(tM.length)h+=`<div class="ik-fld"><div class="ik-lbl">Úkoly pro manažera</div><ul class="ik-tasks">${tM.map(t=>`<li class="ik-task-item">${esc(t)}</li>`).join('')}</ul></div>`;
+    </div><div class="ik-body">`;
+    if(!nonEmpty.length){
+      h+=`<div style="font-size:12px;color:var(--text3);font-style:italic">Záznam je prázdný.</div>`;
+    } else {
+      nonEmpty.forEach(sec=>{
+        const isTask=sec.key==='ukoly_novacek'||sec.key==='ukoly_manazer'||sec.label.toLowerCase().includes('úkol');
+        if(isTask){
+          const tasks=sec.content.split('\n').filter(Boolean);
+          if(tasks.length)h+=`<div class="ik-fld"><div class="ik-lbl">${esc(sec.label)}</div><ul class="ik-tasks">${tasks.map(t=>`<li class="ik-task-item">${esc(t)}</li>`).join('')}</ul></div>`;
+        } else {
+          h+=`<div class="ik-fld"><div class="ik-lbl">${esc(sec.label)}</div><div class="ik-txt">${esc(sec.content).replace(/\n/g,'<br>')}</div></div>`;
+        }
+      });
+    }
     h+=`</div><div class="ik-footer">
       <button class="btn" onclick="createTodoFromIK('${esc(person.name)}','${rec.date}')">+ Vytvořit úkol</button>
       ${person.email?`<button class="btn" onclick="sendEmailRec('${person.id}',${idx})">Poslat e-mailem</button>`:''}
@@ -1552,6 +1624,58 @@ function saveCandidate(){
 }
 
 // ── IK MODAL ──
+// ── IK MODAL ──
+function renderIkModalSections(sections){
+  const container=document.getElementById('ik-sections-container');
+  if(!container)return;
+  container.innerHTML='';
+  sections.forEach((sec,i)=>{
+    const ph=IK_PLACEHOLDER[sec.key]||'Poznámky...';
+    const div=document.createElement('div');
+    div.className='ik-sec';div.id=`ik-sec-${i}`;div.dataset.key=sec.key||`sec_${i}`;
+    div.innerHTML=`
+      <div class="ik-sec-hdr">
+        <span class="ik-sec-num">${i+1}</span>
+        <input class="ik-sec-label" id="ik-sec-label-${i}" value="${esc(sec.label)}" placeholder="Název sekce...">
+        <button class="ik-sec-del" onclick="removeIkSection(${i})" title="Odstranit sekci">×</button>
+      </div>
+      <div class="ik-sec-body">
+        <div class="ik-sec-placeholder">${ph}</div>
+        <textarea class="ik-sec-textarea" id="ik-sec-content-${i}">${esc(sec.content||'')}</textarea>
+      </div>`;
+    container.appendChild(div);
+  });
+}
+function getCurrentIkSections(){
+  const container=document.getElementById('ik-sections-container');
+  if(!container)return[];
+  const sections=[];
+  container.querySelectorAll('.ik-sec').forEach((div,i)=>{
+    sections.push({
+      key:div.dataset.key||`sec_${i}`,
+      label:(document.getElementById(`ik-sec-label-${i}`)?.value||'Sekce').trim(),
+      content:(document.getElementById(`ik-sec-content-${i}`)?.value||'').trim(),
+    });
+  });
+  return sections;
+}
+function addIkSection(){
+  const existing=getCurrentIkSections();
+  existing.push({key:`sec_${Date.now()}`,label:'Nová sekce',content:''});
+  renderIkModalSections(existing);
+  const c=document.getElementById('ik-sections-container');if(c)c.scrollTop=c.scrollHeight;
+}
+function removeIkSection(i){
+  const existing=getCurrentIkSections();existing.splice(i,1);renderIkModalSections(existing);
+}
+function saveIkTemplate(){
+  ikSectionTemplate=getCurrentIkSections().map(s=>({key:s.key,label:s.label}));
+  save();toast('Šablona IK uložena jako výchozí – všechny nové IK budou mít tyto sekce');
+}
+function resetIkTemplate(){
+  if(!confirm('Obnovit výchozí sekce? Obsah aktuálně zadaný v sekcích bude ztracen.'))return;
+  renderIkModalSections(DEFAULT_IK_SECTIONS.map(s=>({...s,content:''})));
+}
 function openIkModal(){
   const p=getPerson();if(!p)return;
   document.getElementById('ik-modal-title').textContent='Nový záznam z IK';
@@ -1559,34 +1683,30 @@ function openIkModal(){
   document.getElementById('ik-edit-idx').value='';
   document.getElementById('ik-save-btn').textContent='Uložit záznam';
   document.getElementById('ik-date').value=new Date().toISOString().split('T')[0];
-  document.getElementById('ik-content').value='';
-  document.getElementById('ik-tasks-nov').value='';document.getElementById('ik-tasks-mgr').value='';
+  renderIkModalSections(ikSectionTemplate.map(s=>({...s,content:''})));
   document.getElementById('ik-modal').classList.remove('hidden');
 }
 function editIK(pid,idx){
   const p=people.find(x=>x.id===pid);if(!p)return;
-  const rec=(p.ik||[])[idx];if(!rec)return;
+  const rawRec=(p.ik||[])[idx];if(!rawRec)return;
+  const rec=migrateIkRecord(rawRec);
+  p.ik[idx]=rec;
   activePersonId=pid;
   document.getElementById('ik-modal-title').textContent='Upravit záznam z IK';
   document.getElementById('ik-modal-sub').textContent='Záznam z IK: '+p.name;
   document.getElementById('ik-edit-idx').value=idx;
   document.getElementById('ik-save-btn').textContent='Uložit změny';
   document.getElementById('ik-date').value=rec.date||'';
-  document.getElementById('ik-content').value=rec.content||'';
-  document.getElementById('ik-tasks-nov').value=rec.tasksNov||'';
-  document.getElementById('ik-tasks-mgr').value=rec.tasksMgr||'';
+  renderIkModalSections(rec.sections||[]);
   document.getElementById('ik-modal').classList.remove('hidden');
 }
 function closeIkModal(){document.getElementById('ik-modal').classList.add('hidden')}
 function saveIkRecord(){
   const p=getPerson();if(!p)return;if(!p.ik)p.ik=[];
   const editIdx=document.getElementById('ik-edit-idx').value;
-  const rec={date:document.getElementById('ik-date').value,content:document.getElementById('ik-content').value.trim(),tasksNov:document.getElementById('ik-tasks-nov').value.trim(),tasksMgr:document.getElementById('ik-tasks-mgr').value.trim()};
-  if(editIdx!==''){
-    p.ik[Number(editIdx)]=rec;toast('IK záznam upraven');
-  } else {
-    p.ik.push(rec);activeTab='ik';toast('IK záznam uložen');
-  }
+  const rec={date:document.getElementById('ik-date').value,sections:getCurrentIkSections()};
+  if(editIdx!==''){p.ik[Number(editIdx)]=rec;toast('IK záznam upraven');}
+  else{p.ik.push(rec);activeTab='ik';toast('IK záznam uložen');}
   save();closeIkModal();renderAll();
 }
 
