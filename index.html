@@ -487,8 +487,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
       <div class="mod-icon" style="background:var(--green-dim);color:var(--green)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1v7M3 6l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       Exportovat zálohu
     </button>
-    <label class="mod-btn" style="cursor:pointer;color:var(--accent)">
-      <div class="mod-icon" style="background:var(--accent-dim);color:var(--accent)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 8V1M3 4l3-3 3 3M1 10h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <button class="mod-btn" onclick="forceReloadCloud()" style="color:var(--accent)">
+      <div class="mod-icon" style="background:var(--accent-dim);color:var(--accent)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M10 6a4 4 0 11-1.2-2.8M10 2v3H7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      Obnovit ze zálohy
+    </button>
+    <label class="mod-btn" style="cursor:pointer;color:var(--text2)">
+      <div class="mod-icon" style="background:var(--bg3);color:var(--text2)"><svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 8V1M3 4l3-3 3 3M1 10h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
       Importovat zálohu
       <input type="file" accept=".json" style="display:none" onchange="importData(this)">
     </label>
@@ -1814,6 +1818,13 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAddModal();clo
 // ═══════════════════════════════════════════════════════
 // EXPORT / IMPORT
 // ═══════════════════════════════════════════════════════
+async function forceReloadCloud(){
+  if(!currentUser?.id||!window._supabase){toast('Nejste přihlášeni nebo není dostupné cloudové úložiště');return;}
+  toast('Načítám ze zálohy...');
+  await loadFromSupabase();
+  renderAll();
+  toast('Data obnovena ze zálohy');
+}
 function exportData(){
   const data={people,candidates,provizeMyPos,provizeOB,mode,todos,kanbanGroups,exportedAt:new Date().toISOString(),version:'v4'};
   const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
@@ -1852,25 +1863,35 @@ function initSupabase(){
   try{
     window._supabase=supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{autoRefreshToken:true,persistSession:true,detectSessionInUrl:true}});
     _sbReady=true;
+
+    // Guard: prevent double-execution from both getSession + onAuthStateChange
+    let _appBooted=false;
+    async function bootApp(user){
+      if(_appBooted)return;_appBooted=true;
+      currentUser={id:user.id,email:user.email,name:user.user_metadata?.full_name||user.email,picture:user.user_metadata?.avatar_url||null};
+      localStorage.setItem('arlo_auth',JSON.stringify(currentUser));
+      showApp();
+      await loadFromSupabase();
+      initDemoData();
+      renderAll();
+    }
+
     window._supabase.auth.onAuthStateChange(async(event,session)=>{
       console.log('Auth event:',event,session?.user?.email);
       if((event==='SIGNED_IN'||event==='TOKEN_REFRESHED')&&session?.user){
-        currentUser={id:session.user.id,email:session.user.email,name:session.user.user_metadata?.full_name||session.user.email,picture:session.user.user_metadata?.avatar_url||null};
-        localStorage.setItem('arlo_auth',JSON.stringify(currentUser));
-        showApp();await loadFromSupabase();initDemoData();renderAll();
+        await bootApp(session.user);
       } else if(event==='SIGNED_OUT'){
+        _appBooted=false;
         currentUser=null;localStorage.removeItem('arlo_auth');
         document.getElementById('app-shell').style.display='none';
         document.getElementById('login-screen').style.display='flex';
       }
     });
+
     window._supabase.auth.getSession().then(({data:{session},error})=>{
       console.log('getSession:',session?.user?.email,error);
-      if(session?.user){
-        currentUser={id:session.user.id,email:session.user.email,name:session.user.user_metadata?.full_name||session.user.email,picture:session.user.user_metadata?.avatar_url||null};
-        localStorage.setItem('arlo_auth',JSON.stringify(currentUser));
-        showApp();loadFromSupabase().then(()=>{initDemoData();renderAll();});
-      } else {showLogin();}
+      if(session?.user){bootApp(session.user);}
+      else{showLogin();}
     });
   }catch(e){console.error('Supabase init error:',e);showLogin();}
 }
