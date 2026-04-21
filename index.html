@@ -164,39 +164,69 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
 .add-btn-sm{padding:4px 9px;border-radius:var(--rs);border:1px solid var(--accent-border);background:var(--accent-dim);color:var(--accent);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer}
 .add-btn-sm:hover{background:var(--accent);color:#fff}
 
-/* AKTIVITY STATS MODULE - redesigned with plan vs actual */
-.aktivity-wrap{overflow-x:auto}
-.stats-table{width:100%;border-collapse:collapse;min-width:900px}
-.stats-table th{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;padding:6px 8px;text-align:center;white-space:nowrap;border-bottom:2px solid var(--border);background:var(--bg2);position:sticky;top:0}
-.stats-table th.metric-col{text-align:left;width:140px}
-.stats-table th.cur-month{background:var(--accent-dim);color:var(--accent)}
-.stats-table td{padding:3px 4px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:middle}
-.stats-table td.metric-name{font-size:12px;font-weight:500;color:var(--text2);white-space:nowrap;padding:5px 8px}
-/* dual cell: plan on top, actual below */
-.dual-cell{display:flex;flex-direction:column;gap:1px;align-items:center;min-width:56px}
-.dual-cell-plan{display:flex;align-items:center;gap:3px}
-.plan-lbl{font-size:9px;font-family:'DM Mono',monospace;color:var(--text3);font-weight:600;width:10px}
-.act-lbl{font-size:9px;font-family:'DM Mono',monospace;color:var(--accent);font-weight:600;width:10px}
-.num-inp-sm{width:48px;padding:2px 4px;border:1px solid var(--border);border-radius:3px;font-family:'Outfit',sans-serif;font-variant-numeric:tabular-nums;font-size:11px;color:var(--text3);background:var(--bg3);text-align:center;outline:none;transition:border-color .15s}
-.num-inp-sm:focus{border-color:var(--accent-border);background:#fff}
-.num-inp{width:48px;padding:2px 4px;border:1px solid var(--border2);border-radius:3px;font-family:'Outfit',sans-serif;font-variant-numeric:tabular-nums;font-size:12px;color:var(--text);background:transparent;text-align:center;outline:none;transition:border-color .15s}
-.num-inp:focus{border-color:var(--accent-border);background:#fff}
-.num-inp.cur{border-color:var(--accent-border)}
-.diff-badge{font-size:9px;font-family:'Outfit',sans-serif;font-weight:600;font-variant-numeric:tabular-nums;border-radius:3px;padding:0 3px;line-height:1.5}
-.diff-pos{color:var(--green);background:var(--green-dim)}
-.diff-neg{color:var(--red);background:var(--red-dim)}
-.diff-zero{color:var(--text3)}
-.cell-green{background:rgba(26,158,104,0.06)}
-.cell-amber{background:rgba(196,125,10,0.06)}
-.cell-red{background:rgba(217,68,68,0.06)}
-.metric-section-hdr td{padding:10px 8px 4px;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);background:var(--bg3);border-top:1px solid var(--border)}
+/* AKTIVITY – new card layout */
+.aktivity-month-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.ak-month-title{font-size:17px;font-weight:700;color:var(--text);letter-spacing:-.3px}
+.ak-nav-btn{width:32px;height:32px;border-radius:var(--rs);border:1px solid var(--border2);background:var(--bg2);color:var(--text2);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.ak-nav-btn:hover{background:var(--bg3);color:var(--text)}
+.aktivity-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.aktivity-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
+.ak-metric-lbl{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+.ak-inputs{display:flex;align-items:flex-end;gap:8px;margin-bottom:10px}
+.ak-input-group{flex:1;display:flex;flex-direction:column;gap:3px}
+.ak-input-lbl{font-size:10px;color:var(--text3);font-weight:500}
+.ak-inp{width:100%;padding:5px 6px;border:1px solid var(--border2);border-radius:var(--rs);font-family:'Outfit',sans-serif;font-variant-numeric:tabular-nums;font-size:16px;font-weight:600;color:var(--text2);background:var(--bg3);text-align:center;outline:none;transition:all .15s}
+.ak-inp:focus{border-color:var(--accent-border);background:#fff;color:var(--text)}
+.ak-inp-main{font-size:20px;color:var(--text);background:transparent;border-color:var(--accent-border)}
+.ak-inp-main:focus{background:#fff}
+.ak-sep{font-size:11px;color:var(--text3);flex-shrink:0;padding-bottom:6px}
+.ak-diff{font-size:12px;font-weight:700;font-family:'Outfit',sans-serif;font-variant-numeric:tabular-nums;border-radius:4px;padding:2px 7px;text-align:center;flex-shrink:0;min-width:36px}
+.ak-diff-pos{color:var(--green);background:var(--green-dim)}
+.ak-diff-neg{color:var(--red);background:var(--red-dim)}
+.ak-diff-zero{color:var(--text3);background:var(--bg3)}
+.ak-bar-track{height:5px;background:var(--bg4);border-radius:3px;overflow:hidden;margin-bottom:5px}
+.ak-bar-fill{height:5px;border-radius:3px;transition:width .4s ease}
+.ak-pct-lbl{font-size:11px;font-family:'Outfit',sans-serif;font-weight:600;font-variant-numeric:tabular-nums}
+/* Year overview table */
+.aktivity-year-table{width:100%;border-collapse:collapse;min-width:860px;font-size:12px}
+.aktivity-year-table th{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;padding:5px 7px;text-align:center;border-bottom:2px solid var(--border);background:var(--bg2)}
+.aktivity-year-table th.cur-month{background:var(--accent-dim);color:var(--accent)}
+.ay-metric{font-size:11px;font-weight:500;color:var(--text2);padding:5px 8px;white-space:nowrap;border-bottom:1px solid var(--border)}
+.ay-cell{text-align:center;padding:4px 6px;border-bottom:1px solid var(--border);font-family:'Outfit',sans-serif;font-variant-numeric:tabular-nums;cursor:default;transition:background .1s;min-width:52px}
+.ay-cell:hover{filter:brightness(0.95)}
+.ay-plan-sub{font-size:9px;color:var(--text3);margin-top:1px;opacity:0.8}
+.ay-green{background:rgba(26,158,104,0.1);color:var(--green);font-weight:600}
+.ay-amber{background:rgba(196,125,10,0.1);color:var(--amber);font-weight:600}
+.ay-red{background:rgba(217,68,68,0.1);color:var(--red);font-weight:600}
+.ay-sel{outline:2px solid var(--accent);outline-offset:-2px}
+/* Drag & drop */
+.kb-card[draggable]{cursor:grab}
+.kb-card[draggable]:active{cursor:grabbing}
+.kb-card.drag-over{opacity:0.4}
+.kb-col.drop-target{background:var(--accent-dim);border:2px dashed var(--accent-border)}
+.cand-card[draggable]{cursor:grab}
+.cand-card[draggable]:active{cursor:grabbing}
+.cand-card.dragging{opacity:0.4}
+.pipe-col.drop-target{background:var(--accent-dim);border-radius:var(--rs);padding:4px}
+/* Pipeline improved */
+.pipe-board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;align-items:start}
+.pipe-col-sep{grid-column:5/6;border-left:2px dashed var(--border2);height:100%;position:relative}
+.pipe-novacek{background:rgba(26,158,104,0.04);border:1px solid var(--green-border);border-radius:var(--r);padding:6px}
+.pipe-novacek .pipe-col-hdr{color:var(--green)}
+.cand-actions{display:flex;align-items:center;gap:6px;margin-top:8px;padding-top:7px;border-top:1px solid var(--border);flex-wrap:wrap}
+.cand-stage-select{flex:1;padding:4px 7px;border:1px solid var(--border2);border-radius:var(--rs);font-family:'DM Sans',sans-serif;font-size:11px;color:var(--text);background:var(--bg3);outline:none;min-width:120px}
+.cand-stage-select:focus{border-color:var(--accent-border);background:#fff}
+.cand-act-btn{padding:4px 9px;border-radius:var(--rs);border:1px solid var(--border);background:transparent;color:var(--text2);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .12s;display:flex;align-items:center;gap:3px;white-space:nowrap}
+.cand-act-btn:hover{background:var(--bg3);color:var(--text)}
+.cand-act-btn.danger:hover{background:var(--red-dim);color:var(--red);border-color:rgba(217,68,68,0.3)}
 
 /* PIPELINE MODULE */
+.aktivity-wrap{overflow-x:auto;margin-top:4px}
 .pipe-top-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .filter-btn{font-size:11px;padding:4px 10px;border-radius:var(--rs);border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;transition:all .15s}
 .filter-btn.active{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
 .filter-btn:hover:not(.active){background:var(--bg3)}
-.pipe-board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;align-items:start}
+.pipe-board{display:grid;grid-template-columns:repeat(5,minmax(0,1fr)) minmax(0,1.2fr);gap:8px;align-items:start}
 .pipe-col-hdr{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between;padding:0 2px}
 .pipe-col-count{font-size:10px;background:var(--bg4);border-radius:20px;padding:1px 7px;color:var(--text3);font-family:'Outfit',sans-serif;font-weight:600}
 .cand-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);padding:9px 11px;margin-bottom:7px;cursor:pointer;transition:border-color .15s}
@@ -421,6 +451,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   .bn-label{font-size:9px;font-weight:500;letter-spacing:.01em;line-height:1}
   .bn-badge{position:absolute;top:-3px;right:-5px;min-width:15px;height:15px;border-radius:10px;background:var(--red);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 3px;font-family:'Outfit',sans-serif}
   .mobile-mode-bar{display:flex;gap:6px;padding:0 16px 10px}
+  .aktivity-cards{grid-template-columns:repeat(2,1fr)}
+  .aktivity-year-table{font-size:11px}
   .mmb-btn{flex:1;padding:6px 4px;border-radius:var(--rs);border:1px solid var(--border);background:transparent;color:var(--text2);font-size:11px;font-family:'DM Sans',sans-serif;cursor:pointer;text-align:center;transition:all .15s}
   .mmb-btn.active-mgr{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent);font-weight:500}
   .mmb-btn.active-dir{background:var(--purple-dim);border-color:var(--purple-border);color:var(--purple);font-weight:500}
@@ -585,7 +617,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min
   <div class="modal-title">Přidat osobu do adaptace</div>
   <div class="modal-sub" id="add-modal-sub">Nový poradce</div>
   <div class="form-group"><label class="form-label">Celé jméno *</label><input class="form-input" id="inp-name" type="text" placeholder="Jan Novák"></div>
-  <div class="form-group"><label class="form-label">Pozice *</label><input class="form-input" id="inp-pos" type="text" placeholder="Junior konzultant"></div>
+  <div class="form-group"><label class="form-label">Pozice *</label>
+    <select class="form-input" id="inp-pos">
+      <option value="">– vyberte pozici –</option>
+    </select>
+  </div>
   <div class="form-group"><label class="form-label">Datum nástupu *</label><input class="form-input" id="inp-date" type="date"></div>
   <div class="form-group"><label class="form-label">E-mail</label><input class="form-input" id="inp-email" type="email" placeholder="jan.novak@firma.cz"></div>
   <div class="modal-actions"><button class="btn" onclick="closeAddModal()">Zrušit</button><button class="btn btn-p" onclick="savePerson()">Přidat</button></div>
@@ -804,7 +840,8 @@ const POSITIONS=[
   {key:'zr',label:'Zemský ředitel',abbr:'ZŘ',koef:13.0},
 ];
 
-const STAGE_LABELS=['Osloven','1. schůzka','Zvažuje','Nabídka','Podpis'];
+const STAGE_LABELS=['Osloven','1. schůzka','Zvažuje','Nabídka','Podpis','Nováček'];
+const PERSON_POSITIONS=['Junior konzultant','Konzultant','Senior konzultant','Samostatný konzultant','TOP konzultant','TOP konzultant II','Exkluzivní konzultant','Junior manažer','Manažer','Senior manažer','Oblastní ředitel','Senior oblastní ředitel','Regionální ředitel','Zemský ředitel','Jiná pozice'];
 const MONTHS=['Led','Úno','Bře','Dub','Kvě','Čer','Čvc','Srp','Zář','Říj','Lis','Pro'];
 
 // Default kanban groups
@@ -830,6 +867,7 @@ let provizeMyPos='jmng',provizeOB={};
 let todos=[],kanbanGroups=JSON.parse(JSON.stringify(DEFAULT_GROUPS));
 let activeKanbanGroup='all',activeKanbanCol='nove';
 let ikSectionTemplate=JSON.parse(JSON.stringify(DEFAULT_IK_SECTIONS));
+let aktivitySelectedMonth={};  // personId → month index
 const editMode=new Set();
 
 let currentUser=null,_sbReady=false;
@@ -1140,92 +1178,102 @@ function renderIK(person){
 // MODULE: AKTIVITY & STATISTIKY (plan vs actual)
 // ═══════════════════════════════════════════════════════
 function renderAktivity(person){
-  if(!person)return`<div class="empty-state"><div class="empty-state-title">Vyberte osobu</div><p style="font-size:13px;margin-top:5px">Vyberte poradce v levém panelu pro zobrazení statistik.</p></div>`;
+  if(!person)return`<div class="empty-state"><div class="empty-state-title">Vyberte osobu</div><p style="font-size:13px;margin-top:5px">Vyberte poradce v levém panelu.</p></div>`;
   const year=new Date().getFullYear();
   const curMonth=new Date().getMonth();
+  const selMonth=aktivitySelectedMonth[person.id]!==undefined?aktivitySelectedMonth[person.id]:curMonth;
   if(!person.stats)person.stats={};
   if(!person.stats[year])person.stats[year]={};
   const yd=person.stats[year];
-  const mKey=`m${curMonth}`;const md=yd[mKey]||{};
+  const mKey=`m${selMonth}`;
+  if(!yd[mKey])yd[mKey]={};
+  const md=yd[mKey];
 
-  const rows=[
-    {key:'klient_schuze',label:'Klientské 1. schůzky',section:'Klientské aktivity'},
-    {key:'ob',label:'OB podepsané (body)',section:'Klientské aktivity'},
-    {key:'nabor_schuze',label:'Náborové schůzky',section:'Náborové aktivity'},
-    {key:'nabor_podpisy',label:'Nové podpisy (nábor)',section:'Náborové aktivity'},
+  const MDEFS=[
+    {key:'klient_schuze',label:'Klientské 1. schůzky',color:'var(--accent)'},
+    {key:'ob',label:'OB podepsané (body)',color:'var(--green)'},
+    {key:'nabor_schuze',label:'Náborové schůzky',color:'var(--purple)'},
+    {key:'nabor_podpisy',label:'Nové podpisy – nábor',color:'var(--amber)'},
   ];
 
-  // Summary cards
-  function getMonthPlan(metric,mi){
-    const mk=`m${mi}`;return(yd[mk]||{})[`plan_${metric}`]||0;
-  }
-  function getMonthActual(metric,mi){
-    const mk=`m${mi}`;return(yd[mk]||{})[metric]||0;
-  }
-  function pctColor(a,p){if(!p||!a)return'var(--text)';const r=a/p;return r>=1?'var(--green)':r>=0.7?'var(--amber)':'var(--red)'}
-  const keys4=['klient_schuze','ob','nabor_schuze','nabor_podpisy'];
-  const lbls4=['Kl. schůzky','OB podepsané','Náb. schůzky','Nábory podpisy'];
-  let h=`<div class="stats-row">`;
-  keys4.forEach((k,i)=>{
-    const p=getMonthPlan(k,curMonth);const a=getMonthActual(k,curMonth);
-    const diff=p>0?a-p:null;const diffStr=diff===null?'':(diff>=0?`+${diff.toLocaleString('cs-CZ')}`:diff.toLocaleString('cs-CZ'));
-    const diffColor=diff===null?'var(--text3)':diff>=0?'var(--green)':'var(--red)';
-    h+=`<div class="stat-c">
-      <div class="stat-c-lbl">${lbls4[i]} – ${MONTHS[curMonth]}</div>
-      <div class="stat-c-val" style="color:${pctColor(a,p)}">${k==='ob'?fmtKc(a):a}</div>
-      <div class="stat-c-sub" style="display:flex;align-items:center;gap:5px">
-        <span>plán ${k==='ob'?fmtKc(p):p||'–'}</span>
-        ${diffStr?`<span style="font-size:10px;font-family:'Outfit',sans-serif;font-weight:600;color:${diffColor}">${diffStr}</span>`:''}
+  // Month navigator
+  const prevM=(selMonth-1+12)%12;const nextM=(selMonth+1)%12;
+  let h=`<div class="aktivity-month-nav">
+    <button class="ak-nav-btn" onclick="setAktivityMonth('${person.id}',${prevM})">‹</button>
+    <div class="ak-month-title">${MONTHS[selMonth]} ${year}</div>
+    <div style="display:flex;gap:6px;align-items:center">
+      <button class="ak-nav-btn" onclick="setAktivityMonth('${person.id}',${nextM})">›</button>
+      ${selMonth!==curMonth?`<button class="btn" onclick="setAktivityMonth('${person.id}',${curMonth})" style="font-size:11px">Aktuální</button>`:''}
+      <button class="btn btn-g" onclick="exportAktivityCSV('${person.id}')" style="font-size:11px">↓ CSV</button>
+      <button class="btn" onclick="exportAktivityPrint('${person.id}')" style="font-size:11px">⎙ Tisk / PDF</button>
+    </div>
+  </div>`;
+
+  // Cards
+  h+=`<div class="aktivity-cards">`;
+  MDEFS.forEach(m=>{
+    const plan=md[`plan_${m.key}`]||0;
+    const actual=md[m.key]!==undefined?md[m.key]:'';
+    const cardId=`ak-${person.id}-${selMonth}-${m.key}`;
+    const pct=plan&&actual!==''?Math.round(Number(actual)/plan*100):null;
+    const diff=plan&&actual!==''?Number(actual)-plan:null;
+    const barPct=pct!==null?Math.min(pct,150):0;
+    const barColor=pct===null?'var(--bg4)':pct>=100?'var(--green)':pct>=70?'var(--amber)':'var(--red)';
+    const pctColor=pct===null?'var(--text3)':pct>=100?'var(--green)':pct>=70?'var(--amber)':'var(--red)';
+    h+=`<div class="aktivity-card" id="${cardId}">
+      <div class="ak-metric-lbl">${m.label}</div>
+      <div class="ak-inputs">
+        <div class="ak-input-group">
+          <div class="ak-input-lbl">Plán</div>
+          <input class="ak-inp" type="number" min="0" value="${plan||''}" placeholder="0"
+            oninput="setMonthPlan('${person.id}',${year},${selMonth},'${m.key}',this.value);liveAkCard('${cardId}',this.value,document.getElementById('${cardId}-actual').value,'${m.key}')">
+        </div>
+        <div class="ak-sep">vs</div>
+        <div class="ak-input-group">
+          <div class="ak-input-lbl" style="color:${m.color}">Skutečnost</div>
+          <input class="ak-inp ak-inp-main" id="${cardId}-actual" type="number" min="0" value="${actual!==''?actual:''}" placeholder="0"
+            oninput="setActual('${person.id}',${year},${selMonth},'${m.key}',this.value);liveAkCard('${cardId}',document.querySelector('#${cardId} .ak-inp').value,this.value,'${m.key}')"
+            style="border-color:${m.color}40">
+        </div>
+        <div class="ak-diff${diff===null?' ak-diff-zero':diff>=0?' ak-diff-pos':' ak-diff-neg'}" id="${cardId}-diff">
+          ${diff===null?'–':(diff>0?'+':'')+diff}
+        </div>
       </div>
+      <div class="ak-bar-track"><div class="ak-bar-fill" id="${cardId}-bar" style="width:${barPct}%;background:${barColor}"></div></div>
+      <div class="ak-pct-lbl" id="${cardId}-pct" style="color:${pctColor}">${pct!==null?pct+' % plánu':'nezadáno'}</div>
     </div>`;
   });
   h+=`</div>`;
 
-  // Full table with dual cells
-  h+=`<div class="aktivity-wrap"><table class="stats-table"><thead><tr>
-    <th class="metric-col">Metrika</th>`;
+  // Year overview table
+  h+=`<div style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:8px">Roční přehled – kliknutím na měsíc přejdete do detailu</div>`;
+  h+=`<div class="aktivity-wrap"><table class="aktivity-year-table"><thead><tr><th style="text-align:left;padding-left:8px">Metrika</th>`;
   MONTHS.forEach((m,i)=>{
-    h+=`<th${i===curMonth?' class="cur-month"':''}>${m}</th>`;
+    const isCur=i===curMonth;const isSel=i===selMonth;
+    h+=`<th class="${isCur?'cur-month':''}" style="${isSel?'background:rgba(59,110,245,0.12);color:var(--accent)':''}">${m}</th>`;
   });
   h+=`</tr></thead><tbody>`;
-
-  let lastSection='';
-  rows.forEach(row=>{
-    if(row.section!==lastSection){
-      h+=`<tr class="metric-section-hdr"><td colspan="13">${row.section}</td></tr>`;
-      lastSection=row.section;
-    }
-    h+=`<tr><td class="metric-name">${row.label}</td>`;
+  MDEFS.forEach((metric,mi)=>{
+    if(mi===2)h+=`<tr><td colspan="13" style="padding:8px 8px 3px;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);background:var(--bg3);border-top:1px solid var(--border)">Náborové aktivity</td></tr>`;
+    if(mi===0)h+=`<tr><td colspan="13" style="padding:8px 8px 3px;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text3);background:var(--bg3);border-top:1px solid var(--border)">Klientské aktivity</td></tr>`;
+    h+=`<tr><td class="ay-metric">${metric.label}</td>`;
     MONTHS.forEach((_,i)=>{
       const mk=`m${i}`;const mData=yd[mk]||{};
-      const plan=mData[`plan_${row.key}`]||0;
-      const actual=mData[row.key]||'';
-      const diff=plan&&actual?Number(actual)-plan:null;
-      let tdCls='';
-      if(actual&&plan){const r=Number(actual)/plan;tdCls=r>=1?'cell-green':r>=0.7?'cell-amber':'cell-red'}
-      const isCur=i===curMonth;
-      h+=`<td class="${tdCls}" style="padding:2px 4px">
-        <div class="dual-cell">
-          <div class="dual-cell-plan">
-            <span class="plan-lbl">P</span>
-            <input class="num-inp-sm${isCur?' cur':''}" type="number" min="0" value="${plan||''}" placeholder="–"
-              onchange="setMonthPlan('${person.id}',${year},${i},'${row.key}',this.value)" title="Plán">
-          </div>
-          <div class="dual-cell-plan">
-            <span class="act-lbl">A</span>
-            <input class="num-inp${isCur?' cur':''}" type="number" min="0" value="${actual||''}" placeholder="–"
-              onchange="setActual('${person.id}',${year},${i},'${row.key}',this.value)" title="Skutečnost">
-          </div>
-          ${diff!==null?`<span class="diff-badge ${diff>0?'diff-pos':diff<0?'diff-neg':'diff-zero'}">${diff>0?'+':''}${diff}</span>`:''}
-        </div>
+      const plan=mData[`plan_${metric.key}`]||0;
+      const actual=mData[metric.key];
+      const pct=plan&&actual!==undefined&&actual!==''?Number(actual)/plan:null;
+      const cls=pct===null?'':pct>=1?'ay-green':pct>=0.7?'ay-amber':'ay-red';
+      const isSel=i===selMonth;
+      h+=`<td class="ay-cell ${cls}${isSel?' ay-sel':''}" onclick="setAktivityMonth('${person.id}',${i})" title="Kliknutím zobrazit ${MONTHS[i]}">
+        ${actual!==undefined&&actual!==''?actual:'–'}
+        ${plan?`<div class="ay-plan-sub">/${plan}</div>`:''}
       </td>`;
     });
     h+=`</tr>`;
   });
-  h+=`</tbody></table></div>`;
-  h+=`<div style="font-size:11px;color:var(--text3);margin-top:10px;padding:8px 12px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--border)">
-    <strong>P</strong> = plán na začátku měsíce &nbsp;·&nbsp; <strong>A</strong> = skutečnost na konci &nbsp;·&nbsp;
-    Barva buňky: <span style="color:var(--green)">zelená ≥ 100 %</span> · <span style="color:var(--amber)">oranžová 70–99 %</span> · <span style="color:var(--red)">červená &lt; 70 %</span>
+  h+=`</tbody></table></div>
+  <div style="font-size:11px;color:var(--text3);margin-top:8px;padding:7px 10px;background:var(--bg2);border-radius:var(--rs);border:1px solid var(--border)">
+    Barva buňky: <span style="color:var(--green)">zelená ≥ 100 %</span> · <span style="color:var(--amber)">oranžová 70–99 %</span> · <span style="color:var(--red)">červená &lt; 70 %</span> plánu &nbsp;·&nbsp; Kliknutím na buňku přejdete do detailu daného měsíce
   </div>`;
   return h;
 }
@@ -1241,17 +1289,19 @@ function lastContactDate(c){
 function renderPipeline(){
   const active=candidates.filter(c=>!c.archived);
   const filtered=pipeFilter==='all'?active:active.filter(c=>c.source===pipeFilter);
-  const signed=active.filter(c=>c.stage===4).length;const offers=active.filter(c=>c.stage===3).length;
+  const novacek=active.filter(c=>c.stage===5).length;
+  const signed=active.filter(c=>c.stage===4).length;
+  const offers=active.filter(c=>c.stage===3).length;
   const contactedThisMonth=active.filter(c=>{
     const ld=lastContactDate(c);if(!ld)return false;
     const d=new Date(ld);const n=new Date();
     return d.getMonth()===n.getMonth()&&d.getFullYear()===n.getFullYear();
   }).length;
   let h=`<div class="stats-row">
-    <div class="stat-c"><div class="stat-c-lbl">Aktivní kandidáti</div><div class="stat-c-val">${active.filter(c=>c.stage<4).length}</div><div class="stat-c-sub">v pipeline</div></div>
-    <div class="stat-c"><div class="stat-c-lbl">Kontaktováno letos</div><div class="stat-c-val">${contactedThisMonth}</div><div class="stat-c-sub">tento měsíc</div></div>
+    <div class="stat-c"><div class="stat-c-lbl">Aktivní v pipeline</div><div class="stat-c-val">${active.filter(c=>c.stage<4).length}</div><div class="stat-c-sub">v náboru</div></div>
+    <div class="stat-c"><div class="stat-c-lbl">Kontaktováno</div><div class="stat-c-val">${contactedThisMonth}</div><div class="stat-c-sub">tento měsíc</div></div>
     <div class="stat-c"><div class="stat-c-lbl">Nabídka podána</div><div class="stat-c-val">${offers}</div><div class="stat-c-sub">čekají na odpověď</div></div>
-    <div class="stat-c"><div class="stat-c-lbl">Podpisy celkem</div><div class="stat-c-val" style="color:var(--green)">${signed}</div><div class="stat-c-sub">úspěšné nábory</div></div>
+    <div class="stat-c"><div class="stat-c-lbl">Nováčci</div><div class="stat-c-val" style="color:var(--green)">${novacek}</div><div class="stat-c-sub">podepsáno ${signed} celkem</div></div>
   </div>`;
   h+=`<div class="pipe-top-bar">
     <button class="filter-btn${pipeFilter==='all'?' active':''}" onclick="setPipeFilter('all')">Vše</button>
@@ -1275,48 +1325,92 @@ function renderPipeline(){
     });
     h+=`</div></div>`;
   }
+
+  // Render candidate card HTML (shared helper)
+  function candCardHtml(c){
+    const ld=lastContactDate(c);const ds=ld?daysSince(ld):null;
+    const lcClass=ds===null?'':ds>14?'lc-warn':ds<=5?'lc-ok':'';
+    const lcTxt=ds===null?'Bez kontaktu':`${ds}d bez kontaktu`;
+    const srcMap={bank:'st-bank',poj:'st-poj',konk:'st-konk',dop:'st-dop',other:'st-other'};
+    const srcLbl={bank:'Banka',poj:'Pojišťovna',konk:'Konkurence',dop:'Doporučení',other:'Ostatní'};
+    const isExp=c.expanded;
+    let ch=`<div class="cand-card${isExp?' expanded':''}" id="cc-${c.id}"
+      draggable="true"
+      ondragstart="pipeDragStart(event,'${c.id}')"
+      ondragend="pipeDragEnd(event)"
+      onclick="toggleCard('${c.id}',event)">
+      <div class="cand-name">${esc(c.name)}</div>
+      <div class="cand-employer">${esc(c.currentRole||'')}${c.currentRole&&c.currentEmployer?' · ':''}${esc(c.currentEmployer||'')}</div>
+      <div class="cand-tags"><span class="src-tag ${srcMap[c.source]||'st-other'}">${srcLbl[c.source]||'Ostatní'}</span></div>
+      <div class="last-contact ${lcClass}">${ds===null?'◦':'●'} ${lcTxt}</div>
+      <div class="cand-detail">`;
+    if(c.phone||c.email){ch+=`<div class="det-row"><span class="det-lbl">Kontakt</span><span class="det-val">${[c.phone,c.email].filter(Boolean).map(esc).join(' · ')}</span></div>`;}
+    if(c.recommender){ch+=`<div class="det-row"><span class="det-lbl">Doporučil</span><span class="det-val">${esc(c.recommender)}</span></div>`;}
+    if(c.obstacle){ch+=`<div class="obstacle-box">⚠ ${esc(c.obstacle)}</div>`;}
+    if(c.solution){ch+=`<div class="solution-box">→ ${esc(c.solution)}</div>`;}
+    ch+=`<div class="contact-log"><div class="contact-log-hdr">Historie kontaktů</div>`;
+    if(c.contacts&&c.contacts.length){
+      [...c.contacts].reverse().forEach((ct,ri)=>{
+        const idx=c.contacts.length-1-ri;
+        ch+=`<div class="contact-entry"><span class="ce-date">${fmtDate(ct.date)}</span><span class="ce-note">${esc(ct.note)}</span><button class="ce-del" onclick="delContact('${c.id}',${idx},event)">×</button></div>`;
+      });
+    } else {ch+=`<div style="font-size:11px;color:var(--text3);padding:4px 0">Zatím žádný kontakt</div>`;}
+    ch+=`<div class="add-contact-form">
+      <input class="mini-inp mini-date" type="date" id="cd-${c.id}" value="${new Date().toISOString().split('T')[0]}">
+      <input class="mini-inp mini-note" id="cn-${c.id}" placeholder="Co proběhlo, co je next step..." onkeydown="if(event.key==='Enter')addContact('${c.id}',event)">
+      <button class="mini-add-btn" onclick="addContact('${c.id}',event)">Přidat</button>
+    </div></div>`;
+    // Clean action bar – stage select + icon buttons
+    ch+=`<div class="cand-actions">
+      <select class="cand-stage-select" onchange="setStage('${c.id}',Number(this.value),event)" onclick="event.stopPropagation()">
+        ${STAGE_LABELS.map((sl,sj)=>`<option value="${sj}"${c.stage===sj?' selected':''}>${sl}</option>`).join('')}
+      </select>
+      <button class="cand-act-btn" onclick="editCandidate('${c.id}');event.stopPropagation()" title="Upravit">
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M8.5 1.5l2 2-7 7H1.5v-2l7-7z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg> Upravit
+      </button>
+      <button class="cand-act-btn" onclick="createTodoFromCandidate('${esc(c.name)}');event.stopPropagation()" title="Přidat úkol">
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Úkol
+      </button>
+      <button class="cand-act-btn danger" onclick="archiveCand('${c.id}',event)" title="Archivovat" style="margin-left:auto">
+        <svg width="11" height="11" viewBox="0 0 12 12" fill="none"><path d="M1 3h10M2 3l1 8h6l1-8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M4.5 5.5v3M7.5 5.5v3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      </button>
+    </div></div></div>`;
+    return ch;
+  }
+
+  // Pipeline stages (0-4) + Nováček (5) separated
   h+=`<div class="pipe-board">`;
-  STAGE_LABELS.forEach((stage,si)=>{
+
+  // Stages 0–4: Recruitment pipeline
+  for(let si=0;si<5;si++){
+    const stage=STAGE_LABELS[si];
     const cols=filtered.filter(c=>c.stage===si);
-    h+=`<div><div class="pipe-col-hdr">${stage}<span class="pipe-col-count">${cols.length}</span></div>`;
-    cols.forEach(c=>{
-      const ld=lastContactDate(c);const ds=ld?daysSince(ld):null;
-      const lcClass=ds===null?'':ds>14?'lc-warn':ds<=5?'lc-ok':'';
-      const lcTxt=ds===null?'Bez kontaktu':`${ds}d bez kontaktu`;
-      const srcMap={bank:'st-bank',poj:'st-poj',konk:'st-konk',dop:'st-dop',other:'st-other'};
-      const srcLbl={bank:'Banka',poj:'Pojišťovna',konk:'Konkurence',dop:'Doporučení',other:'Ostatní'};
-      const isExp=c.expanded;
-      h+=`<div class="cand-card${isExp?' expanded':''}" id="cc-${c.id}" onclick="toggleCard('${c.id}',event)">
-        <div class="cand-name">${esc(c.name)}</div>
-        <div class="cand-employer">${esc(c.currentRole||'')}${c.currentRole&&c.currentEmployer?' · ':''}${esc(c.currentEmployer||'')}</div>
-        <div class="cand-tags"><span class="src-tag ${srcMap[c.source]||'st-other'}">${srcLbl[c.source]||'Ostatní'}</span></div>
-        <div class="last-contact ${lcClass}">${ds===null?'◦':'●'} ${lcTxt}</div>
-        <div class="cand-detail">`;
-      if(c.phone||c.email){h+=`<div class="det-row"><span class="det-lbl">Kontakt</span><span class="det-val">${[c.phone,c.email].filter(Boolean).map(esc).join(' · ')}</span></div>`;}
-      if(c.recommender){h+=`<div class="det-row"><span class="det-lbl">Doporučil</span><span class="det-val">${esc(c.recommender)}</span></div>`;}
-      if(c.obstacle){h+=`<div class="obstacle-box">⚠ ${esc(c.obstacle)}</div>`;}
-      if(c.solution){h+=`<div class="solution-box">→ ${esc(c.solution)}</div>`;}
-      h+=`<div class="contact-log"><div class="contact-log-hdr">Historie kontaktů</div>`;
-      if(c.contacts&&c.contacts.length){
-        [...c.contacts].reverse().forEach((ct,ri)=>{
-          const idx=c.contacts.length-1-ri;
-          h+=`<div class="contact-entry"><span class="ce-date">${fmtDate(ct.date)}</span><span class="ce-note">${esc(ct.note)}</span><button class="ce-del" onclick="delContact('${c.id}',${idx},event)">×</button></div>`;
-        });
-      } else {h+=`<div style="font-size:11px;color:var(--text3);padding:4px 0">Zatím žádný kontakt</div>`;}
-      h+=`<div class="add-contact-form">
-        <input class="mini-inp mini-date" type="date" id="cd-${c.id}" value="${new Date().toISOString().split('T')[0]}">
-        <input class="mini-inp mini-note" id="cn-${c.id}" placeholder="Co proběhlo, co je next step..." onkeydown="if(event.key==='Enter')addContact('${c.id}',event)">
-        <button class="mini-add-btn" onclick="addContact('${c.id}',event)">Přidat</button>
-      </div></div>`;
-      h+=`<div class="stage-btns">`;
-      STAGE_LABELS.forEach((sl,sj)=>{h+=`<button class="stage-btn${c.stage===sj?' cur':''}" onclick="setStage('${c.id}',${sj},event)">${sl}</button>`;});
-      h+=`<button class="archive-btn-c" onclick="archiveCand('${c.id}',event)">Archivovat</button>`;
-      h+=`<button class="archive-btn-c" style="color:var(--accent);border-color:var(--accent-border)" onclick="editCandidate('${c.id}');event.stopPropagation()">Upravit</button>`;
-      h+=`<button class="archive-btn-c" style="color:var(--purple);border-color:var(--purple-border)" onclick="createTodoFromCandidate('${esc(c.name)}');event.stopPropagation()">+ Úkol</button>`;
-      h+=`</div></div></div>`;
-    });
+    h+=`<div class="pipe-col" id="pipe-col-${si}"
+      ondragover="pipeDragOver(event,${si})"
+      ondrop="pipeDrop(event,${si})"
+      ondragleave="pipeDragLeave(event)">
+      <div class="pipe-col-hdr">${stage}<span class="pipe-col-count">${cols.length}</span></div>`;
+    cols.forEach(c=>{h+=candCardHtml(c);});
     h+=`<button class="add-cand-col-btn" onclick="openCandModal(${si})">+ Přidat</button></div>`;
-  });
+  }
+
+  // Nováček column – visually separated
+  const novCols=filtered.filter(c=>c.stage===5);
+  h+=`<div class="pipe-col pipe-novacek" id="pipe-col-5"
+    ondragover="pipeDragOver(event,5)"
+    ondrop="pipeDrop(event,5)"
+    ondragleave="pipeDragLeave(event)">
+    <div class="pipe-col-hdr" style="color:var(--green)">
+      <span style="display:flex;align-items:center;gap:5px">
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="var(--green)" stroke-width="1.5"/><path d="M4 6l1.5 1.5L8 4" stroke="var(--green)" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Nováčci
+      </span>
+      <span class="pipe-col-count" style="background:var(--green-dim);color:var(--green)">${novCols.length}</span>
+    </div>
+    <div style="font-size:10px;color:var(--text3);margin-bottom:8px">Přetáhněte sem po podpisu</div>`;
+  novCols.forEach(c=>{h+=candCardHtml(c);});
+  h+=`<button class="add-cand-col-btn" style="border-color:var(--green-border);color:var(--green)" onclick="openCandModal(5)">+ Přidat nováčka</button></div>`;
+
   h+=`</div>`;
   return h;
 }
@@ -1378,10 +1472,12 @@ function renderKbCard(t){
   const isDone=t.status==='hotove'||t.status==='potvrzene';
   const urgCls=u>0?` urg-${u}`:'';
   const doneCls=isDone?' done-card':'';
-  // next status buttons
   const NEXT_STATUS={nove:'rozpracovane',rozpracovane:'hotove',hotove:'potvrzene',potvrzene:'nove'};
-  const NEXT_LABEL={nove:'→ Rozpracované',rozpracovane:'→ Hotové',hotove:'→ Potvrzené',potvrzene:'↩ Zpět na Nové'};
-  return`<div class="kb-card${urgCls}${doneCls}" id="kc-${t.id}">
+  const NEXT_LABEL={nove:'→ Rozp.',rozpracovane:'→ Hotové',hotove:'→ Potvrzené',potvrzene:'↩ Nové'};
+  return`<div class="kb-card${urgCls}${doneCls}" id="kc-${t.id}"
+    draggable="true"
+    ondragstart="kbDragStart(event,'${t.id}')"
+    ondragend="kbDragEnd(event)">
     <div class="kb-card-title">${esc(t.title)}</div>
     <div class="kb-card-meta">
       ${kbDueTag(t)}
@@ -1390,9 +1486,9 @@ function renderKbCard(t){
       ${t.status==='potvrzene'?`<span class="kb-tag kb-tag-conf">✓ ověřeno</span>`:''}
     </div>
     <div class="kb-card-actions">
-      <button class="kb-act-btn" onclick="advanceTodoStatus('${t.id}')" title="${NEXT_LABEL[t.status||'nove']}">${NEXT_LABEL[t.status||'nove']}</button>
-      <button class="kb-act-btn" onclick="editTodo('${t.id}')" title="Upravit">✎ Upravit</button>
-      <button class="kb-act-btn del" onclick="deleteTodo('${t.id}')" title="Smazat">× Smazat</button>
+      <button class="kb-act-btn" onclick="advanceTodoStatus('${t.id}')">${NEXT_LABEL[t.status||'nove']}</button>
+      <button class="kb-act-btn" onclick="editTodo('${t.id}')">✎</button>
+      <button class="kb-act-btn del" onclick="deleteTodo('${t.id}')">×</button>
     </div>
   </div>`;
 }
@@ -1448,7 +1544,10 @@ function renderFocus(){
         return new Date(b.createdAt||0)-new Date(a.createdAt||0);
       });
     const isActiveMobile=activeKanbanCol===col.key;
-    h+=`<div class="kb-col${!isActiveMobile?' kb-col-other':''}">
+    h+=`<div class="kb-col${!isActiveMobile?' kb-col-other':''}" id="kb-col-${col.key}"
+      ondragover="kbDragOver(event,'${col.key}')"
+      ondrop="kbDrop(event,'${col.key}')"
+      ondragleave="kbDragLeave(event)">
       <div class="kb-col-hdr">
         <span class="kb-col-dot ${col.dotCls}"></span>
         <span class="kb-col-title">${col.label}</span>
@@ -1559,11 +1658,112 @@ function setActual(pid,year,month,key,val){
   p.stats[year][mk][key]=Number(val)||0;save();
 }
 
+// ── AKTIVITY HELPERS ──
+function setAktivityMonth(pid,month){aktivitySelectedMonth[pid]=month;renderAll();}
+
+function liveAkCard(cardId,planVal,actualVal){
+  const plan=Number(planVal)||0;
+  const actual=actualVal!==''&&actualVal!==undefined&&actualVal!==null?Number(actualVal):null;
+  const diff=plan&&actual!==null?actual-plan:null;
+  const pct=plan&&actual!==null?Math.round(actual/plan*100):null;
+  const barPct=pct!==null?Math.min(pct,150):0;
+  const barColor=pct===null?'var(--bg4)':pct>=100?'var(--green)':pct>=70?'var(--amber)':'var(--red)';
+  const pctColor=barColor;
+  const diffEl=document.getElementById(cardId+'-diff');
+  const barEl=document.getElementById(cardId+'-bar');
+  const pctEl=document.getElementById(cardId+'-pct');
+  if(diffEl){
+    if(diff===null){diffEl.className='ak-diff ak-diff-zero';diffEl.textContent='–';}
+    else{diffEl.className='ak-diff '+(diff>=0?'ak-diff-pos':'ak-diff-neg');diffEl.textContent=(diff>0?'+':'')+diff;}
+  }
+  if(barEl){barEl.style.width=barPct+'%';barEl.style.background=barColor;}
+  if(pctEl){pctEl.style.color=pctColor;pctEl.textContent=pct!==null?pct+' % plánu':'nezadáno';}
+}
+
+function exportAktivityCSV(pid){
+  const p=people.find(x=>x.id===pid);if(!p)return;
+  const year=new Date().getFullYear();
+  const yd=(p.stats||{})[year]||{};
+  const MDEFS=[
+    {key:'klient_schuze',label:'Klientské 1. schůzky'},
+    {key:'ob',label:'OB podepsané (body)'},
+    {key:'nabor_schuze',label:'Náborové schůzky'},
+    {key:'nabor_podpisy',label:'Nové podpisy – nábor'},
+  ];
+  const header=['Metrika',...MONTHS.map((m,i)=>[m+' plán',m+' skutečnost',m+' %']).flat()].join(';');
+  const rows=MDEFS.map(m=>{
+    const cells=[m.label];
+    MONTHS.forEach((_,i)=>{
+      const mk=`m${i}`;const md=yd[mk]||{};
+      const plan=md[`plan_${m.key}`]||0;
+      const actual=md[m.key]||0;
+      const pct=plan?Math.round(actual/plan*100):'';
+      cells.push(plan,actual,pct);
+    });
+    return cells.join(';');
+  });
+  const csv='\uFEFF'+[header,...rows].join('\n');
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`Aktivity_${p.name.replace(/\s/g,'_')}_${year}.csv`;
+  a.click();URL.revokeObjectURL(a.href);
+  toast('CSV staženo – otevřete v Excelu');
+}
+
+function exportAktivityPrint(pid){
+  const p=people.find(x=>x.id===pid);if(!p)return;
+  const year=new Date().getFullYear();
+  const yd=(p.stats||{})[year]||{};
+  const MDEFS=[
+    {key:'klient_schuze',label:'Klientské 1. schůzky',color:'#3b6ef5'},
+    {key:'ob',label:'OB podepsané (body)',color:'#1a9e68'},
+    {key:'nabor_schuze',label:'Náborové schůzky',color:'#6c4fd6'},
+    {key:'nabor_podpisy',label:'Nové podpisy – nábor',color:'#c47d0a'},
+  ];
+  function svgBar(plan,actual,color){
+    const w=240;const h=22;
+    const pct=plan?Math.min(actual/plan,1.5):0;
+    const fill=plan?Math.round(Math.min(pct,1)*w):0;
+    const barColor=!plan?'#e4e6ec':pct>=1?'#1a9e68':pct>=0.7?'#c47d0a':'#d94444';
+    return`<svg width="${w}" height="${h}"><rect width="${w}" height="${h}" rx="4" fill="#e4e6ec"/><rect width="${fill}" height="${h}" rx="4" fill="${barColor}"/><text x="${w/2}" y="15" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white" font-weight="600">${plan?Math.round(pct*100)+'%':''}</text></svg>`;
+  }
+  let html=`<html><head><meta charset="UTF-8"><title>Aktivity – ${p.name}</title>
+  <style>body{font-family:'Arial',sans-serif;padding:30px;color:#1a1d27}h1{font-size:18px;margin-bottom:4px}h2{font-size:13px;color:#555;font-weight:400;margin-bottom:20px}
+  table{width:100%;border-collapse:collapse;font-size:11px;margin-bottom:24px}th{background:#1E2D5F;color:white;padding:6px 8px;text-align:center}
+  td{padding:5px 8px;border-bottom:1px solid #e4e6ec}td:first-child{font-weight:500}
+  .green{color:#1a9e68}.amber{color:#c47d0a}.red{color:#d94444}.muted{color:#949ab0}
+  @media print{body{padding:10px}}</style></head><body>
+  <h1>Přehled aktivit – ${p.name}</h1><h2>${p.position||''} · ${year}</h2>`;
+  MDEFS.forEach(m=>{
+    html+=`<table><thead><tr><th style="text-align:left">${m.label}</th>${MONTHS.map(mo=>`<th>${mo}</th>`).join('')}</tr></thead>`;
+    html+=`<tbody><tr><td>Plán</td>${MONTHS.map((_,i)=>{const v=(yd[`m${i}`]||{})[`plan_${m.key}`]||0;return`<td class="muted" style="text-align:center">${v||'–'}</td>`}).join('')}</tr>`;
+    html+=`<tr><td>Skutečnost</td>${MONTHS.map((_,i)=>{
+      const plan=(yd[`m${i}`]||{})[`plan_${m.key}`]||0;
+      const actual=(yd[`m${i}`]||{})[m.key]||0;
+      const pct=plan?actual/plan:null;
+      const cls=pct===null?'muted':pct>=1?'green':pct>=0.7?'amber':'red';
+      return`<td class="${cls}" style="text-align:center;font-weight:600">${actual||'–'}</td>`;
+    }).join('')}</tr>`;
+    html+=`<tr><td>% plánu</td>${MONTHS.map((_,i)=>{
+      const plan=(yd[`m${i}`]||{})[`plan_${m.key}`]||0;
+      const actual=(yd[`m${i}`]||{})[m.key]||0;
+      if(!plan)return`<td class="muted" style="text-align:center">–</td>`;
+      const pct=Math.round(actual/plan*100);
+      const cls=pct>=100?'green':pct>=70?'amber':'red';
+      return`<td class="${cls}" style="text-align:center">${pct}%</td>`;
+    }).join('')}</tr>`;
+    html+=`</tbody></table>`;
+  });
+  html+=`<p style="font-size:10px;color:#949ab0;margin-top:10px">Generováno: ${new Date().toLocaleString('cs-CZ')} · Arlo</p></body></html>`;
+  const w=window.open('','_blank','width=1100,height=700');
+  if(w){w.document.write(html);w.document.close();w.focus();setTimeout(()=>w.print(),400);}
+}
+
 // PIPELINE ACTIONS
 function setPipeFilter(f){pipeFilter=f;renderAll()}
 function toggleArchived(){showArchived=!showArchived;renderAll()}
 function toggleCard(id,e){if(e&&e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='BUTTON'||e.target.tagName==='SELECT'))return;const c=candidates.find(x=>x.id===id);if(!c)return;c.expanded=!c.expanded;renderAll()}
-function setStage(id,stage,e){if(e)e.stopPropagation();const c=candidates.find(x=>x.id===id);if(!c)return;c.stage=stage;save();renderAll()}
+function setStage(id,stage,e){if(e)e.stopPropagation();const c=candidates.find(x=>x.id===id);if(!c)return;c.stage=Number(stage);save();renderAll()}
 function archiveCand(id,e){if(e)e.stopPropagation();const c=candidates.find(x=>x.id===id);if(!c)return;c.archived=true;c.expanded=false;save();renderAll();toast('Kandidát archivován')}
 function unarchive(id){const c=candidates.find(x=>x.id===id);if(!c)return;c.archived=false;save();renderAll()}
 function addContact(id,e){
@@ -1575,6 +1775,35 @@ function addContact(id,e){
   save();renderAll();toast('Kontakt přidán');
 }
 function delContact(id,idx,e){if(e)e.stopPropagation();const c=candidates.find(x=>x.id===id);if(!c)return;c.contacts.splice(idx,1);save();renderAll()}
+
+// ── PIPELINE DRAG & DROP ──
+let _pipeDragId=null;
+function pipeDragStart(e,id){_pipeDragId=id;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',id);setTimeout(()=>{const el=document.getElementById('cc-'+id);if(el)el.classList.add('dragging');},0)}
+function pipeDragEnd(e){const el=document.getElementById('cc-'+(_pipeDragId||''));if(el)el.classList.remove('dragging');document.querySelectorAll('.pipe-col').forEach(c=>c.classList.remove('drop-target'));}
+function pipeDragOver(e,stage){e.preventDefault();e.dataTransfer.dropEffect='move';const col=document.getElementById('pipe-col-'+stage);if(col)col.classList.add('drop-target');}
+function pipeDragLeave(e){if(e.currentTarget&&!e.currentTarget.contains(e.relatedTarget))e.currentTarget.classList.remove('drop-target');}
+function pipeDrop(e,stage){
+  e.preventDefault();
+  const id=e.dataTransfer.getData('text/plain')||_pipeDragId;
+  const c=candidates.find(x=>x.id===id);if(!c)return;
+  c.stage=Number(stage);save();_pipeDragId=null;renderAll();toast(`Přesunuto → ${STAGE_LABELS[stage]}`);
+}
+
+// ── KANBAN DRAG & DROP ──
+let _kbDragId=null;
+function kbDragStart(e,id){_kbDragId=id;e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',id);setTimeout(()=>{const el=document.getElementById('kc-'+id);if(el)el.classList.add('drag-over');},0)}
+function kbDragEnd(e){const el=document.getElementById('kc-'+(_kbDragId||''));if(el)el.classList.remove('drag-over');document.querySelectorAll('.kb-col').forEach(c=>c.classList.remove('drop-target'));}
+function kbDragOver(e,colKey){e.preventDefault();e.dataTransfer.dropEffect='move';const col=document.getElementById('kb-col-'+colKey);if(col)col.classList.add('drop-target');}
+function kbDragLeave(e){if(e.currentTarget&&!e.currentTarget.contains(e.relatedTarget))e.currentTarget.classList.remove('drop-target');}
+function kbDrop(e,colKey){
+  e.preventDefault();
+  const id=e.dataTransfer.getData('text/plain')||_kbDragId;
+  const t=todos.find(x=>x.id===id);if(!t)return;
+  t.status=colKey;
+  if(colKey==='hotove'||colKey==='potvrzene')t.doneAt=new Date().toISOString();
+  else delete t.doneAt;
+  save();_kbDragId=null;renderAll();
+}
 
 // PROVIZE ACTIONS
 function setProvizePos(key){provizeMyPos=key;save();renderAll()}
@@ -1596,7 +1825,10 @@ function editTodo(id){const t=todos.find(x=>x.id===id);if(!t)return;openTodoModa
 // ── PERSON MODAL ──
 function openAddModal(){
   document.getElementById('add-modal-sub').textContent=mode==='mng'?'Nový poradce':'Nový manažer';
-  document.getElementById('inp-name').value='';document.getElementById('inp-pos').value='';
+  document.getElementById('inp-name').value='';
+  const posEl=document.getElementById('inp-pos');
+  posEl.innerHTML='<option value="">– vyberte pozici –</option>';
+  PERSON_POSITIONS.forEach(p=>{const o=document.createElement('option');o.value=p;o.textContent=p;posEl.appendChild(o);});
   document.getElementById('inp-date').value=new Date().toISOString().split('T')[0];
   document.getElementById('inp-email').value='';
   document.getElementById('add-modal').classList.remove('hidden');
@@ -1605,8 +1837,9 @@ function openAddModal(){
 function closeAddModal(){document.getElementById('add-modal').classList.add('hidden')}
 function savePerson(){
   const name=document.getElementById('inp-name').value.trim();if(!name){document.getElementById('inp-name').focus();return}
+  const pos=document.getElementById('inp-pos').value;
   const id='p_'+Date.now();
-  people.push({id,name,position:document.getElementById('inp-pos').value.trim(),startDate:document.getElementById('inp-date').value,email:document.getElementById('inp-email').value.trim(),mode,state:{},ik:[],checklist:JSON.parse(JSON.stringify(TEMPLATE[mode]))});
+  people.push({id,name,position:pos,startDate:document.getElementById('inp-date').value,email:document.getElementById('inp-email').value.trim(),mode,state:{},ik:[],checklist:JSON.parse(JSON.stringify(TEMPLATE[mode]))});
   activePersonId=id;save();closeAddModal();renderAll();toast('Osoba přidána');
 }
 
