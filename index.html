@@ -2165,10 +2165,10 @@ function initSupabase(){
       renderAll();
     }
 
-    window._supabase.auth.onAuthStateChange(async(event,session)=>{
+    window._supabase.auth.onAuthStateChange((event,session)=>{
       console.log('Auth event:',event,session?.user?.email);
       if((event==='SIGNED_IN'||event==='TOKEN_REFRESHED')&&session?.user){
-        await bootApp(session.user);
+        setTimeout(()=>{bootApp(session.user);},0);
       } else if(event==='SIGNED_OUT'){
         _appBooted=false;
         currentUser=null;localStorage.removeItem('arlo_auth');
