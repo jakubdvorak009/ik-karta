@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -1614,7 +1615,11 @@ function renderBottomNav(){
   if(badge){if(urgentCount>0){badge.textContent=urgentCount;badge.style.display='flex';}else badge.style.display='none';}
 }
 
-function togglePhase(pi){const el=document.getElementById('phase-'+pi);if(el)el.classList.toggle('collapsed')}
+function togglePhase(pi){
+  const p=people.find(x=>x.id===activePersonId);
+  if(p){const cl=getCL(p);if(cl[pi]){cl[pi].open=!cl[pi].open;save()}}
+  const el=document.getElementById('phase-'+pi);if(el)el.classList.toggle('collapsed');
+}
 
 // CHECKLIST ACTIONS
 function cycleState(pid,key){
